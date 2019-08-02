@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="includes">
+    <title th:text="Home"></title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+    <h1>Home</h1>
+    <div th:utext="${resultJson}"></div>
+    <hr>
+    <div th:text="${resultJson1}"></div>
+    <hr>
+    <div th:text="${resultJson2}"></div>
+    <hr>
+    <div th:text="${resultJson3}"></div>
+    <!--
+    <div th:utext="${#strings.replace(resultJson,',',',<br />')}"></div>
+    <hr>
+    <pre th:text="${resultJson1}"></pre>
+    <hr>
+    <pre th:text="${resultJson2}"></pre>
+    <hr>
+    <pre th:text="${resultJson3}"></pre>
+    -->
+</body>
+</html>
+</body>
+</html>
