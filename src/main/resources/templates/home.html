@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" type="text/css" href="bootstrap4-3-1/css/bootstrap.min.css"/>
     <!-- jquery muss for Bootstrap impotiert werden sonst wird ein g Fehler geworfen -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+    <script src="/jquery/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="bootstrap4-3-1/js/bootstrap.min.js"></script>
+    <script src="echarts-4-2-1/echarts.common.min.js"></script>
 </head>
 <body>
     <h1>Home</h1>
@@ -30,6 +32,25 @@
     <hr>
     <div th:text="${resultJson3}"></div>
     -->
+    <hr>
+    <div id="priorities-chart" class="graph-cursor-pointer"
+         style="width: 100%; min-height: 200px; min-width: 500px; height: 200px;"></div>
+    <hr>
+
+    <script src="js/pie-chart.js"></script>
+    <script src="js/trend-chart.js"></script>
+    <script src="js/issues-detail.js"></script>
+    <script src="js/simple-trend-chart.js"></script>
+    <script src="js/source-detail.js"></script>
+    <script src="echarts-4-2-1/echarts.common.min.js"></script>
+    <!-- <script src="js/no-prototype.js"></script> -->
+
+    <!-- <script src="js/no-prototype.js"></script>
+    <script src="js/pie-chart.js"></script>
+    <script src="js/trend-chart.js"></script>
+    <script src="js/issues-detail.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script> -->
+    <script src="/js/builds.js"></script>
 </body>
 </html>
 </body>
