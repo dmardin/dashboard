@@ -1,13 +1,12 @@
 package edu.hm.hafner.warningsngui.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Issue {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String baseName;
     private String category;
@@ -26,6 +25,12 @@ public class Issue {
     private String reference;
     private String severity;
     private String type;
+
+    @ManyToOne(fetch= FetchType.EAGER)
+    @JoinColumn(name="tool_id")
+    private Tool tool;
+
+    private IssueType issueType;
 
     public int getId() {
         return id;
@@ -161,5 +166,21 @@ public class Issue {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Tool getTool() {
+        return tool;
+    }
+
+    public void setTool(Tool tool) {
+        this.tool = tool;
+    }
+
+    public IssueType getIssueType() {
+        return issueType;
+    }
+
+    public void setIssueType(IssueType issueType) {
+        this.issueType = issueType;
     }
 }

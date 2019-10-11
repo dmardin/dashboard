@@ -1,9 +1,7 @@
 package edu.hm.hafner.warningsngui.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Build {
@@ -13,6 +11,21 @@ public class Build {
     private String _class;
     private int number;
     private String url;
+
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="job_id")
+    private Job job;
+
+    @OneToMany(mappedBy = "build")
+    private List<Tool> tools;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String get_class() {
         return _class;
@@ -36,5 +49,21 @@ public class Build {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public List<Tool> getTools() {
+        return tools;
+    }
+
+    public void setTools(List<Tool> tools) {
+        this.tools = tools;
+    }
+
+    public Job getJob() {
+        return job;
+    }
+
+    public void setJob(Job job) {
+        this.job = job;
     }
 }

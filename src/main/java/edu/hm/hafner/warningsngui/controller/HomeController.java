@@ -3,6 +3,7 @@ package edu.hm.hafner.warningsngui.controller;
 import com.google.gson.Gson;
 import edu.hm.hafner.warningsngui.model.*;
 import edu.hm.hafner.warningsngui.repository.BuildRepository;
+import edu.hm.hafner.warningsngui.repository.IssueRepository;
 import edu.hm.hafner.warningsngui.repository.JobRepository;
 import edu.hm.hafner.warningsngui.repository.ToolRepository;
 import edu.hm.hafner.warningsngui.rest.RestService;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
@@ -31,6 +31,9 @@ public class HomeController {
 
     @Autowired
     private ToolRepository toolRepository;
+
+    @Autowired
+    private IssueRepository issueRepository;
 
     @RequestMapping(path = {"/", "home"}, method = RequestMethod.GET)
     public String home(final Model model) {
@@ -61,25 +64,87 @@ public class HomeController {
     @RequestMapping(path = {"/", "home"}, method = RequestMethod.GET, params={"getProjects"})
     public String getProjects(final Model model) {
         //get Jobs form Jenkins
+        List<Job> allJobs = new ArrayList<>();
+        List<Build> allBuilds = new ArrayList<>();
+        List<Tool> allTolls = new ArrayList<>();
+        List<Issue> allIssues = new ArrayList<>();
         JobsPayload jobsPayload = restService.getProjects();
-        for (Job job: jobsPayload.getJobs()) {
-            jobRepository.save(job);
+        for (Job job : jobsPayload.getJobs()) {
+            if (job.getName().contains("plagi")) {
+                job.setBuilds(new ArrayList<>());
+            //jobRepository.save(job);
 
             //Get Builds for every Job form Jenkins
-            BuildsPayload buildsPayload = restService.getBuilds(job.getUrl() +"api/json");
+            BuildsPayload buildsPayload = restService.getBuilds(job.getUrl() + "api/json");
             for (Build build : buildsPayload.getBuilds()) {
-                buildRepository.save(build);
+                build.setTools(new ArrayList<>());
+                if (job.getBuilds() != null) {
+                    job.getBuilds().add(build);
+                    build.setJob(job);
+                    //jobRepository.save(job);
+                }
+                //buildRepository.save(build);
 
                 //Get used Tools for every Build form Jenkins
                 ToolsPayload toolsPayload = restService.getTools(build.getUrl() + "warnings-ng/" + "api/json");
-                if (toolsPayload != null){
+                if (toolsPayload != null) {
                     Tool[] tools = toolsPayload.getTools();
                     for (Tool tool : tools) {
-                        toolRepository.save(tool);
+                        if(tool.getId().contains("style")) {
+                        tool.setIssues(new ArrayList<>());
+                        if (build.getTools() != null) {
+                            build.getTools().add(tool);
+                            tool.setBuild(build);
+                            //buildRepository.save(build);
+                        }
+                        //toolRepository.save(tool);
+
+                        List<IssueType> issueTypes = new ArrayList<>();
+                        issueTypes.add(IssueType.FIXED);
+                        issueTypes.add(IssueType.NEW);
+                        issueTypes.add(IssueType.OUTSTANDING);
+                        for (IssueType issueType : issueTypes) {
+                            String url = tool.getLatestUrl() + "/" + issueType.toString().toLowerCase() + "/api/json";
+                            IssuesPayload issuesPayload = restService.getIssues(url);
+                            if (issuesPayload != null) {
+                                Issue[] issues = issuesPayload.getIssues();
+                                List<Issue> addedIssues = new ArrayList<>();
+                                for (Issue issue : issues) {
+                                    //set issue Type!!!
+                                    issue.setIssueType(issueType);
+                                    tool.getIssues().add(issue);
+                                    issue.setTool(tool);
+                                    addedIssues.add(issue);
+
+                                }
+
+                                allJobs.add(job);
+                                allBuilds.add(build);
+                                allTolls.add(tool);
+                                allIssues.addAll(addedIssues);
+                                /*
+                                jobRepository.save(job);
+                                buildRepository.save(build);
+                                toolRepository.save(tool);
+                                issueRepository.saveAll(addedIssues);
+                                */
+
+                                //Issue[] issues = issuesPayload.getIssues();
+                                //tool.getIssues().add(issues);
+
+                            }
+                        }
+
+                    }
                     }
                 }
             }
         }
+    }
+        jobRepository.saveAll(allJobs);
+        buildRepository.saveAll(allBuilds);
+        toolRepository.saveAll(allTolls);
+        issueRepository.saveAll(allIssues);
 
 
 
@@ -94,8 +159,27 @@ public class HomeController {
     @ResponseBody
     ResponseEntity<String> getBuilds(/*@RequestParam("origin") final String origin,
                                          @RequestParam("reference") final String reference*/) {
-        List<Build> builds = buildRepository.findAll();
-        return createResponseFrom(builds);
+
+        /*
+        List<Job> jobs = jobRepository.findAll();
+        for (Job job : jobs) {
+            job.get
+        }*/
+
+        //SeverityTrendChart severityChart = new SeverityTrendChart();
+        /*List<Iterable<? extends AnalysisBuildResult>> histories = jobs.stream()
+                .map(job -> job.getActions(JobAction.class))
+                .flatMap(Collection::stream)
+                .filter(createToolFilter(selectTools, tools))
+                .map(JobAction::createBuildHistory).collect(Collectors.toList());
+
+        return new JacksonFacade().toJson(
+                severityChart.create(new CompositeResult(histories), new ChartModelConfiguration(AxisType.DATE)));
+         */
+
+        //LinesChartModel linesChartModel = severityChart.create(new CompositeResult(null), new ChartModelConfiguration(ChartModelConfiguration.AxisType.DATE));
+        //return createResponseFrom(linesChartModel);
+        return createResponseFrom(buildRepository.findAll());
     }
 
     private ResponseEntity<String> createResponseFrom(final Object model) {

@@ -1,10 +1,8 @@
 package edu.hm.hafner.warningsngui.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Job {
@@ -15,6 +13,9 @@ public class Job {
     private String name;
     private String url;
     private String color;
+
+    @OneToMany(fetch=FetchType.EAGER, mappedBy = "job")
+    private List<Build> builds;
 
     public int getId() {
         return id;
@@ -54,5 +55,13 @@ public class Job {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public List<Build> getBuilds() {
+        return builds;
+    }
+
+    public void setBuilds(List<Build> builds) {
+        this.builds = builds;
     }
 }

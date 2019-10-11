@@ -66,4 +66,22 @@ public class RestService {
         }
         return toolsPayload;
     }
+
+    public IssuesPayload getIssues(String url) {
+        IssuesPayload issuesPayload = null;
+        try {
+            issuesPayload = restTemplate.getForObject(url, IssuesPayload.class);
+        }
+        catch (HttpClientErrorException ex) {
+            System.out.println("Issues not Found for url: "+ url);
+        }
+        if(issuesPayload != null) {
+            Issue[] issues = issuesPayload.getIssues();
+            for(Issue issue : issues) {
+                System.out.println(issue.getBaseName());
+            }
+            System.out.println("####################################################");
+        }
+        return issuesPayload;
+    }
 }

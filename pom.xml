@@ -16,6 +16,8 @@
 
 	<properties>
 		<java.version>1.8</java.version>
+		<commons.lang.version>3.9</commons.lang.version>
+		<analysis-model-api.version>5.3.0</analysis-model-api.version>
 	</properties>
 
 	<dependencies>
@@ -49,6 +51,19 @@
 		</dependency>
 
 
+		<!-- Needed dependencies from warnings plugin -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons.lang.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jenkins.plugins</groupId>
+			<artifactId>analysis-model-api</artifactId>
+			<version>${analysis-model-api.version}</version>
+		</dependency>
+
+
 		<!-- Check if this dependencies are used-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -63,7 +78,37 @@
 	</dependencies>
 
 	<build>
+		<!--
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.jvnet.localizer</groupId>
+					<artifactId>maven-localizer-plugin</artifactId>
+					<version>1.24</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>generate</goal>
+							</goals>
+							<configuration>
+								<fileMask>Messages.properties</fileMask>
+								<outputDirectory>target/generated-sources/localizer</outputDirectory>
+								<accessModifierAnnotations>true</accessModifierAnnotations>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		-->
 		<plugins>
+			<!--
+			<plugin>
+				<groupId>org.jvnet.localizer</groupId>
+				<artifactId>maven-localizer-plugin</artifactId>
+				<version>1.24</version>
+			</plugin>
+			-->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
