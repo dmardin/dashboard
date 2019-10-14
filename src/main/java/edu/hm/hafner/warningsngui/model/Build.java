@@ -1,9 +1,11 @@
 package edu.hm.hafner.warningsngui.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name="build")
 public class Build {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -12,12 +14,11 @@ public class Build {
     private int number;
     private String url;
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="job_id")
+    @ManyToOne
     private Job job;
 
-    @OneToMany(mappedBy = "build")
-    private List<Tool> tools;
+    @OneToMany(mappedBy = "build", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<Tool> tools = new ArrayList<>();
 
     public int getId() {
         return id;

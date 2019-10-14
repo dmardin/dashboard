@@ -3,6 +3,7 @@ package edu.hm.hafner.warningsngui.model;
 import javax.persistence.*;
 
 @Entity
+@Table(name="issue")
 public class Issue {
 
     @Id
@@ -26,8 +27,7 @@ public class Issue {
     private String severity;
     private String type;
 
-    @ManyToOne(fetch= FetchType.EAGER)
-    @JoinColumn(name="tool_id")
+    @ManyToOne
     private Tool tool;
 
     private IssueType issueType;
