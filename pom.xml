@@ -49,36 +49,19 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.jenkins-ci.main/jenkins-core -->
-		<dependency>
-			<groupId>org.jenkins-ci.main</groupId>
-			<artifactId>jenkins-core</artifactId>
-			<version>2.138.4</version>
-		</dependency>
-
 		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.18</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/io.jenkins.plugins/git-forensics -->
-		<!--
-		<dependency>
-			<groupId>io.jenkins.plugins</groupId>
-			<artifactId>git-forensics</artifactId>
-			<version>0.2.0</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-nop</artifactId>
-				</exclusion>
-			</exclusions>
+		<!-- https://mvnrepository.com/artifact/org.jenkins-ci.main/jenkins-core -->
+		<!--<dependency>
+			<groupId>org.jenkins-ci.main</groupId>
+			<artifactId>jenkins-core</artifactId>
+			<version>2.138.4</version>
 		</dependency>
 		-->
-
-
-
 		<!-- Needed dependencies from warnings plugin -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -98,8 +81,6 @@
 			</exclusions>
 		</dependency>
 
-
-		<!-- Check if this dependencies are used-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
