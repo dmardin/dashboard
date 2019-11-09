@@ -1,10 +1,12 @@
 package edu.hm.hafner.warningsngui.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import edu.hm.hafner.warningsngui.io.jenkins.plugins.analysis.core.charts.ChartModelConfiguration;
 import edu.hm.hafner.warningsngui.io.jenkins.plugins.analysis.core.charts.LinesChartModel;
 import edu.hm.hafner.warningsngui.io.jenkins.plugins.analysis.core.charts.SeverityTrendChart2;
 import edu.hm.hafner.warningsngui.model.*;
+import edu.hm.hafner.warningsngui.model.test.Hudson;
 import edu.hm.hafner.warningsngui.repository.BuildRepository;
 import edu.hm.hafner.warningsngui.repository.IssueRepository;
 import edu.hm.hafner.warningsngui.repository.JobRepository;
@@ -18,8 +20,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class HomeController {
@@ -121,6 +125,7 @@ public class HomeController {
 //            }
         }
         jobRepository.saveAll(allJobs);
+        System.out.println("*** Saving Data finished ***");
 
         return "home";
     }
@@ -130,15 +135,199 @@ public class HomeController {
     @ResponseBody
     ResponseEntity<String> getCheckstyle(/*@RequestParam("origin") final String origin,
                                          @RequestParam("reference") final String reference*/) {
-        getProjects(null);
+        //getProjects(null);
+        Job job = jobRepository.fetchJobWithId(1);
+//        Job job = jobRepository.findById(1).orElse(null);
 
-        Job job = jobRepository.findById(1).orElse(null);
+        /*
+        ItemGroup itemGroup = new ItemGroup() {
+            @Override
+            public String getFullName() {
+                return null;
+            }
 
+            @Override
+            public String getFullDisplayName() {
+                return null;
+            }
 
+            @Override
+            public Collection getItems() {
+                return null;
+            }
+
+            @Override
+            public String getUrl() {
+                return null;
+            }
+
+            @Override
+            public String getUrlChildPrefix() {
+                return null;
+            }
+
+            @CheckForNull
+            @Override
+            public Item getItem(String s) throws AccessDeniedException {
+                return null;
+            }
+
+            @Override
+            public File getRootDirFor(Item item) {
+                return null;
+            }
+
+            @Override
+            public void onDeleted(Item item) throws IOException {
+
+            }
+
+            @Override
+            public String getDisplayName() {
+                return null;
+            }
+
+            @Override
+            public File getRootDir() {
+                return null;
+            }
+
+            @Override
+            public void save() throws IOException {
+
+            }
+        };
+        FreeStyleProject freeStyleProject = new FreeStyleProject(itemGroup, "MyName");
+        try {
+            FreeStyleBuild freeStyleBuild = new FreeStyleBuild(freeStyleProject);
+            SeverityTrendChart severityTrendChart = new SeverityTrendChart();
+            StaticAnalysisLabelProvider labelProvider = new StaticAnalysisLabelProvider("Checkstyle");
+
+            History history = new AnalysisHistory(freeStyleBuild, new ByIdResultSelector(labelProvider.getId()));
+            severityTrendChart.create( history, new ChartModelConfiguration());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        */
+
+        Set<Build> builds = buildRepository.findByJob(job);
         SeverityTrendChart2 severityTrendChart2 = new SeverityTrendChart2();
         LinesChartModel model = severityTrendChart2.create(job, new ChartModelConfiguration());
         String json = new Gson().toJson(model);
         System.out.println(json);
+
+        ObjectMapper mapper = new ObjectMapper();
+        String hudsonString = "{\n" +
+                "  \"_class\" : \"hudson.model.Hudson\",\n" +
+                "  \"assignedLabels\" : [\n" +
+                "    {\n" +
+                "      \"name\" : \"master\"\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"mode\" : \"NORMAL\",\n" +
+                "  \"nodeDescription\" : \"the master Jenkins node\",\n" +
+                "  \"nodeName\" : \"\",\n" +
+                "  \"numExecutors\" : 2,\n" +
+                "  \"description\" : null,\n" +
+                "  \"jobs\" : [\n" +
+                "    {\n" +
+                "      \"_class\" : \"hudson.model.FreeStyleProject\",\n" +
+                "      \"name\" : \"dashboard\",\n" +
+                "      \"url\" : \"http://localhost:8080/jenkins/job/dashboard/\",\n" +
+                "      \"color\" : \"red\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"_class\" : \"hudson.model.FreeStyleProject\",\n" +
+                "      \"name\" : \"plagi\",\n" +
+                "      \"url\" : \"http://localhost:8080/jenkins/job/plagi/\",\n" +
+                "      \"color\" : \"blue\"\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"overallLoad\" : {\n" +
+                "    \n" +
+                "  },\n" +
+                "  \"primaryView\" : {\n" +
+                "    \"_class\" : \"hudson.model.AllView\",\n" +
+                "    \"name\" : \"all\",\n" +
+                "    \"url\" : \"http://localhost:8080/jenkins/\"\n" +
+                "  },\n" +
+                "  \"quietingDown\" : false,\n" +
+                "  \"slaveAgentPort\" : 0,\n" +
+                "  \"unlabeledLoad\" : {\n" +
+                "    \"_class\" : \"jenkins.model.UnlabeledLoadStatistics\"\n" +
+                "  },\n" +
+                "  \"useCrumbs\" : false,\n" +
+                "  \"useSecurity\" : false,\n" +
+                "  \"views\" : [\n" +
+                "    {\n" +
+                "      \"_class\" : \"hudson.model.AllView\",\n" +
+                "      \"name\" : \"all\",\n" +
+                "      \"url\" : \"http://localhost:8080/jenkins/\"\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}";
+        try {
+            Hudson h = mapper.readValue(hudsonString, edu.hm.hafner.warningsngui.model.test.Hudson.class);
+            System.out.println(h);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        /*
+        Gson gsonJenkins = new GsonBuilder()
+                /*.registerTypeAdapter(Action.class,  InterfaceSerializer.interfaceSerializer(CauseAction.class))
+                */
+        /*.create();
+        Hudson run = gsonJenkins.fromJson("{\n" +
+                "  \"_class\" : \"hudson.model.Hudson\",\n" +
+                "  \"assignedLabels\" : [\n" +
+                "    {\n" +
+                "      \"name\" : \"master\"\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"mode\" : \"NORMAL\",\n" +
+                "  \"nodeDescription\" : \"the master Jenkins node\",\n" +
+                "  \"nodeName\" : \"\",\n" +
+                "  \"numExecutors\" : 2,\n" +
+                "  \"description\" : null,\n" +
+                "  \"jobs\" : [\n" +
+                "    {\n" +
+                "      \"_class\" : \"hudson.model.FreeStyleProject\",\n" +
+                "      \"name\" : \"dashboard\",\n" +
+                "      \"url\" : \"http://localhost:8080/jenkins/job/dashboard/\",\n" +
+                "      \"color\" : \"red\"\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"_class\" : \"hudson.model.FreeStyleProject\",\n" +
+                "      \"name\" : \"plagi\",\n" +
+                "      \"url\" : \"http://localhost:8080/jenkins/job/plagi/\",\n" +
+                "      \"color\" : \"blue\"\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"overallLoad\" : {\n" +
+                "    \n" +
+                "  },\n" +
+                "  \"primaryView\" : {\n" +
+                "    \"_class\" : \"hudson.model.AllView\",\n" +
+                "    \"name\" : \"all\",\n" +
+                "    \"url\" : \"http://localhost:8080/jenkins/\"\n" +
+                "  },\n" +
+                "  \"quietingDown\" : false,\n" +
+                "  \"slaveAgentPort\" : 0,\n" +
+                "  \"unlabeledLoad\" : {\n" +
+                "    \"_class\" : \"jenkins.model.UnlabeledLoadStatistics\"\n" +
+                "  },\n" +
+                "  \"useCrumbs\" : false,\n" +
+                "  \"useSecurity\" : false,\n" +
+                "  \"views\" : [\n" +
+                "    {\n" +
+                "      \"_class\" : \"hudson.model.AllView\",\n" +
+                "      \"name\" : \"all\",\n" +
+                "      \"url\" : \"http://localhost:8080/jenkins/\"\n" +
+                "    }\n" +
+                "  ]\n" +
+                "}", Hudson.class);*/
+
 
         //SeverityTrendChart severityChart = new SeverityTrendChart();
         /*List<Iterable<? extends AnalysisBuildResult>> histories = jobs.stream()
@@ -165,12 +354,13 @@ public class HomeController {
 //
 //
 //        SeverityTrendChart2 severityTrendChart2 = new SeverityTrendChart2();
-//        LinesChartModel model = severityTrendChart2.create(job, new ChartModelConfiguration());
+//        LinesChartModel model = severityTrendChart2.create2(job, new ChartModelConfiguration());
 //        String json = new Gson().toJson(model);
 //        System.out.println(json);
 //
 //        return createResponseFrom(json);
 //    }
+
 
     private ResponseEntity<String> createResponseFrom(final Object model) {
         return ResponseEntity.ok(new Gson().toJson(model));
