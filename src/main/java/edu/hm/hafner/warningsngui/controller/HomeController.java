@@ -6,6 +6,8 @@ import edu.hm.hafner.warningsngui.repository.IssueRepository;
 import edu.hm.hafner.warningsngui.repository.JobRepository;
 import edu.hm.hafner.warningsngui.repository.ToolRepository;
 import edu.hm.hafner.warningsngui.rest.RestService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -31,14 +33,19 @@ public class HomeController {
     @Autowired
     private IssueRepository issueRepository;
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+
     @RequestMapping(path = {"/", "home"}, method = RequestMethod.GET)
     public String home(final Model model) {
         //TODO check if this is used!
+        logger.info("Normal GET was called");
         return "home";
     }
 
     @RequestMapping(path = {"/", "home"}, method = RequestMethod.GET, params = {"getProjects"})
     public String getProjects(final Model model) {
+        logger.info("GET with Parameter was called");
         return "home";
     }
 
