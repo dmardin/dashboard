@@ -10,7 +10,6 @@ public class Build {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String _class;
     private int number;
     private String url;
 
@@ -26,14 +25,6 @@ public class Build {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String get_class() {
-        return _class;
-    }
-
-    public void set_class(String _class) {
-        this._class = _class;
     }
 
     public int getNumber() {

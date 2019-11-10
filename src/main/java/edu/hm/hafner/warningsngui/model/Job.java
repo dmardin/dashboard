@@ -11,7 +11,6 @@ public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String _class;
     private String name;
     private String url;
     private String color;
@@ -25,14 +24,6 @@ public class Job {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String get_class() {
-        return _class;
-    }
-
-    public void set_class(String _class) {
-        this._class = _class;
     }
 
     public String getName() {
