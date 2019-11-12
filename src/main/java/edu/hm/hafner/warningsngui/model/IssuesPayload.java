@@ -1,13 +1,13 @@
 package edu.hm.hafner.warningsngui.model;
 
 public class IssuesPayload {
-    private Issue[] issues;
+    private IssueEntity[] issues;
 
-    public Issue[] getIssues() {
+    public IssueEntity[] getIssues() {
         return issues;
     }
 
-    public void setIssues(Issue[] issues) {
+    public void setIssues(IssueEntity[] issues) {
         this.issues = issues;
     }
 }

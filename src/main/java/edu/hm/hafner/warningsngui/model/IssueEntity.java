@@ -4,7 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="issue")
-public class Issue {
+public class IssueEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,9 +28,29 @@ public class Issue {
     private String type;
 
     @ManyToOne
-    private Tool tool;
+    IssuesEntity issues;
 
-    private IssueType issueType;
+    public IssuesEntity getIssues() {
+        return issues;
+    }
+
+    public void setIssues(IssuesEntity issues) {
+        this.issues = issues;
+    }
+
+    //    @ManyToOne
+//    private Tool tool;
+
+//    @ManyToOne
+//    private ReportEntity reportEntity;
+
+//    public ReportEntity getReportEntity() {
+//        return reportEntity;
+//    }
+//
+//    public void setReportEntity(ReportEntity reportEntity) {
+//        this.reportEntity = reportEntity;
+//    }
 
     public int getId() {
         return id;
@@ -168,19 +188,11 @@ public class Issue {
         this.type = type;
     }
 
-    public Tool getTool() {
-        return tool;
-    }
-
-    public void setTool(Tool tool) {
-        this.tool = tool;
-    }
-
-    public IssueType getIssueType() {
-        return issueType;
-    }
-
-    public void setIssueType(IssueType issueType) {
-        this.issueType = issueType;
-    }
+//    public Tool getTool() {
+//        return tool;
+//    }
+//
+//    public void setTool(Tool tool) {
+//        this.tool = tool;
+//    }
 }

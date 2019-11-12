@@ -76,7 +76,7 @@ public class RestService {
             System.out.println("Issues not Found for url: "+ url);
         }
         if(issuesPayload != null) {
-            Issue[] issues = issuesPayload.getIssues();
+            IssueEntity[] issues = issuesPayload.getIssues();
 //            for(Issue issue : issues) {
 //                System.out.println(issue.getBaseName());
 //            }

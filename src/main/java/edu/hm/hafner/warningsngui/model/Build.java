@@ -16,8 +16,11 @@ public class Build {
     @ManyToOne
     private Job job;
 
+//    @OneToMany(mappedBy = "build", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    private List<Tool> tools = new ArrayList<>();
+
     @OneToMany(mappedBy = "build", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Tool> tools = new ArrayList<>();
+    private List<ResultEntity> resultEntities = new ArrayList<>();
 
     public int getId() {
         return id;
@@ -43,13 +46,13 @@ public class Build {
         this.url = url;
     }
 
-    public List<Tool> getTools() {
-        return tools;
-    }
-
-    public void setTools(List<Tool> tools) {
-        this.tools = tools;
-    }
+//    public List<Tool> getTools() {
+//        return tools;
+//    }
+//
+//    public void setTools(List<Tool> tools) {
+//        this.tools = tools;
+//    }
 
     public Job getJob() {
         return job;
@@ -57,5 +60,13 @@ public class Build {
 
     public void setJob(Job job) {
         this.job = job;
+    }
+
+    public List<ResultEntity> getResultEntities() {
+        return resultEntities;
+    }
+
+    public void setResultEntities(List<ResultEntity> resultEntities) {
+        this.resultEntities = resultEntities;
     }
 }

@@ -1,8 +1,6 @@
 package edu.hm.hafner.warningsngui.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name="tool")
@@ -15,11 +13,11 @@ public class Tool {
     private String name;
     private int size;
 
-    @ManyToOne
-    private Build build;
+//    @ManyToOne
+//    private Build build;
 
-    @OneToMany(mappedBy = "tool", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Issue> issues = new ArrayList<>();
+//    @OneToMany(mappedBy = "tool", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+//    private List<IssueEntity> issues = new ArrayList<>();
 
     public int getIdentifier() {
         return identifier;
@@ -61,19 +59,19 @@ public class Tool {
         this.size = size;
     }
 
-    public Build getBuild() {
-        return build;
-    }
+//    public Build getBuild() {
+//        return build;
+//    }
+//
+//    public void setBuild(Build build) {
+//        this.build = build;
+//    }
 
-    public void setBuild(Build build) {
-        this.build = build;
-    }
-
-    public List<Issue> getIssues() {
-        return issues;
-    }
-
-    public void setIssues(List<Issue> issues) {
-        this.issues = issues;
-    }
+//    public List<Issue> getIssues() {
+//        return issues;
+//    }
+//
+//    public void setIssues(List<Issue> issues) {
+//        this.issues = issues;
+//    }
 }
