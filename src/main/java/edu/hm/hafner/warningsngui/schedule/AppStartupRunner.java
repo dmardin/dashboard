@@ -6,6 +6,7 @@ import edu.hm.hafner.warningsngui.model.*;
 import edu.hm.hafner.warningsngui.repository.IssueRepository;
 import edu.hm.hafner.warningsngui.repository.JobRepository;
 import edu.hm.hafner.warningsngui.rest.RestService;
+import edu.hm.hafner.warningsngui.rest.response.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -30,25 +31,25 @@ public class AppStartupRunner implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         System.out.println("Start getting Data");
         List<Job> allJobs = new ArrayList<>();
-        JobsPayload jobsPayload = restService.getProjects();
-        for (Job job : jobsPayload.getJobs()) {
+        JobsResponse jobsResponse = restService.getProjects();
+        for (Job job : jobsResponse.getJobs()) {
             if (job.getName().contains("plagi")) {
 
                 //Get Builds for every Job form Jenkins
-                BuildsPayload buildsPayload = restService.getBuilds(job.getUrl() + "api/json");
-                for (Build build : buildsPayload.getBuilds()) {
+                BuildsResponse buildsResponse = restService.getBuilds(job.getUrl() + "api/json");
+                for (Build build : buildsResponse.getBuilds()) {
                     if (job.getBuilds() != null) {
                         job.getBuilds().add(build);
                         build.setJob(job);
                     }
 
                     //Get used Tools for every Build form Jenkins
-                    ToolsPayload toolsPayload = restService.getTools(build.getUrl() + "warnings-ng/" + "api/json");
-                    if (toolsPayload != null) {
-                        Tool[] tools = toolsPayload.getTools();
+                    ToolsResponse toolsResponse = restService.getTools(build.getUrl() + "warnings-ng/" + "api/json");
+                    if (toolsResponse != null) {
+                        Tool[] tools = toolsResponse.getTools();
                         for (Tool tool : tools) {
 
-                            ToolsDetailPayload toolsDetailPayload = restService.getToolsDetail(build.getUrl() + tool.getId().toLowerCase() + "/api/json");
+                            ToolDetailResponse toolDetailResponse = restService.getToolsDetail(build.getUrl() + tool.getId().toLowerCase() + "/api/json");
 
 //                            if (tool.getId().contains("style")) {
 //                                if (build.getTools() != null) {
@@ -64,7 +65,7 @@ public class AppStartupRunner implements ApplicationRunner {
                                 result.setBuild(build);
 
                                 List<ErrorMessage> errorMessages = new ArrayList<>();
-                                for(String err : toolsDetailPayload.getErrorMessages()) {
+                                for(String err : toolDetailResponse.getErrorMessages()) {
                                     ErrorMessage em = new ErrorMessage();
                                     em.setMessage(err);
                                     em.setResult(result);
@@ -73,7 +74,7 @@ public class AppStartupRunner implements ApplicationRunner {
                                 result.setErrorMessages(errorMessages);
 
                                 List<InfoMessage> infoMessages = new ArrayList<>();
-                                for(String info : toolsDetailPayload.getInfoMessages()) {
+                                for(String info : toolDetailResponse.getInfoMessages()) {
                                     InfoMessage im = new InfoMessage();
                                     im.setMessage(info);
                                     im.setResult(result);
@@ -83,10 +84,10 @@ public class AppStartupRunner implements ApplicationRunner {
 
                                 //result.setErrorMessages(toolsDetailPayload.getErrorMessages());
                                 //result.setInfoMessages(toolsDetailPayload.getInfoMessages());
-                                result.setFixedSize(toolsDetailPayload.getFixedSize());
-                                result.setNewSize(toolsDetailPayload.getNewSize());
-                                result.setQualityGateStatus(toolsDetailPayload.getQualityGateStatus());
-                                result.setTotalSize(toolsDetailPayload.getTotalSize());
+                                result.setFixedSize(toolDetailResponse.getFixedSize());
+                                result.setNewSize(toolDetailResponse.getNewSize());
+                                result.setQualityGateStatus(toolDetailResponse.getQualityGateStatus());
+                                result.setTotalSize(toolDetailResponse.getTotalSize());
 
 
 //                                List<IssueType> issueTypes = new ArrayList<>();
@@ -105,9 +106,9 @@ public class AppStartupRunner implements ApplicationRunner {
                                     result.getIssues().add(issuesEntity);
                                     issuesEntity.setWarningType(warningType);
                                     String url = tool.getLatestUrl() + "/" + warningType.toString().toLowerCase() + "/api/json";
-                                    IssuesPayload issuesPayload = restService.getIssues(url);
-                                    if (issuesPayload != null) {
-                                        IssueEntity[] issues = issuesPayload.getIssues();
+                                    IssuesResponse issuesResponse = restService.getIssues(url);
+                                    if (issuesResponse != null) {
+                                        IssueEntity[] issues = issuesResponse.getIssues();
                                         for (IssueEntity issue : issues) {
                                             issuesEntity.getIssues().add(issue);
                                             issue.setIssues(issuesEntity);

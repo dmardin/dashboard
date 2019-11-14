@@ -1,6 +1,8 @@
-package edu.hm.hafner.warningsngui.model;
+package edu.hm.hafner.warningsngui.rest.response;
 
-public class JobsPayload {
+import edu.hm.hafner.warningsngui.model.Job;
+
+public class JobsResponse {
     private Job[] jobs;
 
     public Job[] getJobs() {

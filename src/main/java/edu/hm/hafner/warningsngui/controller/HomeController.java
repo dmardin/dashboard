@@ -1,11 +1,7 @@
 package edu.hm.hafner.warningsngui.controller;
 
 import com.google.gson.Gson;
-import edu.hm.hafner.warningsngui.repository.BuildRepository;
-import edu.hm.hafner.warningsngui.repository.IssueRepository;
 import edu.hm.hafner.warningsngui.repository.JobRepository;
-import edu.hm.hafner.warningsngui.repository.ToolRepository;
-import edu.hm.hafner.warningsngui.rest.RestService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,22 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class HomeController {
     @Autowired
-    private RestService restService;
-
-    @Autowired
     private JobRepository jobRepository;
 
-    @Autowired
-    private BuildRepository buildRepository;
-
-    @Autowired
-    private ToolRepository toolRepository;
-
-    @Autowired
-    private IssueRepository issueRepository;
-
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-
 
     @RequestMapping(path = {"/", "home"}, method = RequestMethod.GET)
     public String home(final Model model) {

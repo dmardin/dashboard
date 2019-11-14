@@ -1,6 +1,8 @@
-package edu.hm.hafner.warningsngui.model;
+package edu.hm.hafner.warningsngui.rest.response;
 
-public class ToolsPayload {
+import edu.hm.hafner.warningsngui.model.Tool;
+
+public class ToolsResponse {
     private Tool[] tools;
 
     public Tool[] getTools() {

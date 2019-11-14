@@ -1,6 +1,8 @@
-package edu.hm.hafner.warningsngui.model;
+package edu.hm.hafner.warningsngui.rest.response;
 
-public class BuildsPayload {
+import edu.hm.hafner.warningsngui.model.Build;
+
+public class BuildsResponse {
     private Build[] builds;
 
     public Build[] getBuilds() {

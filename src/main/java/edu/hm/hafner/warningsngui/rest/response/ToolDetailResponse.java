@@ -1,6 +1,6 @@
-package edu.hm.hafner.warningsngui.model;
+package edu.hm.hafner.warningsngui.rest.response;
 
-public class ToolsDetailPayload {
+public class ToolDetailResponse {
     private String[] errorMessages;
     private String[] infoMessages;
     private int fixedSize;

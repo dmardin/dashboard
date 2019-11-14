@@ -1,6 +1,7 @@
 package edu.hm.hafner.warningsngui.rest;
 
 import edu.hm.hafner.warningsngui.model.*;
+import edu.hm.hafner.warningsngui.rest.response.*;
 import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
@@ -22,8 +23,8 @@ public class RestService {
         return result;
     }
 
-    public JobsPayload getProjects() {
-        JobsPayload jobsPayload = restTemplate.getForObject( "http://localhost:8080/jenkins/api/json", JobsPayload.class);
+    public JobsResponse getProjects() {
+        JobsResponse jobsResponse = restTemplate.getForObject( "http://localhost:8080/jenkins/api/json", JobsResponse.class);
 //        for( int i = 0; i < jobsPayload.getJobs().length; i++){
 //            System.out.println(jobsPayload.getJobs()[i].get_class());
 //            System.out.println(jobsPayload.getJobs()[i].getId());
@@ -31,11 +32,11 @@ public class RestService {
 //            System.out.println(jobsPayload.getJobs()[i].getColor());
 //        }
 //        System.out.println("####################################################");
-        return jobsPayload;
+        return jobsResponse;
     }
 
-    public BuildsPayload getBuilds(String url) {
-        BuildsPayload buildsPayload = restTemplate.getForObject(url, BuildsPayload.class);
+    public BuildsResponse getBuilds(String url) {
+        BuildsResponse buildsResponse = restTemplate.getForObject(url, BuildsResponse.class);
 //        for (Build build: buildsPayload.getBuilds()) {
 //            System.out.println(build.get_class());
 //            System.out.println(build.getNumber());
@@ -43,19 +44,19 @@ public class RestService {
 //        }
 //        System.out.println("####################################################");
 
-        return buildsPayload;
+        return buildsResponse;
     }
 
-    public ToolsPayload getTools(String url) {
-        ToolsPayload toolsPayload = null;
+    public ToolsResponse getTools(String url) {
+        ToolsResponse toolsResponse = null;
         try{
-            toolsPayload = restTemplate.getForObject(url, ToolsPayload.class);
+            toolsResponse = restTemplate.getForObject(url, ToolsResponse.class);
         }
         catch (HttpClientErrorException ex){
             System.out.println("Tools not Found for url: "+ url);
         }
-        if (toolsPayload != null) {
-            Tool[] tools = toolsPayload.getTools();
+        if (toolsResponse != null) {
+            Tool[] tools = toolsResponse.getTools();
 //            for (Tool tool : tools) {
 //                System.out.println(tool.getId());
 //                System.out.println(tool.getLatestUrl());
@@ -64,34 +65,34 @@ public class RestService {
 //            }
 //            System.out.println("####################################################");
         }
-        return toolsPayload;
+        return toolsResponse;
     }
 
-    public ToolsDetailPayload getToolsDetail(String url){
-        ToolsDetailPayload toolsDetailPayload = null;
+    public ToolDetailResponse getToolsDetail(String url){
+        ToolDetailResponse toolDetailResponse = null;
         try{
-            toolsDetailPayload = restTemplate.getForObject(url, ToolsDetailPayload.class);
+            toolDetailResponse = restTemplate.getForObject(url, ToolDetailResponse.class);
         }catch (HttpClientErrorException ex) {
             System.out.println("ToolsDetail not Found for url: " + url);
         }
-        return toolsDetailPayload;
+        return toolDetailResponse;
     }
 
-    public IssuesPayload getIssues(String url) {
-        IssuesPayload issuesPayload = null;
+    public IssuesResponse getIssues(String url) {
+        IssuesResponse issuesResponse = null;
         try {
-            issuesPayload = restTemplate.getForObject(url, IssuesPayload.class);
+            issuesResponse = restTemplate.getForObject(url, IssuesResponse.class);
         }
         catch (HttpClientErrorException ex) {
             System.out.println("Issues not Found for url: "+ url);
         }
-        if(issuesPayload != null) {
-            IssueEntity[] issues = issuesPayload.getIssues();
+        if(issuesResponse != null) {
+            IssueEntity[] issues = issuesResponse.getIssues();
 //            for(Issue issue : issues) {
 //                System.out.println(issue.getBaseName());
 //            }
 //            System.out.println("####################################################");
         }
-        return issuesPayload;
+        return issuesResponse;
     }
 }

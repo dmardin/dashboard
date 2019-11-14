@@ -1,6 +1,8 @@
-package edu.hm.hafner.warningsngui.model;
+package edu.hm.hafner.warningsngui.rest.response;
 
-public class IssuesPayload {
+import edu.hm.hafner.warningsngui.model.IssueEntity;
+
+public class IssuesResponse {
     private IssueEntity[] issues;
 
     public IssueEntity[] getIssues() {
