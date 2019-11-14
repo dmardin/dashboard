@@ -67,6 +67,16 @@ public class RestService {
         return toolsPayload;
     }
 
+    public ToolsDetailPayload getToolsDetail(String url){
+        ToolsDetailPayload toolsDetailPayload = null;
+        try{
+            toolsDetailPayload = restTemplate.getForObject(url, ToolsDetailPayload.class);
+        }catch (HttpClientErrorException ex) {
+            System.out.println("ToolsDetail not Found for url: " + url);
+        }
+        return toolsDetailPayload;
+    }
+
     public IssuesPayload getIssues(String url) {
         IssuesPayload issuesPayload = null;
         try {

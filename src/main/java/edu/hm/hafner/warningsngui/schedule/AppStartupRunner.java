@@ -47,6 +47,9 @@ public class AppStartupRunner implements ApplicationRunner {
                     if (toolsPayload != null) {
                         Tool[] tools = toolsPayload.getTools();
                         for (Tool tool : tools) {
+
+                            ToolsDetailPayload toolsDetailPayload = restService.getToolsDetail(build.getUrl() + tool.getId().toLowerCase() + "/api/json");
+
 //                            if (tool.getId().contains("style")) {
 //                                if (build.getTools() != null) {
 //                                    build.getTools().add(tool);
@@ -59,6 +62,32 @@ public class AppStartupRunner implements ApplicationRunner {
                                 result.setName(tool.getName());
                                 result.setTotal(result.getTotal() + tool.getSize());
                                 result.setBuild(build);
+
+                                List<ErrorMessage> errorMessages = new ArrayList<>();
+                                for(String err : toolsDetailPayload.getErrorMessages()) {
+                                    ErrorMessage em = new ErrorMessage();
+                                    em.setMessage(err);
+                                    em.setResult(result);
+                                    errorMessages.add(em);
+                                }
+                                result.setErrorMessages(errorMessages);
+
+                                List<InfoMessage> infoMessages = new ArrayList<>();
+                                for(String info : toolsDetailPayload.getInfoMessages()) {
+                                    InfoMessage im = new InfoMessage();
+                                    im.setMessage(info);
+                                    im.setResult(result);
+                                    infoMessages.add(im);
+                                }
+                                result.setInfoMessages(infoMessages);
+
+                                //result.setErrorMessages(toolsDetailPayload.getErrorMessages());
+                                //result.setInfoMessages(toolsDetailPayload.getInfoMessages());
+                                result.setFixedSize(toolsDetailPayload.getFixedSize());
+                                result.setNewSize(toolsDetailPayload.getNewSize());
+                                result.setQualityGateStatus(toolsDetailPayload.getQualityGateStatus());
+                                result.setTotalSize(toolsDetailPayload.getTotalSize());
+
 
 //                                List<IssueType> issueTypes = new ArrayList<>();
 //                                issueTypes.add(IssueType.FIXED);

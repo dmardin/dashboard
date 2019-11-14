@@ -23,6 +23,17 @@ public class ResultEntity {
     @ManyToOne
     private Build build;
 
+    @OneToMany(mappedBy = "result", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ErrorMessage> errorMessages = new ArrayList<>();
+
+    @OneToMany(mappedBy = "result", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<InfoMessage> infoMessages = new ArrayList<>();
+
+    private int fixedSize;
+    private int newSize;
+    private String qualityGateStatus;
+    private int totalSize;
+
     @OneToMany(mappedBy = "resultEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<IssuesEntity> issues = new ArrayList<>();
 
@@ -33,6 +44,55 @@ public class ResultEntity {
     public void setIssues(List<IssuesEntity> issues) {
         this.issues = issues;
     }
+
+    public List<ErrorMessage> getErrorMessages() {
+        return errorMessages;
+    }
+
+    public void setErrorMessages(List<ErrorMessage> errorMessages) {
+        this.errorMessages = errorMessages;
+    }
+
+    public List<InfoMessage> getInfoMessages() {
+        return infoMessages;
+    }
+
+    public void setInfoMessages(List<InfoMessage> infoMessages) {
+        this.infoMessages = infoMessages;
+    }
+
+    public int getFixedSize() {
+        return fixedSize;
+    }
+
+    public void setFixedSize(int fixedSize) {
+        this.fixedSize = fixedSize;
+    }
+
+    public int getNewSize() {
+        return newSize;
+    }
+
+    public void setNewSize(int newSize) {
+        this.newSize = newSize;
+    }
+
+    public String getQualityGateStatus() {
+        return qualityGateStatus;
+    }
+
+    public void setQualityGateStatus(String qualityGateStatus) {
+        this.qualityGateStatus = qualityGateStatus;
+    }
+
+    public int getTotalSize() {
+        return totalSize;
+    }
+
+    public void setTotalSize(int totalSize) {
+        this.totalSize = totalSize;
+    }
+
 
     //    @ElementCollection
 //    @MapKeyColumn(name = "warning_type")
