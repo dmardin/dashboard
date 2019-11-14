@@ -1,20 +1,10 @@
-package edu.hm.hafner.warningsngui.model;
+package edu.hm.hafner.warningsngui.model.helper;
 
 public class Tool {
-
-    private int identifier;
     private String id;
     private String latestUrl;
     private String name;
     private int size;
-
-    public int getIdentifier() {
-        return identifier;
-    }
-
-    public void setIdentifier(int identifier) {
-        this.identifier = identifier;
-    }
 
     public String getId() {
         return id;
