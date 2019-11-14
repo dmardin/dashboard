@@ -24,6 +24,7 @@ public class AppStartupRunner implements ApplicationRunner {
     private JobRepository jobRepository;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+    private static final String MAIN_URL = "http://localhost:8080/jenkins";
     private static final String SLASH = "/";
     private static final String API_JSON = "api/json";
     private static final String WARNINGS = "warnings-ng";
@@ -32,10 +33,12 @@ public class AppStartupRunner implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         logger.info("Start requesting data from Jenkins");
         List<Job> allJobs = new ArrayList<>();
-        JobsResponse jobsResponse = restService.getProjects();
+        JobsResponse jobsResponse = restService.getProjects(MAIN_URL + SLASH + API_JSON);
+        logger.info("Start requesting Jobs");
         for (Job job : jobsResponse.getJobs()) {
 
             //Get Builds for every Job form Jenkins
+            logger.info("Start requesting Builds for " + job.getName());
             BuildsResponse buildsResponse = restService.getBuilds(job.getUrl() + API_JSON);
             for (Build build : buildsResponse.getBuilds()) {
                 if (job.getBuilds() != null) {
@@ -44,11 +47,13 @@ public class AppStartupRunner implements ApplicationRunner {
                 }
 
                 //Get used Tools for every Build form Jenkins
+                logger.info("Start requesting Tools for build with number " + build.getNumber());
                 ToolsResponse toolsResponse = restService.getTools(build.getUrl() + WARNINGS + SLASH + API_JSON);
                 if (toolsResponse != null) {
                     Tool[] tools = toolsResponse.getTools();
                     for (Tool tool : tools) {
 
+                        logger.info("Start requesting ToolDetails for Tool with name " + tool.getName());
                         ToolDetailResponse toolDetailResponse = restService.getToolsDetail(build.getUrl() + tool.getId().toLowerCase() + SLASH + API_JSON);
 
                         ResultEntity result = new ResultEntity();
@@ -86,6 +91,7 @@ public class AppStartupRunner implements ApplicationRunner {
                             issuesEntity.setResultEntity(result);
                             result.getIssues().add(issuesEntity);
                             issuesEntity.setWarningType(warningType);
+                            logger.info("Start requesting " + warningType.toString() + " Issues for tool with name " + tool.getName());
                             String url = tool.getLatestUrl() + SLASH + warningType.toString().toLowerCase() + SLASH + API_JSON;
                             IssuesResponse issuesResponse = restService.getIssues(url);
                             if (issuesResponse != null) {
