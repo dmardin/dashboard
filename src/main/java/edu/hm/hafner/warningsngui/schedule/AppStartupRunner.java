@@ -13,6 +13,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -64,24 +65,9 @@ public class AppStartupRunner implements ApplicationRunner {
                         result.setTotal(result.getTotal() + tool.getSize());
                         result.setBuild(build);
 
-                        List<ErrorMessage> errorMessages = new ArrayList<>();
-                        for (String err : toolDetailResponse.getErrorMessages()) {
-                            ErrorMessage em = new ErrorMessage();
-                            em.setMessage(err);
-                            em.setResult(result);
-                            errorMessages.add(em);
-                        }
-                        result.setErrorMessages(errorMessages);
+                        Arrays.stream(toolDetailResponse.getErrorMessages()).forEach(errorMessage -> result.getErrorMessages().add(errorMessage));
+                        Arrays.stream(toolDetailResponse.getInfoMessages()).forEach(infoMessage -> result.getInfoMessages().add(infoMessage));
 
-                        List<InfoMessage> infoMessages = new ArrayList<>();
-                        for (String info : toolDetailResponse.getInfoMessages()) {
-                            InfoMessage im = new InfoMessage();
-                            im.setMessage(info);
-                            im.setResult(result);
-                            infoMessages.add(im);
-                        }
-
-                        result.setInfoMessages(infoMessages);
                         result.setFixedSize(toolDetailResponse.getFixedSize());
                         result.setNewSize(toolDetailResponse.getNewSize());
                         result.setQualityGateStatus(toolDetailResponse.getQualityGateStatus());
@@ -101,9 +87,7 @@ public class AppStartupRunner implements ApplicationRunner {
                                     issuesEntity.getIssues().add(issue);
                                     issue.setIssues(issuesEntity);
                                 }
-
                             }
-
                         }
                     }
                 }
