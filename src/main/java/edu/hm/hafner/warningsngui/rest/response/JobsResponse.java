@@ -1,6 +1,6 @@
 package edu.hm.hafner.warningsngui.rest.response;
 
-import edu.hm.hafner.warningsngui.model.Job;
+import edu.hm.hafner.warningsngui.dto.Job;
 
 public class JobsResponse {
     private Job[] jobs;

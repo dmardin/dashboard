@@ -1,30 +1,14 @@
-package edu.hm.hafner.warningsngui.model;
+package edu.hm.hafner.warningsngui.dto;
 
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name="job")
 public class Job {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+
     private String name;
     private String url;
     private String color;
-
-    @OneToMany(fetch=FetchType.EAGER, mappedBy = "job", cascade = CascadeType.ALL)
     private List<Build> builds = new ArrayList<>();
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

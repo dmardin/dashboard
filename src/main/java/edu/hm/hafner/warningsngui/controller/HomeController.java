@@ -1,7 +1,10 @@
 package edu.hm.hafner.warningsngui.controller;
 
 import com.google.gson.Gson;
-import edu.hm.hafner.warningsngui.repository.JobRepository;
+import edu.hm.hafner.warningsngui.dto.Build;
+import edu.hm.hafner.warningsngui.dto.Job;
+import edu.hm.hafner.warningsngui.dto.Result;
+import edu.hm.hafner.warningsngui.service.JobService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +15,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 public class HomeController {
+
     @Autowired
-    private JobRepository jobRepository;
+    JobService jobService;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -29,6 +35,18 @@ public class HomeController {
     @RequestMapping(path = {"/", "home"}, method = RequestMethod.GET, params = {"getProjects"})
     public String getProjects(final Model model) {
         logger.info("GET with Parameter was called");
+        List<Job> jobs = jobService.createDistributionOfAllJobs();
+        for (Job job : jobs) {
+            System.out.println(job.getName() + " " + job.getColor() + " " + job.getUrl());
+            for (Build build: job.getBuilds()) {
+                System.out.println("    Build Number "+ build.getNumber() + " url:" + build.getUrl());
+                for (Result result: build.getResults()) {
+                    System.out.println("        ResultName " + result.getName() + " Fixed: " + result.getFixedSize() + " New:" + result.getNewSize());
+
+                }
+            }
+        }
+        model.addAttribute("jobs", jobs);
         return "home";
     }
 

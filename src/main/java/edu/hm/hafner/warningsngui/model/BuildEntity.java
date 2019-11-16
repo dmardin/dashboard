@@ -6,7 +6,7 @@ import java.util.List;
 
 @Entity
 @Table(name="build")
-public class Build {
+public class BuildEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -14,12 +14,9 @@ public class Build {
     private String url;
 
     @ManyToOne
-    private Job job;
+    private JobEntity jobEntity;
 
-//    @OneToMany(mappedBy = "build", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    private List<Tool> tools = new ArrayList<>();
-
-    @OneToMany(mappedBy = "build", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "buildEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<ResultEntity> resultEntities = new ArrayList<>();
 
     public int getId() {
@@ -46,20 +43,12 @@ public class Build {
         this.url = url;
     }
 
-//    public List<Tool> getTools() {
-//        return tools;
-//    }
-//
-//    public void setTools(List<Tool> tools) {
-//        this.tools = tools;
-//    }
-
-    public Job getJob() {
-        return job;
+    public JobEntity getJobEntity() {
+        return jobEntity;
     }
 
-    public void setJob(Job job) {
-        this.job = job;
+    public void setJobEntity(JobEntity jobEntity) {
+        this.jobEntity = jobEntity;
     }
 
     public List<ResultEntity> getResultEntities() {

@@ -28,13 +28,13 @@ public class IssueEntity {
     private String type;
 
     @ManyToOne
-    IssuesEntity issues;
+    ReportEntity issues;
 
-    public IssuesEntity getIssues() {
+    public ReportEntity getIssues() {
         return issues;
     }
 
-    public void setIssues(IssuesEntity issues) {
+    public void setIssues(ReportEntity issues) {
         this.issues = issues;
     }
 

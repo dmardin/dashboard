@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="issues")
-public class IssuesEntity {
+@Table(name="report")
+public class ReportEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
@@ -20,7 +20,7 @@ public class IssuesEntity {
     //@ManyToOne(cascade = CascadeType.ALL)
     @Enumerated(EnumType.STRING)
     @Column(name = "warning_type")
-    private WarningType warningType;
+    private WarningTypeEntity warningTypeEntity;
 
     public int getId() {
         return id;
@@ -46,11 +46,11 @@ public class IssuesEntity {
         this.resultEntity = resultEntity;
     }
 
-    public WarningType getWarningType() {
-        return warningType;
+    public WarningTypeEntity getWarningTypeEntity() {
+        return warningTypeEntity;
     }
 
-    public void setWarningType(WarningType warningType) {
-        this.warningType = warningType;
+    public void setWarningTypeEntity(WarningTypeEntity warningTypeEntity) {
+        this.warningTypeEntity = warningTypeEntity;
     }
 }
