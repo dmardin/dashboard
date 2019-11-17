@@ -1,16 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head th:fragment="includes">
-    <title th:text="Home"></title>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" type="text/css" href="bootstrap4-3-1/css/bootstrap.min.css"/>
-    <!-- jquery muss for Bootstrap impotiert werden sonst wird ein g Fehler geworfen -->
-    <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-    <script src="/jquery/jquery-3.4.1.min.js"></script>
-    <script type="text/javascript" src="bootstrap4-3-1/js/bootstrap.min.js"></script>
-    <script src="echarts-4-2-1/echarts.common.min.js"></script>
-</head>
+<head th:replace="fragments/head :: includes"><title>Home</title></head>
 <body>
     <h1>Home</h1>
     <form action="/" method="get">
@@ -38,67 +28,27 @@
                         </button>
                     </h5>
                 </div>
-                <div id="collapse" class="collapse" aria-labelledby="heading" data-parent="#accordion">
+                <div th:id="collapse" class="collapse" aria-labelledby="heading" data-parent="#accordion">
                     <div class="card-body">
-
-                        <!-- body Job -->
-                        <div th:text="|${job.name} ${job.color} ${job.url}|"></div>
-                        <div id="accordionB">
-                            <th:block th:each="build, buildStat: *{jobs.get(jobStat.index).getBuilds()}">
-                                <div class="card">
-                                    <div class="card-header">
-                                        <h5 class="mb-0">
-                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseB" aria-controls="collapse" th:text="${build.number}">
-                                            </button>
-                                        </h5>
-                                    </div>
-                                    <div id="collapseB" class="collapse" aria-labelledby="heading" data-parent="#accordionB">
-                                        <div class="card-body"></div>
-
-                                        <!-- body Build -->
-                                        <div th:text="|${build.number} ${build.url} |"></div>
-                                        <div id="accordionR">
-                                            <th:block th:each="result, resultStat: *{build.getResults()}">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseR" aria-controls="collapse" th:text="${result.getName()}">
-                                                            </button>
-                                                        </h5>
-                                                    </div>
-                                                    <div id="collapseR" class="collapse" aria-labelledby="heading" data-parent="#accordionR">
-                                                        <div class="card-body"></div>
-
-                                                        <!-- body Result -->
-                                                        <div th:text="|${result.name} ${result.totalSize} ${result.fixedSize} ${result.newSize} |"></div>
-                                                        <th:block th:each="issue, issueStat: *{result.getOutstandingIssues()}">
-                                                            <tr>
-                                                                <td th:text="|${issue.baseName} ${issue.category} ${issue.message}|"></td>
-                                                            </tr>
-                                                        </th:block>
-                                                        <hr>
-                                                        <th:block th:each="issue, issueStat: *{result.getFixedIssues()}">
-                                                            <tr>
-                                                                <td th:text="|${issue.baseName} ${issue.category} ${issue.message}|"></td>
-                                                            </tr>
-                                                        </th:block>
-                                                        <hr>
-                                                        <th:block th:each="issue, issueStat: *{result.getNewIssues()}">
-                                                            <tr>
-                                                                <td th:text="|${issue.baseName} ${issue.category} ${issue.message}|"></td>
-                                                            </tr>
-                                                        </th:block>
-
-                                                    </div>
-                                                </div>
-                                            </th:block>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </th:block>
+                        <div class="container-fluid">
+                            <table class="table table-dark table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Job Name</th>
+                                    <th>Status</th>
+                                    <th>Url</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td th:text="${job.name}"></td>
+                                    <td th:text="${job.color}"></td>
+                                    <td th:text="${job.url}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <a th:href="@{/job/{jobName}/build(jobName=${job.getName()})}">view</a>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -114,7 +64,5 @@
     <script src="js/source-detail.js"></script>
     <script src="echarts-4-2-1/echarts.common.min.js"></script>
     <script src="/js/builds.js"></script>
-</body>
-</html>
 </body>
 </html>

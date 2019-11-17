@@ -1,9 +1,7 @@
 package edu.hm.hafner.warningsngui.controller;
 
 import com.google.gson.Gson;
-import edu.hm.hafner.warningsngui.dto.Build;
 import edu.hm.hafner.warningsngui.dto.Job;
-import edu.hm.hafner.warningsngui.dto.Result;
 import edu.hm.hafner.warningsngui.service.JobService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -36,6 +35,7 @@ public class HomeController {
     public String getProjects(final Model model) {
         logger.info("GET with Parameter was called");
         List<Job> jobs = jobService.createDistributionOfAllJobs();
+        /*
         for (Job job : jobs) {
             System.out.println(job.getName() + " " + job.getColor() + " " + job.getUrl());
             for (Build build: job.getBuilds()) {
@@ -45,9 +45,19 @@ public class HomeController {
 
                 }
             }
-        }
+        }*/
         model.addAttribute("jobs", jobs);
         return "home";
+    }
+
+    @RequestMapping(path={"/job/{jobName}/build"}, method=RequestMethod.GET)
+    public String getBuilds(@PathVariable("jobName") String jobName, final Model model) {
+        //TODO check if this is used!
+        List<Job> jobs = jobService.createDistributionOfAllJobs();
+        Job neededJob = jobs.stream().filter(job -> job.getName().equals(jobName)).findFirst().get();
+        model.addAttribute("job", neededJob);
+        logger.info("Normal GET was called");
+        return "build";
     }
 
 
