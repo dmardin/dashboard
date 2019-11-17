@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/head :: includes"><title></title></head>
+<body>
+<h1>Issues</h1>
+<div id="accordion">
+    <th:block th:each="issue, issueStat: ${issues}">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" th:href="'#collapse' + ${issueStat.index}" aria-controls="collapse" th:text="${issue.baseName}">
+                    </button>
+                </h5>
+            </div>
+            <div th:id="'collapse' + ${issueStat.index}" class="collapse" aria-labelledby="heading" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="container-fluid">
+                        <table class="table table-dark table-hover">
+                            <thead>
+                            <tr>
+                                <th>Base Name</th>
+                                <th>Category</th>
+                                <th>Message</th>
+                                <th>Folder</th>
+                                <th>Package</th>
+                                <th>Line start</th>
+                                <th>Line end</th>
+                                <th>column start</th>
+                                <th>column ende</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td th:text="${issue.baseName}"></td>
+                                <td th:text="${issue.category}"></td>
+                                <td th:text="${issue.message}"></td>
+                                <td th:text="${issue.folder}"></td>
+                                <td th:text="${issue.packageName}"></td>
+                                <td th:text="${issue.lineStart}"></td>
+                                <td th:text="${issue.lineEnd}"></td>
+                                <td th:text="${issue.columnStart}"></td>
+                                <td th:text="${issue.columnEnd}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</div>
+</body>
+</html>

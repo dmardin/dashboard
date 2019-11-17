@@ -1,7 +1,9 @@
 package edu.hm.hafner.warningsngui.controller;
 
 import com.google.gson.Gson;
+import edu.hm.hafner.warningsngui.dto.Build;
 import edu.hm.hafner.warningsngui.dto.Job;
+import edu.hm.hafner.warningsngui.dto.Result;
 import edu.hm.hafner.warningsngui.service.JobService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,6 +62,44 @@ public class HomeController {
         return "build";
     }
 
+    // /job/kniffel/build/6
+    @RequestMapping(path={"/job/{jobName}/build/{buildNumber}"}, method=RequestMethod.GET)
+    public String getResults(@PathVariable("jobName") String jobName, @PathVariable("buildNumber") Integer buildNumber,final Model model) {
+        //TODO check if this is used!
+        List<Job> jobs = jobService.createDistributionOfAllJobs();
+        Job neededJob = jobs.stream().filter(job -> job.getName().equals(jobName)).findFirst().get();
+        Build build = neededJob.getBuilds().stream().filter(b -> b.getNumber() == buildNumber).findFirst().get();
+        model.addAttribute("build", build);
+        logger.info("Normal GET was called");
+        return "result";
+    }
+
+    //http://localhost:8181/job/kniffel/build/4/checkstyle/outstanding
+    @RequestMapping(path={"/job/{jobName}/build/{buildNumber}/{toolId}/{issueType}"}, method=RequestMethod.GET)
+    public String getIssue(
+            @PathVariable("jobName") String jobName,
+            @PathVariable("buildNumber") Integer buildNumber,
+            @PathVariable("toolId") String toolId,
+            @PathVariable("issueType") String issueType,
+            final Model model) {
+        //TODO check if this is used!
+        List<Job> jobs = jobService.createDistributionOfAllJobs();
+        Job neededJob = jobs.stream().filter(job -> job.getName().equals(jobName)).findFirst().get();
+        Build build = neededJob.getBuilds().stream().filter(b -> b.getNumber() == buildNumber).findFirst().get();
+
+        Result result = null;
+        if(issueType.equals("outstanding")){
+            result = build.getResults().stream().filter(r -> r.getName().equals(toolId)).findFirst().get();
+        } else if(issueType.equals("fixed")) {
+            result = build.getResults().stream().filter(r -> r.getName().equals(toolId)).findFirst().get();
+        }else if(issueType.equals("new")) {
+            result = build.getResults().stream().filter(r -> r.getName().equals(toolId)).findFirst().get();
+        }
+
+        model.addAttribute("issues", result.getOutstandingIssues());
+        logger.info("Normal GET was called");
+        return "issue";
+    }
 
     @RequestMapping(path = "/ajax/checkstyle", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody

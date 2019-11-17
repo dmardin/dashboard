@@ -69,7 +69,7 @@ public class AppStartupRunner implements ApplicationRunner {
                         Result result = new Result();
                         build.getResults().add(result);
                         result.setBuild(build);
-                        result.setName(tool.getName());
+                        result.setName(tool.getId()); //TODO change? name/id (Checkstyle Warnings/checkstyle)
                         Arrays.stream(toolDetailResponse.getErrorMessages()).forEach(errorMessage -> result.getErrorMessages().add(errorMessage));
                         Arrays.stream(toolDetailResponse.getInfoMessages()).forEach(infoMessage -> result.getInfoMessages().add(infoMessage));
                         result.setFixedSize(toolDetailResponse.getFixedSize());

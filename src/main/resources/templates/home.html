@@ -24,11 +24,11 @@
             <div class="card">
                 <div class="card-header">
                     <h5 class="mb-0">
-                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse" aria-controls="collapse" th:text="${job.name}">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" th:href="'#collapse' + ${jobStat.index}" aria-controls="collapse" th:text="${job.name}">
                         </button>
                     </h5>
                 </div>
-                <div th:id="collapse" class="collapse" aria-labelledby="heading" data-parent="#accordion">
+                <div th:id="'collapse' + ${jobStat.index}" class="collapse" aria-labelledby="heading" data-parent="#accordion">
                     <div class="card-body">
                         <div class="container-fluid">
                             <table class="table table-dark table-hover">
@@ -47,7 +47,10 @@
                                 </tr>
                                 </tbody>
                             </table>
-                            <a th:href="@{/job/{jobName}/build(jobName=${job.getName()})}">view</a>
+
+
+                            <a th:href="@{/job/{jobName}/build(jobName=${job.name})}"><span
+                                    th:text="${'show builds from '+ job.name}"></span></a>
                         </div>
                     </div>
                 </div>
