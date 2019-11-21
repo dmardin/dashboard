@@ -35,7 +35,6 @@ public class AppStartupRunner implements ApplicationRunner {
     private JobService jobService;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    private static final String MAIN_URL = "http://localhost:8080/jenkins";
     private static final String SLASH = "/";
     private static final String API_JSON = "api/json";
     private static final String WARNINGS = "warnings-ng";
@@ -44,7 +43,7 @@ public class AppStartupRunner implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         logger.info("Start requesting data from Jenkins");
         List<Job> allJobs = new ArrayList<>();
-        JobsResponse jobsResponse = restService.getProjects(MAIN_URL + SLASH + API_JSON);
+        JobsResponse jobsResponse = restService.getProjects();
         logger.info("Start requesting Jobs");
         for (Job job : jobsResponse.getJobs()) {
 
