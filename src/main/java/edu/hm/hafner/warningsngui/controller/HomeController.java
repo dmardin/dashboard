@@ -88,15 +88,20 @@ public class HomeController {
         Build build = neededJob.getBuilds().stream().filter(b -> b.getNumber() == buildNumber).findFirst().get();
 
         Result result = null;
-        if(issueType.equals("outstanding")){
-            result = build.getResults().stream().filter(r -> r.getName().equals(toolId)).findFirst().get();
-        } else if(issueType.equals("fixed")) {
-            result = build.getResults().stream().filter(r -> r.getName().equals(toolId)).findFirst().get();
-        }else if(issueType.equals("new")) {
-            result = build.getResults().stream().filter(r -> r.getName().equals(toolId)).findFirst().get();
+        switch (issueType) {
+            case "outstanding":
+                result = build.getResults().stream().filter(r -> r.getName().equals(toolId)).findFirst().get();
+                model.addAttribute("issues", result.getOutstandingIssues());
+                break;
+            case "fixed":
+                result = build.getResults().stream().filter(r -> r.getName().equals(toolId)).findFirst().get();
+                model.addAttribute("issues", result.getFixedIssues());
+                break;
+            case "new":
+                result = build.getResults().stream().filter(r -> r.getName().equals(toolId)).findFirst().get();
+                model.addAttribute("issues", result.getNewIssues());
+                break;
         }
-
-        model.addAttribute("issues", result.getOutstandingIssues());
         logger.info("Normal GET was called");
         return "issue";
     }

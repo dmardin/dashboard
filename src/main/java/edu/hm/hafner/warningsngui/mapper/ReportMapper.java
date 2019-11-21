@@ -67,7 +67,7 @@ public class ReportMapper {
                 .setOrigin(issueEntity.getOrigin())
                 .setPackageName(issueEntity.getPackageName())
                 .setReference(issueEntity.getReference())
-                .setSeverity(Severity.guessFromString(issueEntity.getSeverity()))
+                .setSeverity(Severity.valueOf(issueEntity.getSeverity()))
                 .setType(issueEntity.getType())
                 .build();
     }

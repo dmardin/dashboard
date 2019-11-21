@@ -53,23 +53,23 @@ public class ResultMapper {
         resultEntity.setBuildEntity(buildEntity);
 
         List<ReportEntity> reportEntities = new ArrayList<>();
-        ReportEntity reportEntity = new ReportEntity();
-        reportEntity.setResultEntity(resultEntity);
-        reportEntity.setWarningTypeEntity(WarningTypeEntity.OUTSTANDING);
-        reportEntity.setIssues(ReportMapper.mapToEntities(result.getOutstandingIssues(), reportEntity));
-        reportEntities.add(reportEntity);
+        ReportEntity reportEntityOutstanding = new ReportEntity();
+        reportEntityOutstanding.setResultEntity(resultEntity);
+        reportEntityOutstanding.setWarningTypeEntity(WarningTypeEntity.OUTSTANDING);
+        reportEntityOutstanding.setIssues(ReportMapper.mapToEntities(result.getOutstandingIssues(), reportEntityOutstanding));
+        reportEntities.add(reportEntityOutstanding);
 
-        reportEntity = new ReportEntity();
-        reportEntity.setResultEntity(resultEntity);
-        reportEntity.setWarningTypeEntity(WarningTypeEntity.FIXED);
-        reportEntity.setIssues(ReportMapper.mapToEntities(result.getOutstandingIssues(), reportEntity));
-        reportEntities.add(reportEntity);
+        ReportEntity reportEntityFixed = new ReportEntity();
+        reportEntityFixed.setResultEntity(resultEntity);
+        reportEntityFixed.setWarningTypeEntity(WarningTypeEntity.FIXED);
+        reportEntityFixed.setIssues(ReportMapper.mapToEntities(result.getFixedIssues(), reportEntityFixed));
+        reportEntities.add(reportEntityFixed);
 
-        reportEntity = new ReportEntity();
-        reportEntity.setResultEntity(resultEntity);
-        reportEntity.setWarningTypeEntity(WarningTypeEntity.NEW);
-        reportEntity.setIssues(ReportMapper.mapToEntities(result.getOutstandingIssues(), reportEntity));
-        reportEntities.add(reportEntity);
+        ReportEntity reportEntityNew = new ReportEntity();
+        reportEntityNew.setResultEntity(resultEntity);
+        reportEntityNew.setWarningTypeEntity(WarningTypeEntity.NEW);
+        reportEntityNew.setIssues(ReportMapper.mapToEntities(result.getNewIssues(), reportEntityNew));
+        reportEntities.add(reportEntityNew);
 
         resultEntity.setReports(reportEntities);
 
