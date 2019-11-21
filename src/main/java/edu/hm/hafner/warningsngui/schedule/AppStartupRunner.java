@@ -28,9 +28,6 @@ public class AppStartupRunner implements ApplicationRunner {
     @Autowired
     private RestService restService;
 
-//    @Autowired
-//    private JobRepository jobRepository;
-
     @Autowired
     private JobService jobService;
 
@@ -64,7 +61,6 @@ public class AppStartupRunner implements ApplicationRunner {
                         logger.info("Start requesting ToolDetails for Tool with name " + tool.getName());
                         ToolDetailResponse toolDetailResponse = restService.getToolsDetail(build.getUrl() + tool.getId().toLowerCase() + SLASH + API_JSON);
 
-                        //***************************************************************
                         Result result = new Result();
                         build.getResults().add(result);
                         result.setBuild(build);
@@ -76,34 +72,20 @@ public class AppStartupRunner implements ApplicationRunner {
                         result.setQualityGateStatus(toolDetailResponse.getQualityGateStatus());
                         result.setTotalSize(toolDetailResponse.getTotalSize());
 
-                        //***************************************************************
-
-//                        ResultEntity result = new ResultEntity();
-//                        build.getResultEntities().add(result);
-//                        result.setName(tool.getName());
-//                        result.setBuildEntity(buildEntity);
-//                        Arrays.stream(toolDetailResponse.getErrorMessages()).forEach(errorMessage -> result.getErrorMessages().add(errorMessage));
-//                        Arrays.stream(toolDetailResponse.getInfoMessages()).forEach(infoMessage -> result.getInfoMessages().add(infoMessage));
-//                        result.setFixedSize(toolDetailResponse.getFixedSize());
-//                        result.setNewSize(toolDetailResponse.getNewSize());
-//                        result.setQualityGateStatus(toolDetailResponse.getQualityGateStatus());
-//                        result.setTotalSize(toolDetailResponse.getTotalSize());
-
                         for (WarningTypeEntity warningTypeEntity : WarningTypeEntity.values()) {
                             Report report = new Report();
-                            if (warningTypeEntity == WarningTypeEntity.OUTSTANDING){
-                                result.setOutstandingIssues(report);
-                            } else if (warningTypeEntity == WarningTypeEntity.NEW) {
-                                result.setNewIssues(report);
-                            } else if (warningTypeEntity == WarningTypeEntity.FIXED) {
-                                result.setFixedIssues(report);
+                            switch (warningTypeEntity) {
+                                case OUTSTANDING:
+                                    result.setOutstandingIssues(report);
+                                    break;
+                                case NEW:
+                                    result.setNewIssues(report);
+                                    break;
+                                case FIXED:
+                                    result.setFixedIssues(report);
+                                    break;
                             }
 
-
-//                            IssuesEntity issuesEntity = new IssuesEntity();
-//                            issuesEntity.setResultEntity(result);
-//                            result.getIssues().add(issuesEntity);
-//                            issuesEntity.setWarningTypeEntity(warningTypeEntity);
                             logger.info("Start requesting " + warningTypeEntity.toString() + " Issues for tool with name " + tool.getName());
                             String url = tool.getLatestUrl() + SLASH + warningTypeEntity.toString().toLowerCase() + SLASH + API_JSON;
                             IssuesResponse issuesResponse = restService.getIssues(url);
@@ -111,8 +93,6 @@ public class AppStartupRunner implements ApplicationRunner {
                                 IssueEntity[] issues = issuesResponse.getIssues();
                                 for (IssueEntity issue : issues) {
                                     report.add(ReportMapper.map(issue));
-//                                    issuesEntity.getIssues().add(issue);
-//                                    issue.setIssues(issuesEntity);
                                 }
                             }
                         }
@@ -121,8 +101,7 @@ public class AppStartupRunner implements ApplicationRunner {
             }
             allJobs.add(job);
         }
-        //TODO Save über JobService
-        //jobRepository.saveAll(allJobs); //convert with Mapper
+
         jobService.saveAll(allJobs);
         logger.info("Requested data saved to database");
     }

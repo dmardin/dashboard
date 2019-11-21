@@ -23,8 +23,7 @@ public class JobEntityService {
 
     public List<Job> saveAll(List<Job> jobs) {
         List<JobEntity> jobEntities = jobRepository.saveAll(JobMapper.mapToEntities(jobs));
-        List<Job> savedJobs = JobMapper.map(jobEntities);
-        return savedJobs;
+        return JobMapper.map(jobEntities);
     }
 
     public Job save (Job job) {

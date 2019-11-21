@@ -12,15 +12,6 @@ import java.util.List;
 
 public class ReportMapper {
 
-//    public static Report map(IssuesEntity issuesEntity){
-//        Report report = new Report();
-//        report.add(IssueMapper.map(issuesEntity));
-//
-//        return report;
-//    }
-
-
-
     public static List<IssueEntity> mapToEntities(Report report, ReportEntity reportEntity) {
 
         List<IssueEntity> issueEntities = new ArrayList<>();

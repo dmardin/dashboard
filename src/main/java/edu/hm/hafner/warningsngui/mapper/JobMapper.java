@@ -31,6 +31,6 @@ public class JobMapper {
     }
 
     public static List<JobEntity> mapToEntities(List<Job> jobs) {
-        return jobs.stream().map(job -> mapToEntity(job)).collect(Collectors.toList());
+        return jobs.stream().map(JobMapper::mapToEntity).collect(Collectors.toList());
     }
 }
