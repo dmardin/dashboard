@@ -76,7 +76,7 @@ function bindTables($) {
                     const model = t;
                     dataTable.rows.add(model).draw();
                     $('[data-toggle="tooltip"]').tooltip();
-                });
+                })(jQuery);
         }
     }
 
