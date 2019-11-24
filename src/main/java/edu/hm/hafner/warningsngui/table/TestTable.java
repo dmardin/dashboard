@@ -24,15 +24,15 @@ public class TestTable extends TableModel {
     public List<TableColumn> getColumns() {
         List<TableColumn> columns = new ArrayList<>();
 
-        columns.add(new TableColumn("Messages.Table_Column_File()", "fileName").setWidth(2));
+        columns.add(new TableColumn("Messages.Table_Column_File()", "fileName")/*.setWidth(2)*/);
         columns.add(new TableColumn("Messages.Table_Column_AuthorsSize()", "authorsSize"));
         columns.add(new TableColumn("Messages.Table_Column_CommitsSize()", "commitsSize"));
         columns.add(new TableColumn("Messages.Table_Column_LastCommit()", "modifiedAt")
-                .setWidth(2)
-                .setHeaderClass(TableColumn.ColumnCss.DATE));
+                /*.setWidth(2)
+                .setHeaderClass(TableColumn.ColumnCss.DATE)*/);
         columns.add(new TableColumn("Messages.Table_Column_AddedAt()", "addedAt")
-                .setWidth(2)
-                .setHeaderClass(TableColumn.ColumnCss.DATE));
+                /*.setWidth(2)
+                .setHeaderClass(TableColumn.ColumnCss.DATE)*/);
 
         return columns;
     }

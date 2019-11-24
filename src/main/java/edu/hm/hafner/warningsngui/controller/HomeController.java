@@ -8,6 +8,7 @@ import edu.hm.hafner.warningsngui.service.JobService;
 import edu.hm.hafner.warningsngui.table.FileStatistics;
 import edu.hm.hafner.warningsngui.table.RepositoryStatistics;
 import edu.hm.hafner.warningsngui.table.TestTable;
+import edu.hm.hafner.warningsngui.table.ViewTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,19 +115,71 @@ public class HomeController {
     //@ResponseBody
     /*ResponseEntity<*/String/*>*/ getTable(final Model model) {
         RepositoryStatistics repositoryStatistics = new RepositoryStatistics();
-        FileStatistics fileStatistics = new FileStatistics("AQ");
+        FileStatistics fileStatistics = new FileStatistics("100File");
+        fileStatistics.setCreationTime(100);
+        fileStatistics.setLastModificationTime(111);
+        fileStatistics.setNumberOfAuthors(155);
+        fileStatistics.setNumberOfCommits(188);
+        FileStatistics fileStatistics2 = new FileStatistics("200File");
+        fileStatistics2.setCreationTime(200);
+        fileStatistics2.setLastModificationTime(222);
+        fileStatistics2.setNumberOfAuthors(255);
+        fileStatistics2.setNumberOfCommits(288);
+        FileStatistics fileStatistics3 = new FileStatistics("300File");
+        fileStatistics3.setCreationTime(300);
+        fileStatistics3.setLastModificationTime(333);
+        fileStatistics3.setNumberOfAuthors(355);
+        fileStatistics3.setNumberOfCommits(388);
         ArrayList<FileStatistics> fileStatisticsArrayList = new ArrayList<>();
         fileStatisticsArrayList.add(fileStatistics);
+        fileStatisticsArrayList.add(fileStatistics2);
+        fileStatisticsArrayList.add(fileStatistics3);
         repositoryStatistics.addAll(fileStatisticsArrayList);
         TestTable testTable = new TestTable(repositoryStatistics);
         String columnDef = testTable.getColumnsDefinition();
         testTable.getRows();
         Gson gson = new Gson();
-        model.addAttribute("m2", testTable);
+
+        ViewTable viewTable = new ViewTable(repositoryStatistics);
+        model.addAttribute("m2", viewTable);
         return "myTable";
         //return ResponseEntity.ok(gson.toJson(testTable.getRows()));
     }
 //[{"data": "fileName"},{"data": "authorsSize"},{"data": "commitsSize"},{"data": "modifiedAt"},{"data": "addedAt"}]
+
+
+    @RequestMapping(path = "/ajax/table", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    String getTableData() {
+        RepositoryStatistics repositoryStatistics = new RepositoryStatistics();
+        FileStatistics fileStatistics = new FileStatistics("100File");
+        fileStatistics.setCreationTime(100);
+        fileStatistics.setLastModificationTime(111);
+        fileStatistics.setNumberOfAuthors(155);
+        fileStatistics.setNumberOfCommits(188);
+        FileStatistics fileStatistics2 = new FileStatistics("200File");
+        fileStatistics2.setCreationTime(200);
+        fileStatistics2.setLastModificationTime(222);
+        fileStatistics2.setNumberOfAuthors(255);
+        fileStatistics2.setNumberOfCommits(288);
+        FileStatistics fileStatistics3 = new FileStatistics("300File");
+        fileStatistics3.setCreationTime(300);
+        fileStatistics3.setLastModificationTime(333);
+        fileStatistics3.setNumberOfAuthors(355);
+        fileStatistics3.setNumberOfCommits(388);
+        ArrayList<FileStatistics> fileStatisticsArrayList = new ArrayList<>();
+        fileStatisticsArrayList.add(fileStatistics);
+        fileStatisticsArrayList.add(fileStatistics2);
+        fileStatisticsArrayList.add(fileStatistics3);
+        repositoryStatistics.addAll(fileStatisticsArrayList);
+        TestTable testTable = new TestTable(repositoryStatistics);
+        String columnDef = testTable.getColumnsDefinition();
+        testTable.getRows();
+        Gson gson = new Gson();
+
+        ViewTable viewTable = new ViewTable(repositoryStatistics);
+        return viewTable.getTableRows("");
+    }
 
     @RequestMapping(path = "/ajax/checkstyle", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody

@@ -4,24 +4,17 @@
 <body>
 <h1>Home</h1>
 
-<!--/*@thymesVar id="m2" type="io.jenkins.plugins.datatables.api.TableModel"*/-->
+<!--/*@thymesVar id="m2" type="edu.hm.hafner.warningsngui.table.ViewTable"*/-->
 <div th:object="${m2}" class="table-responsive">
 
 
     <table class="table table-hover table-striped data-table"
-           th:data-columns-definition="${m2.columnsDefinition}" th:id="${m2.id}"
-           >
+           th:data-columns-definition="${m2.getTableModel('').columnsDefinition}" th:id="${m2.getTableModel('').id}">
         <colgroup>
-            <!--
-            <j:forEach var="c" items="${model.columns}">
-                <col class="col-width-${c.width}"/>
-            </j:forEach> -->
-            <div th:each="c : ${m2.columns}">
-                <col th:classappend="|col-width-${c.width}|"/>
-            </div>
+            <col th:each="c : ${m2.getTableModel('').columns}" th:classappend="|col-width-${c.width}|"/>
         </colgroup>
         <thead>
-        <tr th:each="c : ${m2.columns}">
+        <tr th:each="c : ${m2.getTableModel('').columns}">
             <th th:classappend="${c.headerClass}" th:text="${c.headerLabel}"></th>
         </tr>
         </thead>
@@ -29,16 +22,17 @@
 
 </div>
 
-<!-- <script>var tableDataProxy = <st:bind value="${it}"/></script> -->
 
 <script th:inline="javascript">
     /*<![CDATA[*/
 
-    var tableDataProxy = [{"data": "fileName"},{"data": "authorsSize"},{"data": "commitsSize"},{"data": "modifiedAt"},{"data": "addedAt"}];// /*[[${testTable}]]*/ 'default';
+    //var tableDataProxy = [{"data": "fileName"},{"data": "authorsSize"},{"data": "commitsSize"},{"data": "modifiedAt"},{"data": "addedAt"}];// /*[[${testTable}]]*/ 'default';
+    var tableDataProxy = /*[[${m2}]]*/ 'default';
     console.log("tableDataProxy", tableDataProxy);
 
     /*]]>*/
 </script>
+
 
 <script src="js/luxon.min.js"></script>
 <script src="js/table.js"></script>

@@ -63,13 +63,20 @@ function bindTables($) {
     function loadTableData(table, dataTable) {
         if (!table[0].hasAttribute('isLoaded')) {
             table.attr('isLoaded', 'true');
-            tableDataProxy.getTableRows(table.attr('id'), function (t) {
+            /*tableDataProxy.getTableRows(table.attr('id'), function (t) {
                 (function () {
                     const model = JSON.parse(t.responseObject());
                     dataTable.rows.add(model).draw();
                     $('[data-toggle="tooltip"]').tooltip();
                 })(jQuery);
-            });
+            });*/
+
+            $.get("/ajax/table",
+                function (t) {
+                    const model = t;
+                    dataTable.rows.add(model).draw();
+                    $('[data-toggle="tooltip"]').tooltip();
+                });
         }
     }
 

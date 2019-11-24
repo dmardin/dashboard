@@ -39,6 +39,22 @@ public class FileStatistics implements Serializable {
     private transient Set<String> authors = new HashSet<>(); // see readResolve
     private transient int today; // TODO: remove in 1.0.0
 
+    public void setNumberOfAuthors(int numberOfAuthors) {
+        this.numberOfAuthors = numberOfAuthors;
+    }
+
+    public void setNumberOfCommits(int numberOfCommits) {
+        this.numberOfCommits = numberOfCommits;
+    }
+
+    public void setCreationTime(int creationTime) {
+        this.creationTime = creationTime;
+    }
+
+    public void setLastModificationTime(int lastModificationTime) {
+        this.lastModificationTime = lastModificationTime;
+    }
+
     /**
      * Creates a new instance of {@link FileStatistics}.
      *
