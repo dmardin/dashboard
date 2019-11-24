@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 public class HomeController {
@@ -130,8 +131,8 @@ public class HomeController {
     private ViewTable testData() {
         RepositoryStatistics repositoryStatistics = new RepositoryStatistics();
         ArrayList<FileStatistics> fileStatisticsArrayList = new ArrayList<>();
-        for(int i = 0; i < 126; i++ ){
-            FileStatistics fileStatistics = new FileStatistics("File "+i);
+        for(int i = 0; i < 555; i++ ){
+            FileStatistics fileStatistics = new FileStatistics("File "+ getSaltString());
             fileStatistics.setCreationTime(i);
             fileStatistics.setLastModificationTime(i);
             fileStatistics.setNumberOfAuthors(i);
@@ -147,6 +148,19 @@ public class HomeController {
         Gson gson = new Gson();
 
         return new ViewTable(repositoryStatistics);
+    }
+
+    protected String getSaltString() {
+        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < 18) { // length of the random string.
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        String saltStr = salt.toString();
+        return saltStr;
+
     }
 
     @RequestMapping(path = "/ajax/checkstyle", method = RequestMethod.GET, produces = "application/json")
