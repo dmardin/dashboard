@@ -21,14 +21,14 @@ $(document).ready(
                 var view = 'hello';
                 renderTrendChart('checkstyle-history-chart', builds, "");
             });
-        $.get("ajax/pmd",
+        /*$.get("ajax/pmd",
             function (builds) {
                 console.log("ajax is called for builds: ")
                 console.log(builds);
 
                 var view = 'hello';
                 renderTrendChart('pmd-history-chart', builds, "");
-            });
+            });*/
 
     });
 

@@ -5,6 +5,9 @@ import edu.hm.hafner.warningsngui.dto.Build;
 import edu.hm.hafner.warningsngui.dto.Job;
 import edu.hm.hafner.warningsngui.dto.Result;
 import edu.hm.hafner.warningsngui.service.JobService;
+import edu.hm.hafner.warningsngui.table.FileStatistics;
+import edu.hm.hafner.warningsngui.table.RepositoryStatistics;
+import edu.hm.hafner.warningsngui.table.TestTable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -105,6 +109,24 @@ public class HomeController {
         logger.info("Normal GET was called");
         return "issue";
     }
+
+    @RequestMapping(path = "/table", method = RequestMethod.GET/*, produces = "application/json"*/)
+    //@ResponseBody
+    /*ResponseEntity<*/String/*>*/ getTable(final Model model) {
+        RepositoryStatistics repositoryStatistics = new RepositoryStatistics();
+        FileStatistics fileStatistics = new FileStatistics("AQ");
+        ArrayList<FileStatistics> fileStatisticsArrayList = new ArrayList<>();
+        fileStatisticsArrayList.add(fileStatistics);
+        repositoryStatistics.addAll(fileStatisticsArrayList);
+        TestTable testTable = new TestTable(repositoryStatistics);
+        String columnDef = testTable.getColumnsDefinition();
+        testTable.getRows();
+        Gson gson = new Gson();
+        model.addAttribute("m2", testTable);
+        return "myTable";
+        //return ResponseEntity.ok(gson.toJson(testTable.getRows()));
+    }
+//[{"data": "fileName"},{"data": "authorsSize"},{"data": "commitsSize"},{"data": "modifiedAt"},{"data": "addedAt"}]
 
     @RequestMapping(path = "/ajax/checkstyle", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
