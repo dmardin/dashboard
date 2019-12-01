@@ -1,14 +1,15 @@
 package edu.hm.hafner.warningsngui.controller;
 
 import com.google.gson.Gson;
+import edu.hm.hafner.analysis.Report;
 import edu.hm.hafner.warningsngui.dto.Build;
 import edu.hm.hafner.warningsngui.dto.Job;
 import edu.hm.hafner.warningsngui.dto.Result;
 import edu.hm.hafner.warningsngui.service.JobService;
-import edu.hm.hafner.warningsngui.table.FileStatistics;
-import edu.hm.hafner.warningsngui.table.RepositoryStatistics;
-import edu.hm.hafner.warningsngui.table.TestTable;
-import edu.hm.hafner.warningsngui.table.ViewTable;
+import edu.hm.hafner.warningsngui.tableIssue.IssueStatistics;
+import edu.hm.hafner.warningsngui.tableIssue.IssueTable;
+import edu.hm.hafner.warningsngui.tableIssue.IssueViewTable;
+import edu.hm.hafner.warningsngui.tableIssue.RepoStatistics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,7 +83,21 @@ public class HomeController {
 
     //http://localhost:8181/job/kniffel/build/4/checkstyle/outstanding
     @RequestMapping(path={"/job/{jobName}/build/{buildNumber}/{toolId}/{issueType}"}, method=RequestMethod.GET)
-    public String getIssue(
+    public String getIssueHeaders(
+            @PathVariable("jobName") String jobName,
+            @PathVariable("buildNumber") Integer buildNumber,
+            @PathVariable("toolId") String toolId,
+            @PathVariable("issueType") String issueType,
+            final Model model) {
+
+        IssueViewTable issueViewTable = new IssueViewTable(new RepoStatistics());
+        model.addAttribute("issueTableRows", issueViewTable);
+        return "issue";
+    }
+
+    @RequestMapping(path={"/ajax/job/{jobName}/build/{buildNumber}/{toolId}/{issueType}"}, method=RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public String getIssueData(
             @PathVariable("jobName") String jobName,
             @PathVariable("buildNumber") Integer buildNumber,
             @PathVariable("toolId") String toolId,
@@ -93,23 +108,44 @@ public class HomeController {
         Job neededJob = jobs.stream().filter(job -> job.getName().equals(jobName)).findFirst().get();
         Build build = neededJob.getBuilds().stream().filter(b -> b.getNumber() == buildNumber).findFirst().get();
 
-        Result result = null;
+        logger.info("Normal GET was called");
+        Report report = null;
         switch (issueType) {
             case "outstanding":
-                result = build.getResults().stream().filter(r -> r.getName().equals(toolId)).findFirst().get();
-                model.addAttribute("issues", result.getOutstandingIssues());
+                Result result = build.getResults().stream().filter(r -> r.getName().equals(toolId)).findFirst().get();
+                report = result.getOutstandingIssues();
                 break;
             case "fixed":
                 result = build.getResults().stream().filter(r -> r.getName().equals(toolId)).findFirst().get();
-                model.addAttribute("issues", result.getFixedIssues());
+                report = result.getFixedIssues();
                 break;
             case "new":
                 result = build.getResults().stream().filter(r -> r.getName().equals(toolId)).findFirst().get();
-                model.addAttribute("issues", result.getNewIssues());
+                report = result.getNewIssues();
                 break;
         }
-        logger.info("Normal GET was called");
-        return "issue";
+
+        return convertDataForAjax(report);
+    }
+
+    private String convertDataForAjax(Report report) {
+        RepoStatistics repositoryStatistics = new RepoStatistics();
+        ArrayList<IssueStatistics> fileStatisticsArrayList = new ArrayList<>();
+        report.stream().forEach(issue -> {
+            IssueStatistics fileStatistics = new IssueStatistics();
+            fileStatistics.setUuid(issue.getId());
+            fileStatistics.setFileName(issue.getFileName());
+            fileStatistics.setPackageName(issue.getPackageName());
+            fileStatistics.setCategory(issue.getCategory());
+            fileStatistics.setType(issue.getType());
+            fileStatistics.setSeverity(issue.getSeverity().toString());
+
+            fileStatisticsArrayList.add(fileStatistics);
+        });
+
+        repositoryStatistics.addAll(fileStatisticsArrayList);
+        IssueViewTable issueViewTable = new IssueViewTable(repositoryStatistics);
+        return issueViewTable.getTableRows("issues");
     }
 
     @RequestMapping(path = "/table", method = RequestMethod.GET/*, produces = "application/json"*/)
@@ -128,26 +164,27 @@ public class HomeController {
         return testData().getTableRows("");
     }
 
-    private ViewTable testData() {
-        RepositoryStatistics repositoryStatistics = new RepositoryStatistics();
-        ArrayList<FileStatistics> fileStatisticsArrayList = new ArrayList<>();
+    private IssueViewTable testData() {
+        RepoStatistics repositoryStatistics = new RepoStatistics();
+        ArrayList<IssueStatistics> fileStatisticsArrayList = new ArrayList<>();
         for(int i = 0; i < 555; i++ ){
-            FileStatistics fileStatistics = new FileStatistics("File "+ getSaltString());
-            fileStatistics.setCreationTime(i);
-            fileStatistics.setLastModificationTime(i);
-            fileStatistics.setNumberOfAuthors(i);
-            fileStatistics.setNumberOfCommits(i);
+            IssueStatistics fileStatistics = new IssueStatistics();
+            fileStatistics.setFileName("File "+getSaltString() +i);
+            fileStatistics.setPackageName("package " +i);
+            fileStatistics.setCategory("cate "+i);
+            fileStatistics.setType("type "+i);
+            fileStatistics.setSeverity("sev"+i);
 
             fileStatisticsArrayList.add(fileStatistics);
         }
 
         repositoryStatistics.addAll(fileStatisticsArrayList);
-        TestTable testTable = new TestTable(repositoryStatistics);
+        IssueTable testTable = new IssueTable(repositoryStatistics);
         String columnDef = testTable.getColumnsDefinition();
         testTable.getRows();
         Gson gson = new Gson();
 
-        return new ViewTable(repositoryStatistics);
+        return new IssueViewTable(repositoryStatistics);
     }
 
     protected String getSaltString() {

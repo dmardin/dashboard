@@ -71,7 +71,7 @@ function bindTables($) {
                 })(jQuery);
             });*/
 
-            $.get("/ajax/table",
+            $.get("/ajax" + window.location.pathname,
                 function (t) {
                     const model = t;
                     dataTable.rows.add(model).draw();

@@ -3,6 +3,35 @@
 <head th:replace="fragments/head :: includes"><title></title></head>
 <body>
 <h1>Issues</h1>
+
+
+<div class="card ${cardClass}">
+    <div class="card-body">
+        <h5 class="card-title">
+            Title vom Card
+
+            <!--/*@thymesVar id="issueTableRows" type="edu.hm.hafner.warningsngui.tableIssue.IssueViewTable"*/-->
+            <div th:object="${issueTableRows}" class="table-responsive">
+                <table class="table table-hover table-striped data-table"
+                       th:data-columns-definition="${issueTableRows.getTableModel('').columnsDefinition}" th:id="${issueTableRows.getTableModel('').id}">
+                    <colgroup>
+                        <col th:each="c : ${issueTableRows.getTableModel('').columns}" th:classappend="|col-width-${c.width}|"/>
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th th:each="c : ${issueTableRows.getTableModel('').columns}" th:classappend="${c.headerClass}" th:text="${c.headerLabel}"></th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </h5>
+    </div>
+</div>
+
+<script src="/js/luxon.min.js"></script>
+<script src="/js/table.js"></script>
+
+<!--
 <div id="accordion">
     <th:block th:each="issue, issueStat: ${issues}">
         <div class="card">
@@ -53,5 +82,6 @@
         </div>
     </th:block>
 </div>
+-->
 </body>
 </html>

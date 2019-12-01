@@ -10,8 +10,8 @@ $(document).ready(
          */
         $.get("ajax/checkstyle"/*, {origin: origin, reference: reference}*/,
             function (builds) {
-                console.log("ajax is called for builds: ")
-                console.log(builds);
+                // console.log("ajax is called for builds: ")
+                // console.log(builds);
                 /*
                 new Chart($("#priorities-chart"), {
                     type: 'doughnut',
