@@ -1,4 +1,4 @@
-package edu.hm.hafner.warningsngui.tableIssue;
+package edu.hm.hafner.warningsngui.dto.table.issues;
 
 import java.util.UUID;
 
