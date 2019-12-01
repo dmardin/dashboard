@@ -99,9 +99,7 @@ public class HomeController {
             @PathVariable("jobName") String jobName,
             @PathVariable("buildNumber") Integer buildNumber,
             @PathVariable("toolId") String toolId,
-            @PathVariable("issueType") String issueType,
-            final Model model) {
-        //TODO check if this is used!
+            @PathVariable("issueType") String issueType) {
         List<Job> jobs = jobService.createDistributionOfAllJobs();
         Job neededJob = jobs.stream().filter(job -> job.getName().equals(jobName)).findFirst().get();
         Build build = neededJob.getBuilds().stream().filter(b -> b.getNumber() == buildNumber).findFirst().get();
