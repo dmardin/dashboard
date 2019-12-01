@@ -42,17 +42,6 @@ public class HomeController {
     public String getProjects(final Model model) {
         logger.info("GET with Parameter was called");
         List<Job> jobs = jobService.createDistributionOfAllJobs();
-        /*
-        for (Job job : jobs) {
-            System.out.println(job.getName() + " " + job.getColor() + " " + job.getUrl());
-            for (Build build: job.getBuilds()) {
-                System.out.println("    Build Number "+ build.getNumber() + " url:" + build.getUrl());
-                for (Result result: build.getResults()) {
-                    System.out.println("        ResultName " + result.getName() + " Fixed: " + result.getFixedSize() + " New:" + result.getNewSize());
-
-                }
-            }
-        }*/
         model.addAttribute("jobs", jobs);
         return "home";
     }
