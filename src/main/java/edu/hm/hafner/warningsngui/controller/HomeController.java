@@ -7,7 +7,6 @@ import edu.hm.hafner.warningsngui.dto.Job;
 import edu.hm.hafner.warningsngui.dto.Result;
 import edu.hm.hafner.warningsngui.service.JobService;
 import edu.hm.hafner.warningsngui.tableIssue.IssueStatistics;
-import edu.hm.hafner.warningsngui.tableIssue.IssueTable;
 import edu.hm.hafner.warningsngui.tableIssue.IssueViewTable;
 import edu.hm.hafner.warningsngui.tableIssue.RepoStatistics;
 import org.slf4j.Logger;
@@ -23,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @Controller
 public class HomeController {
@@ -146,58 +144,6 @@ public class HomeController {
         repositoryStatistics.addAll(fileStatisticsArrayList);
         IssueViewTable issueViewTable = new IssueViewTable(repositoryStatistics);
         return issueViewTable.getTableRows("issues");
-    }
-
-    @RequestMapping(path = "/table", method = RequestMethod.GET/*, produces = "application/json"*/)
-    //@ResponseBody
-    /*ResponseEntity<*/String/*>*/ getTable(final Model model) {
-        model.addAttribute("m2", testData());
-        return "myTable";
-        //return ResponseEntity.ok(gson.toJson(testTable.getRows()));
-    }
-//[{"data": "fileName"},{"data": "authorsSize"},{"data": "commitsSize"},{"data": "modifiedAt"},{"data": "addedAt"}]
-
-
-    @RequestMapping(path = "/ajax/table", method = RequestMethod.GET, produces = "application/json")
-    @ResponseBody
-    String getTableData() {
-        return testData().getTableRows("");
-    }
-
-    private IssueViewTable testData() {
-        RepoStatistics repositoryStatistics = new RepoStatistics();
-        ArrayList<IssueStatistics> fileStatisticsArrayList = new ArrayList<>();
-        for(int i = 0; i < 555; i++ ){
-            IssueStatistics fileStatistics = new IssueStatistics();
-            fileStatistics.setFileName("File "+getSaltString() +i);
-            fileStatistics.setPackageName("package " +i);
-            fileStatistics.setCategory("cate "+i);
-            fileStatistics.setType("type "+i);
-            fileStatistics.setSeverity("sev"+i);
-
-            fileStatisticsArrayList.add(fileStatistics);
-        }
-
-        repositoryStatistics.addAll(fileStatisticsArrayList);
-        IssueTable testTable = new IssueTable(repositoryStatistics);
-        String columnDef = testTable.getColumnsDefinition();
-        testTable.getRows();
-        Gson gson = new Gson();
-
-        return new IssueViewTable(repositoryStatistics);
-    }
-
-    protected String getSaltString() {
-        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        StringBuilder salt = new StringBuilder();
-        Random rnd = new Random();
-        while (salt.length() < 18) { // length of the random string.
-            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
-            salt.append(SALTCHARS.charAt(index));
-        }
-        String saltStr = salt.toString();
-        return saltStr;
-
     }
 
     @RequestMapping(path = "/ajax/checkstyle", method = RequestMethod.GET, produces = "application/json")
