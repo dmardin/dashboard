@@ -115,20 +115,20 @@ public class HomeController {
 
     private String convertDataForAjax(Report report) {
         RepoStatistics repositoryStatistics = new RepoStatistics();
-        ArrayList<IssueStatistics> fileStatisticsArrayList = new ArrayList<>();
+        ArrayList<IssueStatistics> issueStatisticsList = new ArrayList<>();
         report.stream().forEach(issue -> {
-            IssueStatistics fileStatistics = new IssueStatistics();
-            fileStatistics.setUuid(issue.getId());
-            fileStatistics.setFileName(issue.getFileName());
-            fileStatistics.setPackageName(issue.getPackageName());
-            fileStatistics.setCategory(issue.getCategory());
-            fileStatistics.setType(issue.getType());
-            fileStatistics.setSeverity(issue.getSeverity().toString());
+            IssueStatistics issueStatistics = new IssueStatistics();
+            issueStatistics.setUuid(issue.getId());
+            issueStatistics.setFileName(issue.getFileName());
+            issueStatistics.setPackageName(issue.getPackageName());
+            issueStatistics.setCategory(issue.getCategory());
+            issueStatistics.setType(issue.getType());
+            issueStatistics.setSeverity(issue.getSeverity().toString());
 
-            fileStatisticsArrayList.add(fileStatistics);
+            issueStatisticsList.add(issueStatistics);
         });
 
-        repositoryStatistics.addAll(fileStatisticsArrayList);
+        repositoryStatistics.addAll(issueStatisticsList);
         IssueViewTable issueViewTable = new IssueViewTable(repositoryStatistics);
         return issueViewTable.getTableRows("issues");
     }
