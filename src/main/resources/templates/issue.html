@@ -2,33 +2,43 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="fragments/head :: includes"><title></title></head>
 <body>
-<h1>Issues</h1>
+
+    <div th:replace="fragments/navigation :: navbar"></div>
+    <nav th:insert="fragments/navigationBreadCrumb :: nav(~{ :: .breadcrumb})">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Jenkins</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/job/{jobName}/build(jobName=${jobName})}" th:text="${jobName}"></a></li>
+            <li class="breadcrumb-item"><a th:href="@{/job/{jobName}/build/{buildNumber}(jobName=${jobName},buildNumber=${buildNumber})}" th:text="${buildNumber}"></a></li>
+            <li class="breadcrumb-item"><a th:href="@{/job/{jobName}/build/{buildNumber}/{toolName}/{issueType}(jobName=${jobName},buildNumber=${buildNumber},toolName=${toolId},issueType=${issueType})}" th:text="${toolIdWithIssueType}"></a></li>
+        </ol>
+    </nav>
+    <h1>Issues</h1>
 
 
-<div class="card ${cardClass}">
-    <div class="card-body">
-        <h5 class="card-title">
-            Title vom Card
+    <div class="card ${cardClass}">
+        <div class="card-body">
+            <h5 class="card-title">
+                Title vom Card
 
-            <!--/*@thymesVar id="issueTableRows" type="edu.hm.hafner.warningsngui.dto.table.IssueViewTable"*/-->
-            <div th:object="${issueTableRows}" class="table-responsive">
-                <table class="table table-hover table-striped data-table"
-                       th:data-columns-definition="${issueTableRows.getTableModel('').columnsDefinition}" th:id="${issueTableRows.getTableModel('').id}">
-                    <colgroup>
-                        <col th:each="c : ${issueTableRows.getTableModel('').columns}" th:classappend="|col-width-${c.width}|"/>
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th th:each="c : ${issueTableRows.getTableModel('').columns}" th:classappend="${c.headerClass}" th:text="${c.headerLabel}"></th>
-                    </tr>
-                    </thead>
-                </table>
-            </div>
-        </h5>
+                <!--/*@thymesVar id="issueTableRows" type="edu.hm.hafner.warningsngui.dto.table.IssueViewTable"*/-->
+                <div th:object="${issueTableRows}" class="table-responsive">
+                    <table class="table table-hover table-striped data-table"
+                           th:data-columns-definition="${issueTableRows.getTableModel('').columnsDefinition}" th:id="${issueTableRows.getTableModel('').id}">
+                        <colgroup>
+                            <col th:each="c : ${issueTableRows.getTableModel('').columns}" th:classappend="|col-width-${c.width}|"/>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th th:each="c : ${issueTableRows.getTableModel('').columns}" th:classappend="${c.headerClass}" th:text="${c.headerLabel}"></th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </h5>
+        </div>
     </div>
-</div>
 
-<script src="/js/luxon.min.js"></script>
-<script src="/js/table.js"></script>
+    <script src="/js/luxon.min.js"></script>
+    <script src="/js/table.js"></script>
 </body>
 </html>

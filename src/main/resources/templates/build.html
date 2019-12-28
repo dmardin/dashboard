@@ -2,7 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="fragments/head :: includes"><title>Builds</title></head>
 <body>
+
+    <div th:replace="fragments/navigation :: navbar"></div>
+    <nav th:insert="fragments/navigationBreadCrumb :: nav(~{ :: .breadcrumb})">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Jenkins</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/job/{jobName}/build(jobName=${jobName})}" th:text="${jobName}"></a></li>
+        </ol>
+    </nav>
     <h1>Builds</h1>
+
     <div id="accordion">
         <th:block th:each="build, buildStat: ${job.getBuilds()}">
             <div class="card">

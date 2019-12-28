@@ -31,14 +31,7 @@ public class HomeController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @RequestMapping(path = {"/", "home"}, method = RequestMethod.GET)
-    public String home(final Model model) {
-        //TODO check if this is used!
-        logger.info("Normal GET was called");
-        return "home";
-    }
-
-    @RequestMapping(path = {"/", "home"}, method = RequestMethod.GET, params = {"getProjects"})
+    @RequestMapping(path = {"/", "home"}, method = RequestMethod.GET/*, params = {"getProjects"}*/)
     public String getProjects(final Model model) {
         logger.info("GET with Parameter was called");
         List<Job> jobs = jobService.createDistributionOfAllJobs();
@@ -52,6 +45,7 @@ public class HomeController {
         List<Job> jobs = jobService.createDistributionOfAllJobs();
         Job neededJob = jobs.stream().filter(job -> job.getName().equals(jobName)).findFirst().get();
         model.addAttribute("job", neededJob);
+        model.addAttribute("jobName", jobName);
         logger.info("Normal GET was called");
         return "build";
     }
@@ -64,6 +58,7 @@ public class HomeController {
         Job neededJob = jobs.stream().filter(job -> job.getName().equals(jobName)).findFirst().get();
         Build build = neededJob.getBuilds().stream().filter(b -> b.getNumber() == buildNumber).findFirst().get();
         model.addAttribute("build", build);
+        model.addAttribute("buildNumber",buildNumber);
         logger.info("Normal GET was called");
         return "result";
     }
@@ -79,6 +74,9 @@ public class HomeController {
 
         IssueViewTable issueViewTable = new IssueViewTable(new RepoStatistics());
         model.addAttribute("issueTableRows", issueViewTable);
+        model.addAttribute("toolId", toolId);
+        model.addAttribute("issueType", issueType);
+        model.addAttribute("toolIdWithIssueType", toolId + " / " + issueType);
         return "issue";
     }
 

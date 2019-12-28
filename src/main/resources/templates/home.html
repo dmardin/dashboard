@@ -2,10 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head th:replace="fragments/head :: includes"><title>Home</title></head>
 <body>
-    <h1>Home</h1>
-    <form action="/" method="get">
-        <button type="submit" name="getProjects" class="btn btn-success">Load Data</button>
-    </form>
+
+    <div th:replace="fragments/navigation :: navbar"></div>
+    <nav th:insert="fragments/navigationBreadCrumb :: nav(~{ :: .breadcrumb})">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Jenkins</a></li>
+        </ol>
+    </nav>
+    <h1>Projects</h1>
+
     <hr>
     <div id="accordion">
         <th:block th:each="job, jobStat: ${jobs}">
