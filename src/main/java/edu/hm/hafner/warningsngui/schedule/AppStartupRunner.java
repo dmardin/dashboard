@@ -43,6 +43,7 @@ public class AppStartupRunner implements ApplicationRunner {
         JobsResponse jobsResponse = restService.getProjects();
         logger.info("Start requesting Jobs");
         for (Job job : jobsResponse.getJobs()) {
+            job.setLastBuildStatus(getBuildStatusFromColor(job.getColor()));
 
             //Get Builds for every Job form Jenkins
             logger.info("Start requesting Builds for " + job.getName());
@@ -104,5 +105,16 @@ public class AppStartupRunner implements ApplicationRunner {
 
         jobService.saveAll(allJobs);
         logger.info("Requested data saved to database");
+    }
+
+    private String getBuildStatusFromColor(String color){
+        switch (color){
+            case "blue":
+                return "Success";
+            case "red":
+                return "Failed";
+            default:
+                return "Unknown Status for this Build";
+        }
     }
 }

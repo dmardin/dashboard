@@ -8,6 +8,7 @@ public class Job {
     private String name;
     private String url;
     private String color;
+    private String lastBuildStatus;
     private List<Build> builds = new ArrayList<>();
 
     public String getName() {
@@ -40,5 +41,13 @@ public class Job {
 
     public void setBuilds(List<Build> builds) {
         this.builds = builds;
+    }
+
+    public String getLastBuildStatus() {
+        return lastBuildStatus;
+    }
+
+    public void setLastBuildStatus(String lastBuildStatus) {
+        this.lastBuildStatus = lastBuildStatus;
     }
 }

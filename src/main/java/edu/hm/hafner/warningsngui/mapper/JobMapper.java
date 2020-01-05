@@ -11,7 +11,7 @@ public class JobMapper {
     public static Job map(JobEntity jobEntity) {
         Job job = new Job();
         job.setName(jobEntity.getName());
-        job.setColor(jobEntity.getColor());
+        job.setLastBuildStatus(jobEntity.getLastBuildStatus());
         job.setUrl(jobEntity.getUrl());
         job.setBuilds(BuildMapper.map(jobEntity.getBuildEntities(), job));
         return job;
@@ -24,7 +24,7 @@ public class JobMapper {
     public static JobEntity mapToEntity(Job job) {
         JobEntity jobEntity = new JobEntity();
         jobEntity.setName(job.getName());
-        jobEntity.setColor(job.getColor());
+        jobEntity.setLastBuildStatus(job.getLastBuildStatus());
         jobEntity.setUrl(job.getUrl());
         jobEntity.setBuildEntities(BuildMapper.mapToEntities(job.getBuilds(), jobEntity));
         return jobEntity;

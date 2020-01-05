@@ -13,7 +13,7 @@ public class JobEntity {
     private int id;
     private String name;
     private String url;
-    private String color;
+    private String lastBuildStatus;
 
     @OneToMany(fetch=FetchType.EAGER, mappedBy = "jobEntity", cascade = CascadeType.ALL)
     private List<BuildEntity> buildEntities = new ArrayList<>();
@@ -42,12 +42,12 @@ public class JobEntity {
         this.url = url;
     }
 
-    public String getColor() {
-        return color;
+    public String getLastBuildStatus() {
+        return lastBuildStatus;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setLastBuildStatus(String lastBuildStatus) {
+        this.lastBuildStatus = lastBuildStatus;
     }
 
     public List<BuildEntity> getBuildEntities() {
