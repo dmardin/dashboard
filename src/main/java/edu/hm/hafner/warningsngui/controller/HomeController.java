@@ -82,7 +82,7 @@ public class HomeController {
 
     @RequestMapping(path={"/ajax/job/{jobName}/build/{buildNumber}/{toolId}/{issueType}"}, method=RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public String getIssueData(
+    public List<Object> getIssueData(
             @PathVariable("jobName") String jobName,
             @PathVariable("buildNumber") Integer buildNumber,
             @PathVariable("toolId") String toolId,
@@ -111,7 +111,7 @@ public class HomeController {
         return convertDataForAjax(report);
     }
 
-    private String convertDataForAjax(Report report) {
+    private List<Object> convertDataForAjax(Report report) {
         RepoStatistics repositoryStatistics = new RepoStatistics();
         ArrayList<IssueStatistics> issueStatisticsList = new ArrayList<>();
         report.stream().forEach(issue -> {

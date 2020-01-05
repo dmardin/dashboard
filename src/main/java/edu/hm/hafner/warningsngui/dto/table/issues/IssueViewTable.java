@@ -1,9 +1,10 @@
 package edu.hm.hafner.warningsngui.dto.table.issues;
 
-import io.jenkins.plugins.datatables.api.DefaultAsyncTableContentProvider;
 import io.jenkins.plugins.datatables.api.TableModel;
 
-public class IssueViewTable extends DefaultAsyncTableContentProvider {
+import java.util.List;
+
+public class IssueViewTable {
 
     private final RepoStatistics repoStatistics;
 
@@ -11,8 +12,11 @@ public class IssueViewTable extends DefaultAsyncTableContentProvider {
         this.repoStatistics = repoStatistics;
     }
 
-    @Override
     public TableModel getTableModel(String s) {
         return new IssueTable(repoStatistics);
+    }
+
+    public List<Object> getTableRows(final String id) {
+        return getTableModel(id).getRows();
     }
 }
