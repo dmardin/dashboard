@@ -8,7 +8,7 @@ $(document).ready(
         var origin = $('#origin').text();
         var reference = $('#reference').text();
          */
-        $.get("ajax/checkstyle"/*, {origin: origin, reference: reference}*/,
+        $.get("ajax/chartX"/*, {origin: origin, reference: reference}*/,
             function (builds) {
                 // console.log("ajax is called for builds: ")
                 // console.log(builds);

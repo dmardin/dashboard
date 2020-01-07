@@ -6,7 +6,7 @@
  * @param {String} urlName - the URL to the results, if empty or unset then clicking on the chart is disabled
  */
 function renderTrendChart(chartDivId, model, urlName) {
-    var chartModel = JSON.parse(model);
+    var chartModel = model;
     var chartPlaceHolder = document.getElementById(chartDivId);
     var currentSelection; // the tooltip formatter will change this value while hoovering
 

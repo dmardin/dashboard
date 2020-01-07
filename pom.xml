@@ -29,6 +29,13 @@
 	</properties>
 
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/edu.hm.hafner/echarts-build-trends -->
+		<dependency>
+			<groupId>edu.hm.hafner</groupId>
+			<artifactId>echarts-build-trends</artifactId>
+			<version>0.1.0</version>
+		</dependency>
+
 		<!-- Jenkins api -->
 		<dependency>
 			<groupId>io.jenkins.plugins</groupId>
