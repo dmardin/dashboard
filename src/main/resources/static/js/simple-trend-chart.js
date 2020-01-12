@@ -59,7 +59,7 @@ function renderTrendChart(chartDivId, model, urlName) {
         xAxis: [{
             type: 'category',
             boundaryGap: false,
-            data: chartModel.xAxisLabels
+            data: chartModel.domainAxisLabels
         }
         ],
         yAxis: [{
