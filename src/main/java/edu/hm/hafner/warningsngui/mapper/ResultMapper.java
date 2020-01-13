@@ -22,6 +22,7 @@ public class ResultMapper {
         result.setInfoMessages(resultEntity.getInfoMessages());
         result.setQualityGateStatus(resultEntity.getQualityGateStatus());
         result.setBuild(build);
+        result.setTotalSize(resultEntity.getTotalSize());
         for (ReportEntity reportEntity : resultEntity.getReports()) {
             if(reportEntity.getWarningTypeEntity() == WarningTypeEntity.OUTSTANDING) {
                 result.setOutstandingIssues(ReportMapper.map(reportEntity));
