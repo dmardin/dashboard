@@ -12,6 +12,25 @@
     </nav>
     <h1>Builds</h1>
 
+    <div class="row">
+        <div class="col-3">
+            <div class="text-center"> Aggregated Analysis Results</div>
+            <div id="aggregated-analysis-results-history-chart" class="graph-cursor-pointer"
+                 style="width: 100%; min-height: 200px;"></div>
+        </div>
+        <div th:each="tool : ${usedtools}" class="col-3">
+            <div class="text-center" th:text="${tool} + ' Warnings Trend'"></div>
+            <div th:id="${tool} + '-history-chart'" class="graph-cursor-pointer"
+                 style="width: 100%; min-height: 200px;"></div>
+        </div>
+    </div>
+
+    <hr>
+
+
+
+
+
     <div id="accordion">
         <th:block th:each="build, buildStat: ${job.getBuilds()}">
             <div class="card">
@@ -47,5 +66,25 @@
             </div>
         </th:block>
     </div>
+
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        var usedtools = /*[[${usedtools}]]*/ 'default';
+        usedtools.forEach(tool => {
+            var urlParts = window.location.href.split('/');
+            urlParts.pop(); //TODO double pop!!! siehe anderes TODO
+            var lastSegment = urlParts.pop() || urlParts.pop();
+            $.get("/ajax/"+lastSegment+"/tool/"+tool,
+                function (builds) {
+                    var id = tool + "-history-chart";
+                    renderTrendChart(id, builds, "");
+                });
+        });
+
+        /*]]>*/
+    </script>
+    <script src="/js/simple-trend-chart.js"></script>
+    <script src="/js/aggregated-analysis-results.js"></script>
 </body>
 </html>
