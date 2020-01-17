@@ -8,7 +8,7 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Jenkins</a></li>
             <li class="breadcrumb-item"><a th:href="@{/job/{jobName}/build(jobName=${jobName})}" th:text="${jobName}"></a></li>
-            <li class="breadcrumb-item"><a th:href="@{/job/{jobName}/build/{buildNumber}(jobName=${jobName},buildNumber=${buildNumber})}" th:text="${buildNumber}"></a></li>
+            <li class="breadcrumb-item"><a th:href="@{/job/{jobName}/build/{buildNumber}(jobName=${jobName},buildNumber=${buildNumber})}" th:text="'#'+${buildNumber}"></a></li>
             <li class="breadcrumb-item"><a th:href="@{/job/{jobName}/build/{buildNumber}/{toolName}/{issueType}(jobName=${jobName},buildNumber=${buildNumber},toolName=${toolId},issueType=${issueType})}" th:text="${toolIdWithIssueType}"></a></li>
         </ol>
     </nav>

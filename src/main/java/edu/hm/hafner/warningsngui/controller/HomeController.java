@@ -76,6 +76,37 @@ public class HomeController {
         return "result";
     }
 
+    @RequestMapping(path={"/job/{jobName}/build/{buildNumber}/{toolId}"}, method=RequestMethod.GET)
+    public String getIssueHeadersForTool(
+            @PathVariable("jobName") String jobName,
+            @PathVariable("buildNumber") Integer buildNumber,
+            @PathVariable("toolId") String toolId,
+            final Model model) {
+
+        IssueViewTable issueViewTable = new IssueViewTable(new RepoStatistics());
+        model.addAttribute("issueTableRows", issueViewTable);
+        model.addAttribute("toolId", toolId);
+        model.addAttribute("toolIdWithIssueType", toolId);
+        return "issue";
+    }
+
+    @RequestMapping(path={"/ajax/job/{jobName}/build/{buildNumber}/{toolId}"}, method=RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public List<Object> getIssueDataForTool(
+            @PathVariable("jobName") String jobName,
+            @PathVariable("buildNumber") Integer buildNumber,
+            @PathVariable("toolId") String toolId) {
+        List<Job> jobs = jobService.createDistributionOfAllJobs();
+        Job neededJob = jobs.stream().filter(job -> job.getName().equals(jobName)).findFirst().get();
+        Build build = neededJob.getBuilds().stream().filter(b -> b.getNumber() == buildNumber).findFirst().get();
+        Result result = build.getResults().stream().filter(r -> r.getName().equals(toolId)).findFirst().get();
+        Report report = new Report();
+        report.addAll(result.getOutstandingIssues());
+        report.addAll(result.getNewIssues());
+
+        return convertDataForAjax(report);
+    }
+
     //http://localhost:8181/job/kniffel/build/4/checkstyle/outstanding
     @RequestMapping(path={"/job/{jobName}/build/{buildNumber}/{toolId}/{issueType}"}, method=RequestMethod.GET)
     public String getIssueHeaders(
