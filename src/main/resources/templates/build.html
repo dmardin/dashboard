@@ -3,34 +3,64 @@
 <head th:replace="fragments/head :: includes"><title>Builds</title></head>
 <body>
 
-    <div th:replace="fragments/navigation :: navbar"></div>
+    <!-- <div th:replace="fragments/navigation :: navbar"></div> -->
     <nav th:insert="fragments/navigationBreadCrumb :: nav(~{ :: .breadcrumb})">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Jenkins</a></li>
             <li class="breadcrumb-item"><a th:href="@{/job/{jobName}/build(jobName=${jobName})}" th:text="${jobName}"></a></li>
         </ol>
     </nav>
-    <h1>Builds</h1>
 
-    <div class="row">
-        <div class="col-3">
-            <div class="text-center"> Aggregated Analysis Results</div>
-            <div id="aggregated-analysis-results-history-chart" class="graph-cursor-pointer"
-                 style="width: 100%; min-height: 200px;"></div>
-        </div>
-        <div th:each="tool : ${usedtools}" class="col-3">
-            <div class="text-center" th:text="${tool} + ' Warnings Trend'"></div>
-            <div th:id="${tool} + '-history-chart'" class="graph-cursor-pointer"
-                 style="width: 100%; min-height: 200px;"></div>
+
+    <div class="container-fluid">
+        <h1>Builds</h1>
+        <div class="row">
+            <div class="col-6">
+                <h2>Specific builds</h2>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Build Number</th>
+                        <th>Url</th>
+                    </tr>
+                    </thead>
+                    <tbody th:each="build, buildStat: ${job.getBuilds()}">
+                    <tr>
+                        <td>
+                            <a th:href="@{/job/{jobName}/build/{buildNumber}(jobName=${job.name},buildNumber=${build.number})}">
+                                <span th:text="${'#'+ build.number}"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="${build.url}" th:target="_blank">
+                                <span th:text="${build.url}"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="col-6">
+                <h2>History of the Builds</h2>
+                <div class="row">
+                    <div class="col-6">
+                        <div class="text-center"> Aggregated Analysis Results</div>
+                        <div id="aggregated-analysis-results-history-chart" class="graph-cursor-pointer"
+                             style="width: 100%; min-height: 200px;"></div>
+                    </div>
+                    <div th:each="tool : ${usedtools}" class="col-6">
+                        <div class="text-center" th:text="${tool} + ' Warnings Trend'"></div>
+                        <div th:id="${tool} + '-history-chart'" class="graph-cursor-pointer"
+                             style="width: 100%; min-height: 200px;"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <hr>
 
-
-
-
-
+    <!--
     <div id="accordion">
         <th:block th:each="build, buildStat: ${job.getBuilds()}">
             <div class="card">
@@ -66,6 +96,7 @@
             </div>
         </th:block>
     </div>
+    -->
 
 
     <script th:inline="javascript">

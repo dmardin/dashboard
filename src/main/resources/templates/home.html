@@ -3,15 +3,42 @@
 <head th:replace="fragments/head :: includes"><title>Home</title></head>
 <body>
 
-    <div th:replace="fragments/navigation :: navbar"></div>
+    <!-- <div th:replace="fragments/navigation :: navbar"></div> -->
     <nav th:insert="fragments/navigationBreadCrumb :: nav(~{ :: .breadcrumb})">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">Jenkins</a></li>
         </ol>
     </nav>
-    <h1>Projects</h1>
 
-    <hr>
+    <div class="container-fluid">
+        <h1>Projects</h1>
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Job Name</th>
+                <th>Status</th>
+                <th>Url</th>
+            </tr>
+            </thead>
+            <tbody th:each="job, jobStat: ${jobs}">
+            <tr>
+                <td>
+                    <a th:href="@{/job/{jobName}/build(jobName=${job.name})}">
+                        <span th:text="${job.name}"></span>
+                    </a>
+                </td>
+                <td th:text="${job.lastBuildStatus}"></td>
+                <td>
+                    <a th:href="${job.url}" th:target="_blank">
+                        <span th:text="${job.url}"></span>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!--
     <div id="accordion">
         <th:block th:each="job, jobStat: ${jobs}">
             <div class="card">
@@ -49,7 +76,7 @@
                 </div>
             </div>
         </th:block>
-    </div>
+    </div> -->
 
     <script src="js/pie-chart.js"></script>
     <script src="js/trend-chart.js"></script>
