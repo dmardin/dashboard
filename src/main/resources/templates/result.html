@@ -16,70 +16,80 @@
     <h1>Results</h1>
     <th:block th:each="result, resultStat: ${build.getResults()}">
         <h2 th:text="${result.name}"></h2>
-        <table class="table able-hover">
-            <thead>
-            <tr>
-                <th>Fixed Size</th>
-                <th>New Size</th>
-                <th>Outstanding Size</th>
-                <th>Total Size</th>
-                <th>Quality Gate Status</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>
-                    <a th:href="@{/job/{jobName}/build/{buildNumber}/{toolName}/fixed(jobName=${build.job.name},buildNumber=${build.number},toolName=${result.name})}">
-                        <span th:text="${result.fixedSize}"></span>
-                    </a>
-                </td>
-                <td>
-                    <a th:href="@{/job/{jobName}/build/{buildNumber}/{toolName}/new(jobName=${build.job.name},buildNumber=${build.number},toolName=${result.name})}">
-                        <span th:text="${result.newSize}"></span>
-                    </a>
-                </td>
-                <td>
-                    <a th:href="@{/job/{jobName}/build/{buildNumber}/{toolName}/outstanding(jobName=${build.job.name},buildNumber=${build.number},toolName=${result.name})}">
-                        <span th:text="${result.totalSize - result.newSize}"></span>
-                    </a>
-                </td>
-                <td>
-                    <a th:href="@{/job/{jobName}/build/{buildNumber}/{toolName}(jobName=${build.job.name},buildNumber=${build.number},toolName=${result.name})}">
-                        <span th:text="${result.totalSize}"></span>
-                    </a>
-                </td>
-                <td th:text="${result.qualityGateStatus}"></td>
-            </tr>
-            </tbody>
-        </table>
-        <div id="accordion" class="row">
-            <div class="col-6">
-                <div class="card-header">
-                    <h5 class="mb-0">
-                        <button class="btn btn-link collapsed" data-toggle="collapse" th:href="'#collapseInfoMessages' + ${resultStat.index}" aria-controls="collapse" th:text="'Info Messages'">
-                        </button>
-                    </h5>
-                </div>
-                <div th:id="'collapseInfoMessages' + ${resultStat.index}" class="collapse" aria-labelledby="heading" data-parent="#accordion">
-                    <div class="card-body">
-                        <div th:text="${result.infoMessages}"></div>
+
+        <div class="row">
+            <div class="col-9">
+                <table class="table able-hover">
+                    <thead>
+                    <tr>
+                        <th>Fixed Size</th>
+                        <th>New Size</th>
+                        <th>Outstanding Size</th>
+                        <th>Total Size</th>
+                        <th>Quality Gate Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <a th:href="@{/job/{jobName}/build/{buildNumber}/{toolName}/fixed(jobName=${build.job.name},buildNumber=${build.number},toolName=${result.name})}">
+                                <span th:text="${result.fixedSize}"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/job/{jobName}/build/{buildNumber}/{toolName}/new(jobName=${build.job.name},buildNumber=${build.number},toolName=${result.name})}">
+                                <span th:text="${result.newSize}"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/job/{jobName}/build/{buildNumber}/{toolName}/outstanding(jobName=${build.job.name},buildNumber=${build.number},toolName=${result.name})}">
+                                <span th:text="${result.totalSize - result.newSize}"></span>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/job/{jobName}/build/{buildNumber}/{toolName}(jobName=${build.job.name},buildNumber=${build.number},toolName=${result.name})}">
+                                <span th:text="${result.totalSize}"></span>
+                            </a>
+                        </td>
+                        <td th:text="${result.qualityGateStatus}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div id="accordion" class="row">
+                    <div class="col-6">
+                        <div class="card-header">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" th:href="'#collapseInfoMessages' + ${resultStat.index}" aria-controls="collapse" th:text="'Info Messages'">
+                                </button>
+                            </h5>
+                        </div>
+                        <div th:id="'collapseInfoMessages' + ${resultStat.index}" class="collapse" aria-labelledby="heading" data-parent="#accordion">
+                            <div class="card-body">
+                                <div th:text="${result.infoMessages}"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card-header">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" th:href="'#collapseErrorMessages' + ${resultStat.index}" aria-controls="collapse" th:text="'Error Messages'">
+                                </button>
+                            </h5>
+                        </div>
+                        <div th:id="'collapseErrorMessages' + ${resultStat.index}" class="collapse" aria-labelledby="heading" data-parent="#accordion">
+                            <div class="card-body">
+                                <div th:text="${result.errorMessages}"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-6">
-                <div class="card-header">
-                    <h5 class="mb-0">
-                        <button class="btn btn-link collapsed" data-toggle="collapse" th:href="'#collapseErrorMessages' + ${resultStat.index}" aria-controls="collapse" th:text="'Error Messages'">
-                        </button>
-                    </h5>
-                </div>
-                <div th:id="'collapseErrorMessages' + ${resultStat.index}" class="collapse" aria-labelledby="heading" data-parent="#accordion">
-                    <div class="card-body">
-                        <div th:text="${result.errorMessages}"></div>
-                    </div>
-                </div>
+            <div class="col-3">
+                <div th:id="'grafik'+ ${resultStat.index}" class="graph-cursor-pointer"
+                     style="width: 100%; min-height: 200px;"></div>
             </div>
         </div>
+        <hr>
     </th:block>
     </div>
 
@@ -132,5 +142,27 @@
         </th:block>
     </div>
     -->
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        <!-- var usedtools = /*[[${usedtools}]]*/ 'default'; -->
+        $.get("/ajax/grafik",
+            function (StringObject) {
+                grafik(StringObject, "0");
+            }
+        );
+        $.get("/ajax/grafik",
+            function (StringObject) {
+                grafik(StringObject, "1");
+            }
+        );
+        $.get("/ajax/grafik",
+            function (StringObject) {
+                grafik(StringObject, "2");
+            }
+        );
+        /*]]>*/
+    </script>
+    <script src="/js/grafik.js"></script>
 </body>
 </html>

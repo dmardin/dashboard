@@ -182,6 +182,106 @@ public class HomeController {
         return createTestResponseFrom();
     }
 
+    @RequestMapping(path = "/ajax/grafik", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    Object getGrafik() {
+//        Job job = jobRepository.fetchJobWithId(1);
+        return grafik();
+    }
+
+    private ResponseEntity<String> grafik() {
+        String test = "{\n" +
+                "  \"series\": [\n" +
+                "    {\n" +
+                "      \"name\": \"Old Total Size\",\n" +
+                "      \"type\": \"bar\",\n" +
+                "      \"data\": [\n" +
+                "        320\n" +
+                "      ],\n" +
+                "      \"label\": {\n" +
+                "        \"show\": true,\n" +
+                "        \"position\": \"inside\"\n" +
+                "      }\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Fixed\",\n" +
+                "      \"type\": \"bar\",\n" +
+                "      \"stack\": \"a\",\n" +
+                "      \"data\": [\n" +
+                "        120\n" +
+                "      ],\n" +
+                "      \"label\": {\n" +
+                "        \"show\": true,\n" +
+                "        \"position\": \"inside\"\n" +
+                "      }\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"Outstanding\",\n" +
+                "      \"type\": \"bar\",\n" +
+                "      \"stack\": \"a\",\n" +
+                "      \"data\": [\n" +
+                "        200\n" +
+                "      ],\n" +
+                "      \"label\": {\n" +
+                "        \"show\": true,\n" +
+                "        \"position\": \"inside\"\n" +
+                "      }\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"New\",\n" +
+                "      \"type\": \"bar\",\n" +
+                "      \"stack\": \"a\",\n" +
+                "      \"data\": [\n" +
+                "        50\n" +
+                "      ],\n" +
+                "      \"label\": {\n" +
+                "        \"show\": true,\n" +
+                "        \"position\": \"inside\"\n" +
+                "      }\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"\",\n" +
+                "      \"type\": \"bar\",\n" +
+                "      \"stack\": \"b\",\n" +
+                "      \"itemStyle\": {\n" +
+                "        \"barBorderColor\": \"rgba(0,0,0,0)\",\n" +
+                "        \"color\": \"rgba(0,0,0,0)\"\n" +
+                "      },\n" +
+                "      \"emphasis\": {\n" +
+                "        \"itemStyle\": {\n" +
+                "          \"barBorderColor\": \"rgba(0,0,0,0)\",\n" +
+                "          \"color\": \"rgba(0,0,0,0)\"\n" +
+                "        }\n" +
+                "      },\n" +
+                "      \"data\": [\n" +
+                "        120\n" +
+                "      ]\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"name\": \"New Total Size\",\n" +
+                "      \"type\": \"bar\",\n" +
+                "      \"stack\": \"b\",\n" +
+                "      \"data\": [\n" +
+                "        250\n" +
+                "      ],\n" +
+                "      \"label\": {\n" +
+                "        \"show\": true,\n" +
+                "        \"position\": \"inside\"\n" +
+                "      }\n" +
+                "    }\n" +
+                "  ],\n" +
+                "\"legendData\": [\n" +
+                "    \"Old Total Size\",\n" +
+                "    \"Fixed\",\n" +
+                "    \"Outstanding\",\n" +
+                "    \"New\",\n" +
+                "    \"New Total Size\"\n" +
+                "  ]\n" +
+
+                "}";
+        return ResponseEntity.ok(new Gson().toJson(test));
+    }
+
     private ResponseEntity<String> createTestResponseFrom() {
         String testResponse = "{\n" +
                 "   \"series\":[\n" +
