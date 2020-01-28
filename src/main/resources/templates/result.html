@@ -85,7 +85,7 @@
                 </div>
             </div>
             <div class="col-3">
-                <div th:id="'grafik'+ ${resultStat.index}" class="graph-cursor-pointer"
+                <div th:id="'result-summarize-'+ ${result.name}" class="graph-cursor-pointer"
                      style="width: 100%; min-height: 200px;"></div>
             </div>
         </div>
@@ -95,24 +95,24 @@
 
     <script th:inline="javascript">
         /*<![CDATA[*/
-        <!-- var usedtools = /*[[${usedtools}]]*/ 'default'; -->
-        $.get("/ajax/grafik",
-            function (StringObject) {
-                grafik(StringObject, "0");
-            }
-        );
-        $.get("/ajax/grafik",
-            function (StringObject) {
-                grafik(StringObject, "1");
-            }
-        );
-        $.get("/ajax/grafik",
-            function (StringObject) {
-                grafik(StringObject, "2");
-            }
-        );
+        const build = /*[[${build}]]*/ 'default';
+        const jobName = build.job.name;
+        const buildNumber = build.number;
+        const results = build.results;
+
+        let i;
+        for (i = 0; i < results.length; i++) {
+            const toolName = results[i].name;
+            const url = "/ajax/job/"+ jobName + "/build/"+ buildNumber + "/"+ toolName +"/result";
+            $.get(url,
+                function (jsonResponseModel) {
+                    resultSummarize(jsonResponseModel, toolName);
+                }
+            );
+        }
         /*]]>*/
+
     </script>
-    <script src="/js/grafik.js"></script>
+    <script src="/js/result-summarize.js"></script>
 </body>
 </html>

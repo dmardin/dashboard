@@ -11,6 +11,8 @@ import edu.hm.hafner.warningsngui.dto.Result;
 import edu.hm.hafner.warningsngui.dto.table.issues.IssueStatistics;
 import edu.hm.hafner.warningsngui.dto.table.issues.IssueViewTable;
 import edu.hm.hafner.warningsngui.dto.table.issues.RepoStatistics;
+import edu.hm.hafner.warningsngui.echart.BarChartModel;
+import edu.hm.hafner.warningsngui.echart.ResultChart;
 import edu.hm.hafner.warningsngui.echart.ToolTrendChart;
 import edu.hm.hafner.warningsngui.service.JobService;
 import org.slf4j.Logger;
@@ -181,26 +183,35 @@ public class HomeController {
 //        Job job = jobRepository.fetchJobWithId(1);
         return createTestResponseFrom();
     }
-
-    @RequestMapping(path = "/ajax/grafik", method = RequestMethod.GET, produces = "application/json")
+    
+    @RequestMapping(path={"/ajax/job/{jobName}/build/{buildNumber}/{toolName}/result"}, method=RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    Object getGrafik() {
-//        Job job = jobRepository.fetchJobWithId(1);
-        return grafik();
+    BarChartModel getResultSummarize(@PathVariable("jobName") String jobName,
+                     @PathVariable("buildNumber") Integer buildNumber,
+                     @PathVariable("toolName") String toolName) {
+        List<Job> jobs = jobService.createDistributionOfAllJobs();
+        Job neededJob = jobs.stream().filter(job -> job.getName().equals(jobName)).findFirst().get();
+        Build neededBuild = neededJob.getBuilds().stream().filter(b -> b.getNumber() == buildNumber).findFirst().get();
+        Result result = neededBuild.getResults().stream().filter(r -> r.getName().equals(toolName)).findFirst().get();
+
+        ResultChart resultChart = new ResultChart();
+        BarChartModel model = resultChart.create(result);
+
+        return model;
     }
 
-    private ResponseEntity<String> grafik() {
+    private ResponseEntity<String> grafik(Integer oldSize, Integer fixed, Integer outstanding, Integer newIssues, Integer newTotalSize) {
         String test = "{\n" +
                 "  \"series\": [\n" +
                 "    {\n" +
                 "      \"name\": \"Old Total Size\",\n" +
                 "      \"type\": \"bar\",\n" +
                 "      \"data\": [\n" +
-                "        320\n" +
+                "        "+oldSize+"\n" +
                 "      ],\n" +
                 "      \"label\": {\n" +
-                "        \"show\": true,\n" +
-                "        \"position\": \"inside\"\n" +
+                "        \"show\": false,\n" +
+                "        \"position\": \"top\"\n" +
                 "      }\n" +
                 "    },\n" +
                 "    {\n" +
@@ -208,11 +219,11 @@ public class HomeController {
                 "      \"type\": \"bar\",\n" +
                 "      \"stack\": \"a\",\n" +
                 "      \"data\": [\n" +
-                "        120\n" +
+                "        "+fixed+"\n" +
                 "      ],\n" +
                 "      \"label\": {\n" +
-                "        \"show\": true,\n" +
-                "        \"position\": \"inside\"\n" +
+                "        \"show\": false,\n" +
+                "        \"position\": \"top\"\n" +
                 "      }\n" +
                 "    },\n" +
                 "    {\n" +
@@ -220,11 +231,11 @@ public class HomeController {
                 "      \"type\": \"bar\",\n" +
                 "      \"stack\": \"a\",\n" +
                 "      \"data\": [\n" +
-                "        200\n" +
+                "        "+outstanding+"\n" +
                 "      ],\n" +
                 "      \"label\": {\n" +
-                "        \"show\": true,\n" +
-                "        \"position\": \"inside\"\n" +
+                "        \"show\": false,\n" +
+                "        \"position\": \"top\"\n" +
                 "      }\n" +
                 "    },\n" +
                 "    {\n" +
@@ -232,11 +243,11 @@ public class HomeController {
                 "      \"type\": \"bar\",\n" +
                 "      \"stack\": \"a\",\n" +
                 "      \"data\": [\n" +
-                "        50\n" +
+                "        "+newIssues+"\n" +
                 "      ],\n" +
                 "      \"label\": {\n" +
-                "        \"show\": true,\n" +
-                "        \"position\": \"inside\"\n" +
+                "        \"show\": false,\n" +
+                "        \"position\": \"top\"\n" +
                 "      }\n" +
                 "    },\n" +
                 "    {\n" +
@@ -254,7 +265,7 @@ public class HomeController {
                 "        }\n" +
                 "      },\n" +
                 "      \"data\": [\n" +
-                "        120\n" +
+                "        "+fixed+"\n" +
                 "      ]\n" +
                 "    },\n" +
                 "    {\n" +
@@ -262,11 +273,11 @@ public class HomeController {
                 "      \"type\": \"bar\",\n" +
                 "      \"stack\": \"b\",\n" +
                 "      \"data\": [\n" +
-                "        250\n" +
+                "        "+newTotalSize+"\n" +
                 "      ],\n" +
                 "      \"label\": {\n" +
-                "        \"show\": true,\n" +
-                "        \"position\": \"inside\"\n" +
+                "        \"show\": false,\n" +
+                "        \"position\": \"top\"\n" +
                 "      }\n" +
                 "    }\n" +
                 "  ],\n" +

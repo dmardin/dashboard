@@ -1,5 +1,7 @@
 package edu.hm.hafner.warningsngui.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,6 +9,8 @@ public class Build {
 
     private int number;
     private String url;
+
+    @JsonIgnoreProperties("builds")
     private Job job;
     private List<Result> results = new ArrayList<>();
 

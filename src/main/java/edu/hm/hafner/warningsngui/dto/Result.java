@@ -1,5 +1,6 @@
 package edu.hm.hafner.warningsngui.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import edu.hm.hafner.analysis.Report;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class Result {
     private String qualityGateStatus;
     private int totalSize;
 
+    @JsonIgnoreProperties("results")
     private Build build;
     private List<String> errorMessages = new ArrayList<>();
     private List<String> infoMessages = new ArrayList<>();
