@@ -1,6 +1,5 @@
 package edu.hm.hafner.warningsngui.controller;
 
-import com.google.gson.Gson;
 import edu.hm.hafner.analysis.Report;
 import edu.hm.hafner.echarts.BuildResult;
 import edu.hm.hafner.echarts.ChartModelConfiguration;
@@ -18,7 +17,6 @@ import edu.hm.hafner.warningsngui.service.JobService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,7 +63,6 @@ public class HomeController {
         return "build";
     }
 
-    // /job/kniffel/build/6
     @RequestMapping(path={"/job/{jobName}/build/{buildNumber}"}, method=RequestMethod.GET)
     public String getResults(@PathVariable("jobName") String jobName, @PathVariable("buildNumber") Integer buildNumber,final Model model) {
         //TODO check if this is used!
@@ -109,7 +106,6 @@ public class HomeController {
         return convertDataForAjax(report);
     }
 
-    //http://localhost:8181/job/kniffel/build/4/checkstyle/outstanding
     @RequestMapping(path={"/job/{jobName}/build/{buildNumber}/{toolId}/{issueType}"}, method=RequestMethod.GET)
     public String getIssueHeaders(
             @PathVariable("jobName") String jobName,
@@ -176,13 +172,6 @@ public class HomeController {
         IssueViewTable issueViewTable = new IssueViewTable(repositoryStatistics);
         return issueViewTable.getTableRows("issues");
     }
-
-    @RequestMapping(path = "/ajax/checkstyle", method = RequestMethod.GET, produces = "application/json")
-    @ResponseBody
-    ResponseEntity<String> getCheckstyle() {
-//        Job job = jobRepository.fetchJobWithId(1);
-        return createTestResponseFrom();
-    }
     
     @RequestMapping(path={"/ajax/job/{jobName}/build/{buildNumber}/{toolName}/result"}, method=RequestMethod.GET, produces = "application/json")
     @ResponseBody
@@ -198,154 +187,6 @@ public class HomeController {
         BarChartModel model = resultChart.create(result);
 
         return model;
-    }
-
-    private ResponseEntity<String> grafik(Integer oldSize, Integer fixed, Integer outstanding, Integer newIssues, Integer newTotalSize) {
-        String test = "{\n" +
-                "  \"series\": [\n" +
-                "    {\n" +
-                "      \"name\": \"Old Total Size\",\n" +
-                "      \"type\": \"bar\",\n" +
-                "      \"data\": [\n" +
-                "        "+oldSize+"\n" +
-                "      ],\n" +
-                "      \"label\": {\n" +
-                "        \"show\": false,\n" +
-                "        \"position\": \"top\"\n" +
-                "      }\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"name\": \"Fixed\",\n" +
-                "      \"type\": \"bar\",\n" +
-                "      \"stack\": \"a\",\n" +
-                "      \"data\": [\n" +
-                "        "+fixed+"\n" +
-                "      ],\n" +
-                "      \"label\": {\n" +
-                "        \"show\": false,\n" +
-                "        \"position\": \"top\"\n" +
-                "      }\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"name\": \"Outstanding\",\n" +
-                "      \"type\": \"bar\",\n" +
-                "      \"stack\": \"a\",\n" +
-                "      \"data\": [\n" +
-                "        "+outstanding+"\n" +
-                "      ],\n" +
-                "      \"label\": {\n" +
-                "        \"show\": false,\n" +
-                "        \"position\": \"top\"\n" +
-                "      }\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"name\": \"New\",\n" +
-                "      \"type\": \"bar\",\n" +
-                "      \"stack\": \"a\",\n" +
-                "      \"data\": [\n" +
-                "        "+newIssues+"\n" +
-                "      ],\n" +
-                "      \"label\": {\n" +
-                "        \"show\": false,\n" +
-                "        \"position\": \"top\"\n" +
-                "      }\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"name\": \"\",\n" +
-                "      \"type\": \"bar\",\n" +
-                "      \"stack\": \"b\",\n" +
-                "      \"itemStyle\": {\n" +
-                "        \"barBorderColor\": \"rgba(0,0,0,0)\",\n" +
-                "        \"color\": \"rgba(0,0,0,0)\"\n" +
-                "      },\n" +
-                "      \"emphasis\": {\n" +
-                "        \"itemStyle\": {\n" +
-                "          \"barBorderColor\": \"rgba(0,0,0,0)\",\n" +
-                "          \"color\": \"rgba(0,0,0,0)\"\n" +
-                "        }\n" +
-                "      },\n" +
-                "      \"data\": [\n" +
-                "        "+fixed+"\n" +
-                "      ]\n" +
-                "    },\n" +
-                "    {\n" +
-                "      \"name\": \"New Total Size\",\n" +
-                "      \"type\": \"bar\",\n" +
-                "      \"stack\": \"b\",\n" +
-                "      \"data\": [\n" +
-                "        "+newTotalSize+"\n" +
-                "      ],\n" +
-                "      \"label\": {\n" +
-                "        \"show\": false,\n" +
-                "        \"position\": \"top\"\n" +
-                "      }\n" +
-                "    }\n" +
-                "  ],\n" +
-                "\"legendData\": [\n" +
-                "    \"Old Total Size\",\n" +
-                "    \"Fixed\",\n" +
-                "    \"Outstanding\",\n" +
-                "    \"New\",\n" +
-                "    \"New Total Size\"\n" +
-                "  ]\n" +
-
-                "}";
-        return ResponseEntity.ok(new Gson().toJson(test));
-    }
-
-    private ResponseEntity<String> createTestResponseFrom() {
-        String testResponse = "{\n" +
-                "   \"series\":[\n" +
-                "      {\n" +
-                "         \"name\":\"Error\",\n" +
-                "         \"type\":\"line\",\n" +
-                "         \"symbol\":\"circle\",\n" +
-                "         \"data\":[\n" +
-                "            1869,\n" +
-                "            1869,\n" +
-                "            1831,\n" +
-                "            1791,\n" +
-                "            1791,\n" +
-                "            1730,\n" +
-                "            1693,\n" +
-                "            1567,\n" +
-                "            1517,\n" +
-                "            1353,\n" +
-                "            1265,\n" +
-                "            1227,\n" +
-                "            1172,\n" +
-                "            1180,\n" +
-                "            1172\n" +
-                "         ],\n" +
-                "         \"itemStyle\":{\n" +
-                "            \"color\":\"#EF9A9A\"\n" +
-                "         },\n" +
-                "         \"areaStyle\":{\n" +
-                "            \"normal\":true\n" +
-                "         },\n" +
-                "         \"stack\":\"stacked\"\n" +
-                "      }\n" +
-                "   ],\n" +
-                "   \"id\":\"\",\n" +
-                "   \"xAxisLabels\":[\n" +
-                "      \"#3\",\n" +
-                "      \"#4\",\n" +
-                "      \"#5\",\n" +
-                "      \"#6\",\n" +
-                "      \"#7\",\n" +
-                "      \"#8\",\n" +
-                "      \"#9\",\n" +
-                "      \"#10\",\n" +
-                "      \"#11\",\n" +
-                "      \"#12\",\n" +
-                "      \"#13\",\n" +
-                "      \"#14\",\n" +
-                "      \"#15\",\n" +
-                "      \"#16\",\n" +
-                "      \"#17\"\n" +
-                "   ]\n" +
-                "}";
-        return ResponseEntity.ok(new Gson().toJson(testResponse));
     }
 
     @RequestMapping(path={"/ajax/aggregatedAnalysisResults/{jobName}"}, method=RequestMethod.GET, produces = "application/json")
@@ -393,19 +234,6 @@ public class HomeController {
 
         ToolTrendChart toolTrendChart = new ToolTrendChart();
         LinesChartModel model = toolTrendChart.create(results, new ChartModelConfiguration());
-
-        /*
-        ToolSeriesBuilder builder = new ToolSeriesBuilder();
-        LinesDataSet dataSet = builder.createDataSet(new ChartModelConfiguration(), results);
-
-        LinesChartModel model = new LinesChartModel();
-        model.setDomainAxisLabels(dataSet.getDomainAxisLabels());
-        model.setBuildNumbers(dataSet.getBuildNumbers());
-        List<Integer> error1 = dataSet.getSeries("checkstyle");
-        LineSeries lineSeries = new LineSeries("checkstyle Fixed", "#c660ff", LineSeries.StackedMode.STACKED, LineSeries.FilledMode.FILLED);
-        lineSeries.addAll(error1);
-        model.addSeries(lineSeries);
-        */
 
         return model;
     }
