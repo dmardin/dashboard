@@ -8,7 +8,7 @@ import java.util.List;
 
 public class BarChartModel {
     private final List<BarSeries> series = new ArrayList<>();
-    private final List<String> legendData = new ArrayList<>();
+    private final List<String> legend = new ArrayList<>();
 
     private String id;
 
@@ -40,15 +40,15 @@ public class BarChartModel {
         return series;
     }
 
-    void addLegendData(final List<String> legendDatas) {
-        legendData.addAll(legendDatas);
+    void addLegend(final List<String> legends) {
+        legend.addAll(legends);
     }
 
-    public void addLegendDatas(final String... legendDatas) {
-        Collections.addAll(legendData, legendDatas);
+    public void addLegends(final String... legends) {
+        Collections.addAll(legend, legends);
     }
 
-    public List<String> getLegendData() {
-        return legendData;
+    public List<String> getLegend() {
+        return legend;
     }
 }

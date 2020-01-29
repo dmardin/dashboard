@@ -10,21 +10,22 @@ function resultSummarize(model, i) {
                 type: 'shadow'
             },
             formatter: function (params) {
-                const colorSpan = color => '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + color + '"></span>';
-                let tar = params[1].name;
-                let i;
-                //TODO fix bug with selection in grafic
-                for (i = 0; i < params.length; i++) {
-                    if (i !== 4) {
-                        const param = params[i];
-                        tar = tar + '<br/>' + colorSpan(param.color) + ' ' + param.seriesName + ' : ' + param.value;
+                if(typeof params[0] !== "undefined"){
+                    const colorSpan = color => '<span style="display:inline-block;margin-right:5px;border-radius:10px;width:9px;height:9px;background-color:' + color + '"></span>';
+                    let text = params[0].name; //heading of the Tooltip
+                    let i;
+                    for (i = 0; i < params.length; i++) {
+                        if (params[i].seriesName !== "") {
+                            const param = params[i];
+                            text = text + '<br/>' + colorSpan(param.color) + ' ' + param.seriesName + ' : ' + param.value;
+                        }
                     }
+                    return text;
                 }
-                return tar;
             }
         },
         legend: {
-            data: model.legendData
+            data: model.legend
         },
         grid: {
             left: '3%',

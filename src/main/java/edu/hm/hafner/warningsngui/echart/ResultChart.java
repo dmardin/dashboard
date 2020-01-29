@@ -47,7 +47,7 @@ public class ResultChart {
         }
 
         List<String> resultToolValues = Arrays.stream(ResultToolElement.values()).filter(element -> !element.getName().isEmpty()).map(ResultToolElement::getName).collect(Collectors.toList());
-        model.addLegendData(resultToolValues);
+        model.addLegend(resultToolValues);
 
         return model;
     }
