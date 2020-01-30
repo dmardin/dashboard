@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title></title>
@@ -7,7 +7,7 @@
 <body>
 <nav th:fragment="nav(breadcrumb)" aria-label="breadcrumb">
     <ol class="breadcrumb" th:replace="${breadcrumb}">
-        <li class="breadcrumb-item"><a href="/">Jenkins</a></li>
+        <li class="breadcrumb-item"><a href="/" th:text="#{jenkins}"></a></li>
     </ol>
 </nav>
 </body>
