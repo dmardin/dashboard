@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/head :: includes"><title>Builds</title></head>
+<body>
+    <nav th:insert="fragments/navigationBreadCrumb :: nav(~{ :: .breadcrumb})">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Jenkins</a></li>
+            <li class="breadcrumb-item"><a th:href="@{/job/{jobName}/build(jobName=${jobName})}" th:text="${jobName}"></a></li>
+            <li class="breadcrumb-item"><a th:href="@{/job/{jobName}/build/{buildNumber}(jobName=${jobName},buildNumber=${buildNumber})}" th:text="'#'+${buildNumber}"></a></li>
+            <li class="breadcrumb-item"><a th:href="@{/job/{jobName}/build/{buildNumber}/{toolName}/messages(jobName=${jobName},buildNumber=${buildNumber},toolName=${toolId})}" th:text="${toolIdWithMessage}"></a></li>
+        </ol>
+    </nav>
+
+    <div class="container-fluid">
+        <h1>Messages of the Result</h1>
+
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Info Messages</h2>
+                <div th:if="${infoMessages.isEmpty()}">
+                    <samp>
+                        <div th:text="'No Info Messages available'"></div>
+                    </samp>
+                </div>
+                <div th:unless="${infoMessages.isEmpty()}">
+                    <samp>
+                        <th:block th:each="line, lineStat: ${infoMessages}">
+                            <div th:text="${line}"></div>
+                        </th:block>
+                    </samp>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Error Messages</h2>
+                <div th:if="${errorMessages.isEmpty()}">
+                    <samp>
+                        <div th:text="'No Error Messages available'"></div>
+                    </samp>
+                </div>
+                <div th:unless="${errorMessages.isEmpty()}">
+                    <samp>
+                        <th:block th:each="line, lineStat: ${errorMessages}">
+                            <div th:text="${line}"></div>
+                        </th:block>
+                    </samp>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

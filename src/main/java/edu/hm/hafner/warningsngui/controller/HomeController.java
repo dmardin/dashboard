@@ -106,6 +106,24 @@ public class HomeController {
         return convertDataForAjax(report);
     }
 
+    @RequestMapping(path={"/job/{jobName}/build/{buildNumber}/{toolId}/messages"}, method=RequestMethod.GET)
+    public String getInfoAndErrorMessages(
+            @PathVariable("jobName") String jobName,
+            @PathVariable("buildNumber") Integer buildNumber,
+            @PathVariable("toolId") String toolId,
+            final Model model) {
+        List<Job> jobs = jobService.createDistributionOfAllJobs();
+        Job neededJob = jobs.stream().filter(job -> job.getName().equals(jobName)).findFirst().get();
+        Build build = neededJob.getBuilds().stream().filter(b -> b.getNumber() == buildNumber).findFirst().get();
+        Result result = build.getResults().stream().filter(r -> r.getName().equals(toolId)).findFirst().get();
+
+        model.addAttribute("infoMessages", result.getInfoMessages());
+        model.addAttribute("errorMessages", result.getErrorMessages());
+        model.addAttribute("toolId", toolId);
+        model.addAttribute("toolIdWithMessage", toolId + " / messages");
+        return "message";
+    }
+
     @RequestMapping(path={"/job/{jobName}/build/{buildNumber}/{toolId}/{issueType}"}, method=RequestMethod.GET)
     public String getIssueHeaders(
             @PathVariable("jobName") String jobName,

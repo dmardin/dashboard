@@ -19,7 +19,7 @@
 
         <div class="row">
             <div class="col-9">
-                <table class="table able-hover">
+                <table class="table table-bordered">
                     <thead>
                     <tr>
                         <th>Fixed Size</th>
@@ -55,33 +55,10 @@
                     </tr>
                     </tbody>
                 </table>
-                <div id="accordion" class="row">
-                    <div class="col-6">
-                        <div class="card-header">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link collapsed" data-toggle="collapse" th:href="'#collapseInfoMessages' + ${resultStat.index}" aria-controls="collapse" th:text="'Info Messages'">
-                                </button>
-                            </h5>
-                        </div>
-                        <div th:id="'collapseInfoMessages' + ${resultStat.index}" class="collapse" aria-labelledby="heading" data-parent="#accordion">
-                            <div class="card-body">
-                                <div th:text="${result.infoMessages}"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="card-header">
-                            <h5 class="mb-0">
-                                <button class="btn btn-link collapsed" data-toggle="collapse" th:href="'#collapseErrorMessages' + ${resultStat.index}" aria-controls="collapse" th:text="'Error Messages'">
-                                </button>
-                            </h5>
-                        </div>
-                        <div th:id="'collapseErrorMessages' + ${resultStat.index}" class="collapse" aria-labelledby="heading" data-parent="#accordion">
-                            <div class="card-body">
-                                <div th:text="${result.errorMessages}"></div>
-                            </div>
-                        </div>
-                    </div>
+                <div>
+                    <a class="btn btn-outline-secondary btn-block" th:href="@{/job/{jobName}/build/{buildNumber}/{toolName}/messages(jobName=${build.job.name},buildNumber=${build.number},toolName=${result.name})}">
+                        <span th:text="'Messages of the Result'"></span>
+                    </a>
                 </div>
             </div>
             <div class="col-3">
