@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-<head th:replace="fragments/head :: includes"><title>Builds</title></head>
+<head th:replace="fragments/head :: includes"><title></title></head>
 <body>
 
     <!-- <div th:replace="fragments/navigation :: navbar"></div> -->
     <nav th:insert="fragments/navigationBreadCrumb :: nav(~{ :: .breadcrumb})">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Jenkins</a></li>
+            <li class="breadcrumb-item"><a href="/" th:text="#{jenkins}"></a></li>
             <li class="breadcrumb-item"><a th:href="@{/job/{jobName}/build(jobName=${jobName})}" th:text="${jobName}"></a></li>
             <li class="breadcrumb-item"><a th:href="@{/job/{jobName}/build/{buildNumber}(jobName=${jobName},buildNumber=${buildNumber})}" th:text="'#'+${buildNumber}"></a></li>
         </ol>
