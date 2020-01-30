@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class BarSeries {
-    private final static String NONE_STACK = "";
+    public final static String NONE_STACK = "";
     private final String name;
     @SuppressFBWarnings("SS_SHOULD_BE_STATIC")
     private final String type = "bar";
@@ -16,20 +16,11 @@ public class BarSeries {
     private final String stack;
     private final Optional<ItemStyle> itemStyle;
 
-    public BarSeries(final String name) {
-        this(name, NONE_STACK);
-    }
-
-    public BarSeries(final String name, final String stack) {
+    public BarSeries(final String name, final String stack, final String color) {
         this.name = name;
         this.stack = stack;
-        if(name.isEmpty()){
-            itemStyle = Optional.of(new ItemStyle(ItemStyle.TRANSPARENT,ItemStyle.TRANSPARENT));
-        }
-        else
-            itemStyle = Optional.empty();
+        this.itemStyle = Optional.of(new ItemStyle(color, color));
     }
-
 
     public String getName() {
         return name;
