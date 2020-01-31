@@ -12,8 +12,12 @@ public class JobService {
     @Autowired
     JobEntityService jobEntityService;
 
-    public List<Job> createDistributionOfAllJobs(){
+    public List<Job> getAllJobs(){
         return jobEntityService.findAll();
+    }
+
+    public Job findJobByName(String name){
+        return jobEntityService.findJobByName(name);
     }
 
     public List<Job> saveAll(List<Job> jobs) {

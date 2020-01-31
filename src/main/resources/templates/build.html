@@ -49,7 +49,7 @@
                         <div id="aggregated-analysis-results-history-chart" class="graph-cursor-pointer"
                              style="width: 100%; min-height: 200px;"></div>
                     </div>
-                    <div th:each="tool : ${usedtools}" class="col-6">
+                    <div th:each="tool : ${usedTools}" class="col-6">
                         <div class="text-center" th:text="${tool} + ' Warnings Trend'"></div>
                         <div th:id="${tool} + '-history-chart'" class="graph-cursor-pointer"
                              style="width: 100%; min-height: 200px;"></div>
@@ -61,8 +61,8 @@
 
     <script th:inline="javascript">
         /*<![CDATA[*/
-        var usedtools = /*[[${usedtools}]]*/ 'default';
-        usedtools.forEach(tool => {
+        var usedTools = /*[[${usedTools}]]*/ 'default';
+        usedTools.forEach(tool => {
             var urlParts = window.location.href.split('/');
             urlParts.pop(); //TODO double pop!!! siehe anderes TODO
             var lastSegment = urlParts.pop() || urlParts.pop();

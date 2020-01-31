@@ -21,6 +21,11 @@ public class JobEntityService {
         return JobMapper.map(jobEntities);
     }
 
+    public Job findJobByName(String name) {
+        JobEntity jobEntity = jobRepository.findByName(name);
+        return JobMapper.map(jobEntity);
+    }
+
     public List<Job> saveAll(List<Job> jobs) {
         List<JobEntity> jobEntities = jobRepository.saveAll(JobMapper.mapToEntities(jobs));
         return JobMapper.map(jobEntities);

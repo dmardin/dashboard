@@ -10,4 +10,6 @@ public interface JobRepository extends JpaRepository<JobEntity, Integer> {
 
     @Query(value = "select * from job where job.id=?1" , nativeQuery = true)
     JobEntity fetchJobWithId(int id);
+
+    JobEntity findByName(String name);
 }
