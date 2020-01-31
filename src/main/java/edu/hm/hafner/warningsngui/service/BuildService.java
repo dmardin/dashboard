@@ -1,9 +1,9 @@
 package edu.hm.hafner.warningsngui.service;
 
 import edu.hm.hafner.echarts.BuildResult;
-import edu.hm.hafner.warningsngui.dto.Build;
-import edu.hm.hafner.warningsngui.dto.Job;
-import edu.hm.hafner.warningsngui.dto.Result;
+import edu.hm.hafner.warningsngui.service.dto.Build;
+import edu.hm.hafner.warningsngui.service.dto.Job;
+import edu.hm.hafner.warningsngui.service.dto.Result;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

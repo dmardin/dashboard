@@ -1,6 +1,7 @@
 package edu.hm.hafner.warningsngui.service;
 
-import edu.hm.hafner.warningsngui.dto.Job;
+import edu.hm.hafner.warningsngui.db.JobEntityService;
+import edu.hm.hafner.warningsngui.service.dto.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
