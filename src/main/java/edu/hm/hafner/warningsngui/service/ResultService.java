@@ -1,7 +1,11 @@
 package edu.hm.hafner.warningsngui.service;
 
+import edu.hm.hafner.analysis.Report;
 import edu.hm.hafner.warningsngui.dto.Build;
 import edu.hm.hafner.warningsngui.dto.Result;
+import edu.hm.hafner.warningsngui.dto.table.issues.IssueStatistics;
+import edu.hm.hafner.warningsngui.dto.table.issues.IssueViewTable;
+import edu.hm.hafner.warningsngui.dto.table.issues.RepoStatistics;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -27,7 +31,54 @@ public class ResultService {
         return build.getResults().stream().filter(r -> r.getName().equals(toolName)).findFirst().get();
     }
 
+    public List<Object> getOutstandingAndNewIssuesForTool(Build build, String toolId) {
+        Result result = getResultByToolName(build, toolId);
+        Report report = new Report();
+        report.addAll(result.getOutstandingIssues());
+        report.addAll(result.getNewIssues());
+
+        return convertIssuesDataForAjax(report);
+    }
+
+    public List<Object> getIssuesByToolIdAndIssueType(Build build, String toolId, String issueType) {
+        Report report = new Report();
+        Result result = getResultByToolName(build, toolId);
+        switch (issueType) {
+            case "outstanding":
+                report = result.getOutstandingIssues();
+                break;
+            case "fixed":
+                report = result.getFixedIssues();
+                break;
+            case "new":
+                report = result.getNewIssues();
+                break;
+        }
+
+        return convertIssuesDataForAjax(report);
+    }
+
     private Result getResultFromBuildWithToolId(Build build, String toolId) {
         return build.getResults().stream().filter(r -> r.getName().equals(toolId)).findFirst().get();
+    }
+
+    private List<Object> convertIssuesDataForAjax(Report report) {
+        RepoStatistics repositoryStatistics = new RepoStatistics();
+        ArrayList<IssueStatistics> issueStatisticsList = new ArrayList<>();
+        report.stream().forEach(issue -> {
+            IssueStatistics issueStatistics = new IssueStatistics();
+            issueStatistics.setUuid(issue.getId());
+            issueStatistics.setFileName(issue.getFileName());
+            issueStatistics.setPackageName(issue.getPackageName());
+            issueStatistics.setCategory(issue.getCategory());
+            issueStatistics.setType(issue.getType());
+            issueStatistics.setSeverity(issue.getSeverity().toString());
+
+            issueStatisticsList.add(issueStatistics);
+        });
+
+        repositoryStatistics.addAll(issueStatisticsList);
+        IssueViewTable issueViewTable = new IssueViewTable(repositoryStatistics);
+        return issueViewTable.getTableRows("issues");
     }
 }

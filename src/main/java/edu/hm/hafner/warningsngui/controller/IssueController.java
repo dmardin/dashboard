@@ -1,10 +1,7 @@
 package edu.hm.hafner.warningsngui.controller;
 
-import edu.hm.hafner.analysis.Report;
 import edu.hm.hafner.warningsngui.dto.Build;
 import edu.hm.hafner.warningsngui.dto.Job;
-import edu.hm.hafner.warningsngui.dto.Result;
-import edu.hm.hafner.warningsngui.dto.table.issues.IssueStatistics;
 import edu.hm.hafner.warningsngui.dto.table.issues.IssueViewTable;
 import edu.hm.hafner.warningsngui.dto.table.issues.RepoStatistics;
 import edu.hm.hafner.warningsngui.service.BuildService;
@@ -20,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -66,64 +62,28 @@ public class IssueController {
 
     @RequestMapping(path={"/ajax/job/{jobName}/build/{buildNumber}/{toolId}"}, method=RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public List<Object> getIssueDataForTool(
+    public List<Object> getIssuesDataForToolWithTotalSize(
             @PathVariable("jobName") String jobName,
             @PathVariable("buildNumber") Integer buildNumber,
             @PathVariable("toolId") String toolId) {
+        logger.info("getIssuesDataForToolWithTotalSize is called");
         Job job = jobService.findJobByName(jobName);
         Build build = buildService.getBuildWithBuildNumberFromJob(job, buildNumber);
-        Result result = resultService.getResultByToolName(build, toolId);
-        Report report = new Report();
-        report.addAll(result.getOutstandingIssues());
-        report.addAll(result.getNewIssues());
 
-        return convertIssuesDataForAjax(report);
+        return resultService.getOutstandingAndNewIssuesForTool(build, toolId);
     }
 
     @RequestMapping(path={"/ajax/job/{jobName}/build/{buildNumber}/{toolId}/{issueType}"}, method=RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public List<Object> getIssueData(
+    public List<Object> getIssuesDataForToolWithIssueType(
             @PathVariable("jobName") String jobName,
             @PathVariable("buildNumber") Integer buildNumber,
             @PathVariable("toolId") String toolId,
             @PathVariable("issueType") String issueType) {
-        logger.info("getIssueData is called");
+        logger.info("getIssuesDataForToolWithIssueType is called");
         Job job = jobService.findJobByName(jobName);
         Build build = buildService.getBuildWithBuildNumberFromJob(job, buildNumber);
-        Report report = new Report();
-        Result result = resultService.getResultByToolName(build, toolId);
-        switch (issueType) {
-            case "outstanding":
-                report = result.getOutstandingIssues();
-                break;
-            case "fixed":
-                report = result.getFixedIssues();
-                break;
-            case "new":
-                report = result.getNewIssues();
-                break;
-        }
 
-        return convertIssuesDataForAjax(report);
-    }
-
-    private List<Object> convertIssuesDataForAjax(Report report) {
-        RepoStatistics repositoryStatistics = new RepoStatistics();
-        ArrayList<IssueStatistics> issueStatisticsList = new ArrayList<>();
-        report.stream().forEach(issue -> {
-            IssueStatistics issueStatistics = new IssueStatistics();
-            issueStatistics.setUuid(issue.getId());
-            issueStatistics.setFileName(issue.getFileName());
-            issueStatistics.setPackageName(issue.getPackageName());
-            issueStatistics.setCategory(issue.getCategory());
-            issueStatistics.setType(issue.getType());
-            issueStatistics.setSeverity(issue.getSeverity().toString());
-
-            issueStatisticsList.add(issueStatistics);
-        });
-
-        repositoryStatistics.addAll(issueStatisticsList);
-        IssueViewTable issueViewTable = new IssueViewTable(repositoryStatistics);
-        return issueViewTable.getTableRows("issues");
+        return resultService.getIssuesByToolIdAndIssueType(build, toolId, issueType);
     }
 }
