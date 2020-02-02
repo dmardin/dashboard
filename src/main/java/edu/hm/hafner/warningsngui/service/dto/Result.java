@@ -8,6 +8,8 @@ import java.util.List;
 
 public class Result {
 
+    private String warningId;
+    private String latestUrl;
     private String name;
     private int fixedSize;
     private int newSize;
@@ -21,6 +23,23 @@ public class Result {
     private Report outstandingIssues;
     private Report newIssues;
     private Report fixedIssues;
+
+
+    public String getWarningId() {
+        return warningId;
+    }
+
+    public void setWarningId(String warningId) {
+        this.warningId = warningId;
+    }
+
+    public String getLatestUrl() {
+        return latestUrl;
+    }
+
+    public void setLatestUrl(String latestUrl) {
+        this.latestUrl = latestUrl;
+    }
 
     public Report getOutstandingIssues() {
         return outstandingIssues;

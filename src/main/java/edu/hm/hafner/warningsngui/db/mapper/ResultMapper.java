@@ -15,6 +15,8 @@ public class ResultMapper {
 
     public static Result map(ResultEntity resultEntity, Build build) {
         Result result = new Result();
+        result.setWarningId(resultEntity.getWarningId());
+        result.setLatestUrl(resultEntity.getLatestUrl());
         result.setName(resultEntity.getName());
         result.setNewSize(resultEntity.getNewSize());
         result.setFixedSize(resultEntity.getFixedSize());
@@ -44,6 +46,8 @@ public class ResultMapper {
 
     public static ResultEntity mapToEntity(Result result, BuildEntity buildEntity) {
         ResultEntity resultEntity = new ResultEntity();
+        resultEntity.setWarningId(result.getWarningId());
+        resultEntity.setLatestUrl(result.getLatestUrl());
         resultEntity.setName(result.getName());
         resultEntity.setTotalSize(result.getTotalSize());
         resultEntity.setNewSize(result.getNewSize());

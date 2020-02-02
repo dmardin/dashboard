@@ -50,7 +50,7 @@
                              style="width: 100%; min-height: 200px;"></div>
                     </div>
                     <div th:each="tool : ${usedTools}" class="col-6">
-                        <div class="text-center" th:text="${tool} + ' Warnings Trend'"></div>
+                        <div class="text-center" th:text="${tool} + ' Trend'"></div>
                         <div th:id="${tool} + '-history-chart'" class="graph-cursor-pointer"
                              style="width: 100%; min-height: 200px;"></div>
                     </div>

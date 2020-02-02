@@ -12,6 +12,8 @@ public class ResultEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
+    private String latestUrl;
+    private String warningId;
     private String name;
     private int fixedSize;
     private int newSize;
@@ -102,6 +104,22 @@ public class ResultEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getWarningId() {
+        return warningId;
+    }
+
+    public void setWarningId(String warningId) {
+        this.warningId = warningId;
+    }
+
+    public String getLatestUrl() {
+        return latestUrl;
+    }
+
+    public void setLatestUrl(String latestUrl) {
+        this.latestUrl = latestUrl;
     }
 
     public BuildEntity getBuildEntity() {

@@ -1,10 +1,10 @@
 package edu.hm.hafner.warningsngui.service.schedule.rest.response.helper;
 
 public class Tool {
+
     private String id;
     private String latestUrl;
     private String name;
-    private int size;
 
     public String getId() {
         return id;
@@ -28,13 +28,5 @@ public class Tool {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
     }
 }
