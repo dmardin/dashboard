@@ -66,6 +66,7 @@
             var urlParts = window.location.href.split('/');
             urlParts.pop(); //TODO double pop!!! siehe anderes TODO
             var lastSegment = urlParts.pop() || urlParts.pop();
+            console.log("/ajax/"+lastSegment+"/tool/"+tool)
             $.get("/ajax/"+lastSegment+"/tool/"+tool,
                 function (builds) {
                     var id = tool + "-history-chart";

@@ -50,7 +50,7 @@ public class ResultController {
                                      @PathVariable("toolName") String toolName) {
         Job job = jobService.findJobByName(jobName);
         Build build = buildService.getBuildWithBuildNumberFromJob(job, buildNumber);
-        Result result = resultService.getResultByToolName(build, toolName);
+        Result result = resultService.getResultByToolId(build, toolName);
         ResultChart resultChart = new ResultChart();
         BarChartModel model = resultChart.create(result);
 

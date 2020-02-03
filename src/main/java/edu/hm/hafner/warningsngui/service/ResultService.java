@@ -27,12 +27,12 @@ public class ResultService {
         return getResultFromBuildWithToolId(build, toolId).getErrorMessages();
     }
 
-    public Result getResultByToolName(Build build, String toolName){
-        return build.getResults().stream().filter(r -> r.getName().equals(toolName)).findFirst().get();
+    public Result getResultByToolId(Build build, String toolId){
+        return build.getResults().stream().filter(r -> r.getWarningId().equals(toolId)).findFirst().get();
     }
 
     public List<Object> getOutstandingAndNewIssuesForTool(Build build, String toolId) {
-        Result result = getResultByToolName(build, toolId);
+        Result result = getResultByToolId(build, toolId);
         Report report = new Report();
         report.addAll(result.getOutstandingIssues());
         report.addAll(result.getNewIssues());
@@ -42,7 +42,7 @@ public class ResultService {
 
     public List<Object> getIssuesByToolIdAndIssueType(Build build, String toolId, String issueType) {
         Report report = new Report();
-        Result result = getResultByToolName(build, toolId);
+        Result result = getResultByToolId(build, toolId);
         switch (issueType) {
             case "outstanding":
                 report = result.getOutstandingIssues();
@@ -59,7 +59,7 @@ public class ResultService {
     }
 
     private Result getResultFromBuildWithToolId(Build build, String toolId) {
-        return build.getResults().stream().filter(r -> r.getName().equals(toolId)).findFirst().get();
+        return build.getResults().stream().filter(r -> r.getWarningId().equals(toolId)).findFirst().get();
     }
 
     private List<Object> convertIssuesDataForAjax(Report report) {

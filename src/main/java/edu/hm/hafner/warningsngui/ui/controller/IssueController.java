@@ -55,7 +55,7 @@ public class IssueController {
         model.addAttribute("issueTableRows", issueViewTable);
         model.addAttribute("toolId", toolId);
         model.addAttribute("issueType", issueType);
-        model.addAttribute("toolIdWithIssueType", toolId + " / " + issueType);
+        model.addAttribute("toolIdWithIssueType", toolId + " (" + issueType + ")");
 
         return "issue";
     }
