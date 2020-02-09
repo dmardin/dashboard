@@ -3,9 +3,9 @@ package edu.hm.hafner.warningsngui.service;
 import edu.hm.hafner.analysis.Report;
 import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Result;
+import edu.hm.hafner.warningsngui.ui.table.issue.IssueRepositoryStatistics;
 import edu.hm.hafner.warningsngui.ui.table.issue.IssueStatistics;
 import edu.hm.hafner.warningsngui.ui.table.issue.IssueViewTable;
-import edu.hm.hafner.warningsngui.ui.table.issue.RepoStatistics;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Service
 public class ResultService {
 
-    public List<String> getUsedToolsFromBuild(Build build){
+    public List<String> getUsedToolsFromBuild(Build build) {
         return build.getResults().stream().map(Result::getName).collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -27,7 +27,7 @@ public class ResultService {
         return getResultFromBuildWithToolId(build, toolId).getErrorMessages();
     }
 
-    public Result getResultByToolId(Build build, String toolId){
+    public Result getResultByToolId(Build build, String toolId) {
         return build.getResults().stream().filter(r -> r.getWarningId().equals(toolId)).findFirst().get();
     }
 
@@ -63,22 +63,14 @@ public class ResultService {
     }
 
     private List<Object> convertIssuesDataForAjax(Report report) {
-        RepoStatistics repositoryStatistics = new RepoStatistics();
         ArrayList<IssueStatistics> issueStatisticsList = new ArrayList<>();
         report.stream().forEach(issue -> {
-            IssueStatistics issueStatistics = new IssueStatistics();
-            issueStatistics.setUuid(issue.getId());
-            issueStatistics.setFileName(issue.getFileName());
-            issueStatistics.setPackageName(issue.getPackageName());
-            issueStatistics.setCategory(issue.getCategory());
-            issueStatistics.setType(issue.getType());
-            issueStatistics.setSeverity(issue.getSeverity().toString());
-
-            issueStatisticsList.add(issueStatistics);
+            issueStatisticsList.add(new IssueStatistics(issue.getId(), issue.getFileName(), issue.getPackageName(), issue.getCategory(), issue.getType(), issue.getSeverity().toString()));
         });
-
+        IssueRepositoryStatistics repositoryStatistics = new IssueRepositoryStatistics();
         repositoryStatistics.addAll(issueStatisticsList);
         IssueViewTable issueViewTable = new IssueViewTable(repositoryStatistics);
+
         return issueViewTable.getTableRows("issues");
     }
 }

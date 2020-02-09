@@ -16,27 +16,19 @@
     <div class="container-fluid">
         <h1>Issues</h1>
 
-        <div class="card ${cardClass}">
-            <div class="card-body">
-                <h5 class="card-title">
-                    Title vom Card
-
-                    <!--/*@thymesVar id="issueTableRows" type="edu.hm.hafner.warningsngui.ui.table.issue.IssueViewTable"*/-->
-                    <div th:object="${issueTableRows}" class="table-responsive">
-                        <table class="table table-hover table-striped data-table"
-                               th:data-columns-definition="${issueTableRows.getTableModel('').columnsDefinition}" th:id="${issueTableRows.getTableModel('').id}">
-                            <colgroup>
-                                <col th:each="c : ${issueTableRows.getTableModel('').columns}" th:classappend="|col-width-${c.width}|"/>
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th th:each="c : ${issueTableRows.getTableModel('').columns}" th:classappend="${c.headerClass}" th:text="${c.headerLabel}"></th>
-                            </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </h5>
-            </div>
+        <!--/*@thymesVar id="issueViewTable" type="edu.hm.hafner.warningsngui.ui.table.issue.IssueViewTable"*/-->
+        <div th:object="${issueViewTable}" class="table-responsive">
+            <table class="table table-hover table-striped data-table"
+                   th:data-columns-definition="${issueViewTable.getTableModel('issues').columnsDefinition}" th:id="${issueViewTable.getTableModel('issues').id}">
+                <colgroup>
+                    <col th:each="column : ${issueViewTable.getTableModel('issues').columns}" th:classappend="|col-width-${column.width}|"/>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th th:each="column : ${issueViewTable.getTableModel('issues').columns}" th:classappend="${column.headerClass}" th:text="${column.headerLabel}"></th>
+                </tr>
+                </thead>
+            </table>
         </div>
     </div>
 

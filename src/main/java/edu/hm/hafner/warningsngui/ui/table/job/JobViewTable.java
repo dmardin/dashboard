@@ -25,8 +25,8 @@ public class JobViewTable {
 
     /**
      * Returns the {@link JobTableModel}.
-     * @param id the id of the table
      *
+     * @param id the id of the table
      * @return the {@link JobTableModel}
      */
     public TableModel getTableModel(String id) {

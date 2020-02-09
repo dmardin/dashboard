@@ -5,8 +5,8 @@ import edu.hm.hafner.warningsngui.service.JobService;
 import edu.hm.hafner.warningsngui.service.ResultService;
 import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Job;
+import edu.hm.hafner.warningsngui.ui.table.issue.IssueRepositoryStatistics;
 import edu.hm.hafner.warningsngui.ui.table.issue.IssueViewTable;
-import edu.hm.hafner.warningsngui.ui.table.issue.RepoStatistics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +36,8 @@ public class IssueController {
             @PathVariable("buildNumber") Integer buildNumber,
             @PathVariable("toolId") String toolId,
             final Model model) {
-        IssueViewTable issueViewTable = new IssueViewTable(new RepoStatistics());
-        model.addAttribute("issueTableRows", issueViewTable);
+        IssueViewTable issueViewTable = new IssueViewTable(new IssueRepositoryStatistics());
+        model.addAttribute("issueViewTable", issueViewTable);
         model.addAttribute("toolId", toolId);
         model.addAttribute("toolIdWithIssueType", toolId);
 
@@ -51,8 +51,8 @@ public class IssueController {
             @PathVariable("toolId") String toolId,
             @PathVariable("issueType") String issueType,
             final Model model) {
-        IssueViewTable issueViewTable = new IssueViewTable(new RepoStatistics());
-        model.addAttribute("issueTableRows", issueViewTable);
+        IssueViewTable issueViewTable = new IssueViewTable(new IssueRepositoryStatistics());
+        model.addAttribute("issueViewTable", issueViewTable);
         model.addAttribute("toolId", toolId);
         model.addAttribute("issueType", issueType);
         model.addAttribute("toolIdWithIssueType", toolId + " (" + issueType + ")");
