@@ -1,12 +1,12 @@
 package edu.hm.hafner.warningsngui.ui.controller;
 
-import edu.hm.hafner.warningsngui.service.dto.Build;
-import edu.hm.hafner.warningsngui.service.dto.Job;
-import edu.hm.hafner.warningsngui.ui.table.IssueViewTable;
-import edu.hm.hafner.warningsngui.ui.table.RepoStatistics;
 import edu.hm.hafner.warningsngui.service.BuildService;
 import edu.hm.hafner.warningsngui.service.JobService;
 import edu.hm.hafner.warningsngui.service.ResultService;
+import edu.hm.hafner.warningsngui.service.dto.Build;
+import edu.hm.hafner.warningsngui.service.dto.Job;
+import edu.hm.hafner.warningsngui.ui.table.issue.IssueViewTable;
+import edu.hm.hafner.warningsngui.ui.table.issue.RepoStatistics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

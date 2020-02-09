@@ -3,9 +3,9 @@ package edu.hm.hafner.warningsngui.service;
 import edu.hm.hafner.analysis.Report;
 import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Result;
-import edu.hm.hafner.warningsngui.ui.table.IssueStatistics;
-import edu.hm.hafner.warningsngui.ui.table.IssueViewTable;
-import edu.hm.hafner.warningsngui.ui.table.RepoStatistics;
+import edu.hm.hafner.warningsngui.ui.table.issue.IssueStatistics;
+import edu.hm.hafner.warningsngui.ui.table.issue.IssueViewTable;
+import edu.hm.hafner.warningsngui.ui.table.issue.RepoStatistics;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

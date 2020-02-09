@@ -1,14 +1,6 @@
 /* global jQuery, luxon, tableDataProxy */
 (function ($, luxon) {
     $(document).ready(function ($) {
-        /*
-        $.get("/ajax/table",
-            function (builds) {
-                console.log("ajax is called for builds: ")
-                console.log(builds);
-                var view = 'hello';
-            });
-         */
         bindTables($, luxon);
     });
 })(jQuery, luxon);
@@ -50,10 +42,26 @@ function bindTables($) {
                             return data;
                         }
                     }
+                },
+                { // Configuration for links
+                    targets: '',
+                    render: function (data, type, row, meta) {
+                        for (let key in row) {
+                            if (row.hasOwnProperty(key) && row[key] === data) {
+                                if(key === "jobName"){ // Link to build page in the application
+                                    return '<a href="/job/' + data +'/build">' + data + '</a>';
+                                }
+                                if(key === "jobUrl"){ // Link to the corresponding jenkins site
+                                    return '<a href="' + data + '" target="_blank">' + data + '</a>';
+                                }
+                            }
+                        }
+
+                        return data; // data as text (without a link)
+                    }
                 }
             ],
             columns: JSON.parse(table.attr('data-columns-definition'))
-            //columns: JSON.parse([{"data": "fileName"},{"data": "authorsSize"},{"data": "commitsSize"},{"data": "modifiedAt"},{"data": "addedAt"}])
         });
     }
 
@@ -63,17 +71,8 @@ function bindTables($) {
     function loadTableData(table, dataTable) {
         if (!table[0].hasAttribute('isLoaded')) {
             table.attr('isLoaded', 'true');
-            /*tableDataProxy.getTableRows(table.attr('id'), function (t) {
-                (function () {
-                    const model = JSON.parse(t.responseObject());
-                    dataTable.rows.add(model).draw();
-                    $('[data-toggle="tooltip"]').tooltip();
-                })(jQuery);
-            });*/
-
             $.get("/ajax" + window.location.pathname,
-                function (t) {
-                    const model = t;
+                function (model) {
                     dataTable.rows.add(model).draw();
                     $('[data-toggle="tooltip"]').tooltip();
                 });

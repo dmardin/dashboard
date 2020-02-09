@@ -11,37 +11,25 @@
     </nav>
 
     <div class="container-fluid">
-        <h1>Projects</h1>
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>Job Name</th>
-                <th>Status</th>
-                <th>Url</th>
-            </tr>
-            </thead>
-            <tbody th:each="job, jobStat: ${jobs}">
-            <tr>
-                <td>
-                    <a th:href="@{/job/{jobName}/build(jobName=${job.name})}">
-                        <span th:text="${job.name}"></span>
-                    </a>
-                </td>
-                <td th:text="${job.lastBuildStatus}"></td>
-                <td>
-                    <a th:href="${job.url}" th:target="_blank">
-                        <span th:text="${job.url}"></span>
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <h1>Jobs</h1>
+
+        <!--/*@thymesVar id="jobViewTable" type="edu.hm.hafner.warningsngui.ui.table.job.JobViewTable"*/-->
+        <div th:object="${jobViewTable}" class="table-responsive">
+            <table class="table table-hover table-striped data-table"
+                   th:data-columns-definition="${jobViewTable.getTableModel('jobs').columnsDefinition}" th:id="${jobViewTable.getTableModel('jobs').id}">
+                <colgroup>
+                    <col th:each="column : ${jobViewTable.getTableModel('jobs').columns}" th:classappend="|col-width-${column.width}|"/>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th th:each="column : ${jobViewTable.getTableModel('jobs').columns}" th:classappend="${column.headerClass}" th:text="${column.headerLabel}"></th>
+                </tr>
+                </thead>
+            </table>
+        </div>
     </div>
 
-    <script src="js/pie-chart.js"></script>
-    <script src="js/trend-chart.js"></script>
-    <script src="js/issues-detail.js"></script>
-    <script src="js/simple-trend-chart.js"></script>
-    <script src="js/source-detail.js"></script>
+    <script src="/js/luxon.min.js"></script>
+    <script src="/js/table.js"></script>
 </body>
 </html>

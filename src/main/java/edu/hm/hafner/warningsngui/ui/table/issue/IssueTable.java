@@ -1,4 +1,4 @@
-package edu.hm.hafner.warningsngui.ui.table;
+package edu.hm.hafner.warningsngui.ui.table.issue;
 
 import io.jenkins.plugins.datatables.api.TableColumn;
 import io.jenkins.plugins.datatables.api.TableModel;
@@ -23,7 +23,6 @@ public class IssueTable extends TableModel {
     @Override
     public List<TableColumn> getColumns() {
         List<TableColumn> columns = new ArrayList<>();
-
         columns.add(new TableColumn("File", "fileName")/*.setWidth(2)*/);
         columns.add(new TableColumn("Package", "package"));
         columns.add(new TableColumn("Category", "category"));
