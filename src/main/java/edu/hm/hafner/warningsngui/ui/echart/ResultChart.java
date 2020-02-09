@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 public class ResultChart {
 
     public BarChartModel create(Result result) {
-
         BarChartModel model = new BarChartModel();
         int outstandingSize = result.getOutstandingIssues().getSize();
         Palette[] colors = Palette.values();
@@ -42,13 +41,9 @@ public class ResultChart {
                     series = new BarSeries(resultToolElement.getName(), "bottomStack", colors[index++].getNormal());
                     series.add(result.getTotalSize());
                     break;
-                default:
-                    //TODO throw an error ?
-                    break;
             }
             model.addSeries(series);
         }
-
         List<String> resultToolValues = Arrays.stream(ResultToolElement.values()).filter(element -> !element.getName().isEmpty()).map(ResultToolElement::getName).collect(Collectors.toList());
         model.addLegend(resultToolValues);
 
