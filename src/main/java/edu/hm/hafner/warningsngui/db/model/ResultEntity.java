@@ -7,11 +7,10 @@ import java.util.List;
 @Entity
 @Table(name="result")
 public class ResultEntity {
-    //TODO issues müssen nicht neu berrechnet werden
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
     private String latestUrl;
     private String warningId;
     private String name;

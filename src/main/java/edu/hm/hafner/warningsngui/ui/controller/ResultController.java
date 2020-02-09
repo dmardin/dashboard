@@ -1,13 +1,13 @@
 package edu.hm.hafner.warningsngui.ui.controller;
 
+import edu.hm.hafner.warningsngui.service.BuildService;
+import edu.hm.hafner.warningsngui.service.JobService;
+import edu.hm.hafner.warningsngui.service.ResultService;
 import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Job;
 import edu.hm.hafner.warningsngui.service.dto.Result;
 import edu.hm.hafner.warningsngui.ui.echart.BarChartModel;
 import edu.hm.hafner.warningsngui.ui.echart.ResultChart;
-import edu.hm.hafner.warningsngui.service.BuildService;
-import edu.hm.hafner.warningsngui.service.JobService;
-import edu.hm.hafner.warningsngui.service.ResultService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,13 +33,13 @@ public class ResultController {
 
     @RequestMapping(path={"/job/{jobName}/build/{buildNumber}"}, method= RequestMethod.GET)
     public String getResults(@PathVariable("jobName") String jobName, @PathVariable("buildNumber") Integer buildNumber, final Model model) {
-        //TODO check if this is used!
+        logger.info("getResults was called");
         List<Job> jobs = jobService.getAllJobs();
         Job neededJob = jobs.stream().filter(job -> job.getName().equals(jobName)).findFirst().get();
         Build build = neededJob.getBuilds().stream().filter(b -> b.getNumber() == buildNumber).findFirst().get();
         model.addAttribute("build", build);
         model.addAttribute("buildNumber",buildNumber);
-        logger.info("Normal GET was called");
+
         return "result";
     }
 
@@ -48,6 +48,7 @@ public class ResultController {
     BarChartModel getResultSummarize(@PathVariable("jobName") String jobName,
                                      @PathVariable("buildNumber") Integer buildNumber,
                                      @PathVariable("toolName") String toolName) {
+        logger.info("getResultSummarize was called");
         Job job = jobService.findJobByName(jobName);
         Build build = buildService.getBuildWithBuildNumberFromJob(job, buildNumber);
         Result result = resultService.getResultByToolId(build, toolName);
