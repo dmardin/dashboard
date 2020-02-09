@@ -4,6 +4,9 @@ import edu.hm.hafner.echarts.BuildResult;
 import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Job;
 import edu.hm.hafner.warningsngui.service.dto.Result;
+import edu.hm.hafner.warningsngui.ui.table.build.BuildRepositoryStatistics;
+import edu.hm.hafner.warningsngui.ui.table.build.BuildStatistics;
+import edu.hm.hafner.warningsngui.ui.table.build.BuildViewTable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -57,5 +60,33 @@ public class BuildService {
 
     public Build getBuildWithBuildNumberFromJob(Job job,int buildNumber){
         return job.getBuilds().stream().filter(b -> b.getNumber() == buildNumber).findFirst().get();
+    }
+
+    /**
+     * Fetches all build from database and converts it to the needed format of table rows.
+     *
+     * @return prepared table rows
+     * @param builds the builds
+     */
+    public List<Object> prepareRowsForBuildViewTable(List<Build> builds) {
+        return convertRowsForTheBuildViewTable(builds);
+    }
+
+    /**
+     * Method to convert a list of builds to the needed format of table rows.
+     *
+     * @param builds the jobs to convert
+     * @return converted table rows
+     */
+    private List<Object> convertRowsForTheBuildViewTable(List<Build> builds) {
+        BuildRepositoryStatistics buildRepositoryStatistics = new BuildRepositoryStatistics();
+        ArrayList<BuildStatistics> buildsStatistics = new ArrayList<>();
+        builds.forEach(build -> {
+            buildsStatistics.add(new BuildStatistics(build.getNumber(), build.getUrl()));
+        });
+
+        buildRepositoryStatistics.addAll(buildsStatistics);
+        BuildViewTable buildViewTable = new BuildViewTable(buildRepositoryStatistics);
+        return buildViewTable.getTableRows("builds");
     }
 }

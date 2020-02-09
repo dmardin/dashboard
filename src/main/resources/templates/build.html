@@ -17,28 +17,19 @@
         <div class="row">
             <div class="col-6">
                 <h2>Specific builds</h2>
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>Build Number</th>
-                        <th>Url</th>
-                    </tr>
-                    </thead>
-                    <tbody th:each="build, buildStat: ${job.getBuilds()}">
-                    <tr>
-                        <td>
-                            <a th:href="@{/job/{jobName}/build/{buildNumber}(jobName=${job.name},buildNumber=${build.number})}">
-                                <span th:text="${'#'+ build.number}"></span>
-                            </a>
-                        </td>
-                        <td>
-                            <a th:href="${build.url}" th:target="_blank">
-                                <span th:text="${build.url}"></span>
-                            </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <div th:object="${buildViewTable}" class="table-responsive">
+                    <table class="table table-hover table-striped data-table"
+                           th:data-columns-definition="${buildViewTable.getTableModel('builds').columnsDefinition}" th:id="${buildViewTable.getTableModel('builds').id}">
+                        <colgroup>
+                            <col th:each="column : ${buildViewTable.getTableModel('builds').columns}" th:classappend="|col-width-${column.width}|"/>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th th:each="column : ${buildViewTable.getTableModel('builds').columns}" th:classappend="${column.headerClass}" th:text="${column.headerLabel}"></th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
 
             <div class="col-6">
@@ -59,6 +50,8 @@
         </div>
     </div>
 
+    <script src="/js/luxon.min.js"></script>
+    <script src="/js/table.js"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
         var usedTools = /*[[${usedTools}]]*/ 'default';
@@ -73,7 +66,6 @@
                     renderTrendChart(id, builds, "");
                 });
         });
-
         /*]]>*/
     </script>
     <script src="/js/simple-trend-chart.js"></script>
