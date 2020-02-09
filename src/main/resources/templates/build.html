@@ -54,15 +54,13 @@
     <script src="/js/table.js"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
-        var usedTools = /*[[${usedTools}]]*/ 'default';
+        const usedTools = /*[[${usedTools}]]*/ 'default';
         usedTools.forEach(tool => {
-            var urlParts = window.location.href.split('/');
-            urlParts.pop(); //TODO double pop!!! siehe anderes TODO
-            var lastSegment = urlParts.pop() || urlParts.pop();
-            console.log("/ajax/"+lastSegment+"/tool/"+tool)
-            $.get("/ajax/"+lastSegment+"/tool/"+tool,
+            const urlParts = window.location.href.split('/');
+            const jobName = urlParts[urlParts.length - 2];
+            $.get("/ajax/"+jobName+"/tool/"+tool,
                 function (builds) {
-                    var id = tool + "-history-chart";
+                    const id = tool + "-history-chart";
                     renderTrendChart(id, builds, "");
                 });
         });
