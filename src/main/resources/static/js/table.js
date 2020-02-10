@@ -57,7 +57,7 @@ function bindTables($) {
                                 if(key === "buildNumber"){ // Link to a specific build number
                                     const urlParts = window.location.href.split('/');
                                     const jobName = urlParts[urlParts.length - 2];
-                                    return '<a href="/job/'+jobName+'/build/' + data + '">#' + data + '</a>';
+                                    return '<a href="/job/'+jobName+'/build/' + data + '">' + data + '</a>';
                                 }
                                 if(key === "buildUrl"){ // Link to the corresponding jenkins site
                                     return '<a href="' + data + '" target="_blank">' + data + '</a>';
