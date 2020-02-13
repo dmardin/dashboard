@@ -35,22 +35,26 @@
                     <tr>
                         <td th:text="${result.warningId}"></td>
                         <td>
-                            <a th:href="@{/job/{jobName}/build/{buildNumber}/{toolId}/fixed(jobName=${build.job.name},buildNumber=${build.number},toolId=${result.warningId})}">
+                            <span th:if="${result.fixedSize == 0}" th:text="${result.fixedSize}" th:style="'color: #007bff;'"></span>
+                            <a th:unless="${result.fixedSize == 0}" th:href="@{/job/{jobName}/build/{buildNumber}/{toolId}/fixed(jobName=${build.job.name},buildNumber=${build.number},toolId=${result.warningId})}">
                                 <span th:text="${result.fixedSize}"></span>
                             </a>
                         </td>
                         <td>
-                            <a th:href="@{/job/{jobName}/build/{buildNumber}/{toolId}/new(jobName=${build.job.name},buildNumber=${build.number},toolId=${result.warningId})}">
+                            <span th:if="${result.newSize == 0}" th:text="${result.newSize}" th:style="'color: #007bff;'"></span>
+                            <a th:unless="${result.newSize == 0}" th:href="@{/job/{jobName}/build/{buildNumber}/{toolId}/new(jobName=${build.job.name},buildNumber=${build.number},toolId=${result.warningId})}">
                                 <span th:text="${result.newSize}"></span>
                             </a>
                         </td>
                         <td>
-                            <a th:href="@{/job/{jobName}/build/{buildNumber}/{toolId}/outstanding(jobName=${build.job.name},buildNumber=${build.number},toolId=${result.warningId})}">
+                            <span th:if="${result.totalSize - result.newSize == 0}" th:text="${result.totalSize - result.newSize}" th:style="'color: #007bff;'"></span>
+                            <a th:unless="${result.totalSize - result.newSize == 0}" th:href="@{/job/{jobName}/build/{buildNumber}/{toolId}/outstanding(jobName=${build.job.name},buildNumber=${build.number},toolId=${result.warningId})}">
                                 <span th:text="${result.totalSize - result.newSize}"></span>
                             </a>
                         </td>
                         <td>
-                            <a th:href="@{/job/{jobName}/build/{buildNumber}/{toolId}(jobName=${build.job.name},buildNumber=${build.number},toolId=${result.warningId})}">
+                            <span th:if="${result.totalSize == 0}" th:text="${result.totalSize}" th:style="'color: #007bff;'"></span>
+                            <a th:unless="${result.totalSize == 0}" th:href="@{/job/{jobName}/build/{buildNumber}/{toolId}(jobName=${build.job.name},buildNumber=${build.number},toolId=${result.warningId})}">
                                 <span th:text="${result.totalSize}"></span>
                             </a>
                         </td>
