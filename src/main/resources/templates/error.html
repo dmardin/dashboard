@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="fragments/head :: includes"><title></title></head>
+<body>
+    <nav th:insert="fragments/navigationBreadCrumb :: nav(~{ :: .breadcrumb})">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/" th:text="#{jenkins}"></a></li>
+        </ol>
+    </nav>
+    <div class="container-fluid">
+        <h1>Oops something went wrong...</h1>
+        <p>please try again or go to the <a href="/">homepage</a></p>
+    </div>
+</body>
+</html>
+
