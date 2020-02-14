@@ -32,11 +32,11 @@ public class ResultController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @RequestMapping(path={"/job/{jobName}/build/{buildNumber}"}, method= RequestMethod.GET)
-    public String getResults(@PathVariable("jobName") String jobName, @PathVariable("buildNumber") Integer buildNumber, final Model model) {
+    public String getResults(@PathVariable("jobName") String jobName, @PathVariable("buildNumber") String buildNumber, final Model model) {
         logger.info("getResults was called");
         List<Job> jobs = jobService.getAllJobs();
         Job neededJob = jobs.stream().filter(job -> job.getName().equals(jobName)).findFirst().get();
-        Build build = neededJob.getBuilds().stream().filter(b -> b.getNumber() == buildNumber).findFirst().get();
+        Build build = neededJob.getBuilds().stream().filter(b -> b.getNumber() == Integer.parseInt(buildNumber)).findFirst().get();
         model.addAttribute("build", build);
         model.addAttribute("buildNumber",buildNumber);
 
