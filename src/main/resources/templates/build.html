@@ -31,20 +31,41 @@
                     </table>
                 </div>
             </div>
-
             <div class="col-7">
                 <h2>History of the Builds</h2>
                 <div class="row">
                     <div class="col-6">
-                        <div class="text-center"> Aggregated Analysis Results</div>
+                        <div class="text-center">Aggregated Analysis Results</div>
                         <div id="aggregated-analysis-results-history-chart" class="graph-cursor-pointer"
                              style="width: 100%; min-height: 200px;"></div>
                     </div>
-                    <div th:each="tool : ${usedTools}" class="col-6">
+                    <div class="col-6">
+                        <div class="text-center">New vs. Fixed History</div>
+                        <div id="new-versus-fixed-history-chart" class="graph-cursor-pointer"
+                             style="width: 100%; min-height: 200px;"></div>
+                    </div>
+                    <!--<div th:each="tool : ${usedTools}" class="col-6">
                         <div class="text-center" th:text="${tool} + ' Trend'"></div>
                         <div th:id="${tool} + '-history-chart'" class="graph-cursor-pointer"
                              style="width: 100%; min-height: 200px;"></div>
                     </div>
+                    <div th:each="tool : ${usedTools}" class="col-6">
+                        <div class="text-center" th:text="${tool} + ' New vs. Fixed'"></div>
+                        <div th:id="${tool} + '-new-versus-fixed-history-chart'" class="graph-cursor-pointer"
+                             style="width: 100%; min-height: 200px;"></div>
+                    </div>-->
+                    <th:block th:each="tool : ${usedTools}">
+                        <div class="col-6">
+                            <div class="text-center " th:text="${tool} + ' Trend'"></div>
+                            <div th:id="${tool} + '-history-chart'" class="graph-cursor-pointer"
+                                 style="width: 100%; min-height: 200px;"></div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-center" th:text="${tool} + ' New vs. Fixed'"></div>
+                            <div th:id="${tool} + '-new-versus-fixed-history-chart'" class="graph-cursor-pointer"
+                                 style="width: 100%; min-height: 200px;"></div>
+                        </div>
+                    </th:block>
                 </div>
             </div>
         </div>
@@ -54,12 +75,17 @@
     <script th:inline="javascript">
         /*<![CDATA[*/
         const usedTools = /*[[${usedTools}]]*/ 'default';
+        const urlParts = window.location.href.split('/');
+        const jobName = urlParts[urlParts.length - 2];
         usedTools.forEach(tool => {
-            const urlParts = window.location.href.split('/');
-            const jobName = urlParts[urlParts.length - 2];
             $.get("/ajax/"+jobName+"/tool/"+tool,
                 function (builds) {
                     const id = tool + "-history-chart";
+                    renderTrendChart(id, builds, "");
+                });
+            $.get("/ajax/"+jobName+"/newVersusFixedTrendChart/"+tool,
+                function (builds) {
+                    const id = tool + "-new-versus-fixed-history-chart";
                     renderTrendChart(id, builds, "");
                 });
         });
@@ -67,5 +93,6 @@
     </script>
     <script src="/js/simple-trend-chart.js"></script>
     <script src="/js/aggregated-analysis-results.js"></script>
+    <script src="/js/new-versus-fixed-aggregated.js"></script>
 </body>
 </html>

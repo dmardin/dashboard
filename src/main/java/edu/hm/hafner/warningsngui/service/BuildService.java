@@ -25,7 +25,7 @@ public class BuildService {
         return latestBuild;
     }
 
-    public List<BuildResult<Build>> createBuildResultsForAggregatedAnalysisResults(Job job) {
+    public List<BuildResult<Build>> createBuildResults(Job job) {
         List<BuildResult<Build>> buildResults = new ArrayList<>();
         for (Build b : job.getBuilds()) {
             //TODO BuildTime

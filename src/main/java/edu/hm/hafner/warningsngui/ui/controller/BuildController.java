@@ -8,6 +8,8 @@ import edu.hm.hafner.warningsngui.service.JobService;
 import edu.hm.hafner.warningsngui.service.ResultService;
 import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Job;
+import edu.hm.hafner.warningsngui.ui.echart.NewVersusFixedAggregatedTrendChart;
+import edu.hm.hafner.warningsngui.ui.echart.NewVersusFixedTrendChart;
 import edu.hm.hafner.warningsngui.ui.echart.ToolTrendChart;
 import edu.hm.hafner.warningsngui.ui.table.build.BuildRepositoryStatistics;
 import edu.hm.hafner.warningsngui.ui.table.build.BuildViewTable;
@@ -63,10 +65,10 @@ public class BuildController {
 
     @RequestMapping(path={"/ajax/aggregatedAnalysisResults/{jobName}"}, method=RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public LinesChartModel getAggregatedAnalysisResultsTrendChartsExample(@PathVariable("jobName") String jobName) {
+    public LinesChartModel getAggregatedAnalysisResultsTrendCharts(@PathVariable("jobName") String jobName) {
         logger.info("getAggregatedAnalysisResultsTrendChartsExample (ajax) is called");
         Job job = jobService.findJobByName(jobName);
-        List<BuildResult<Build>> buildResults = buildService.createBuildResultsForAggregatedAnalysisResults(job);
+        List<BuildResult<Build>> buildResults = buildService.createBuildResults(job);
         ToolTrendChart toolTrendChart = new ToolTrendChart();
         LinesChartModel model = toolTrendChart.create(buildResults, new ChartModelConfiguration());
 
@@ -83,5 +85,40 @@ public class BuildController {
         LinesChartModel model = toolTrendChart.create(results, new ChartModelConfiguration());
 
         return model;
+    }
+
+    /**
+     * Ajax call to get the aggregated size of new vs fixed issues.
+     *
+     * @param jobName the name of the project
+     * @return the lines chart model with the size of fixed and new issues for each build
+     */
+    @RequestMapping(path={"/ajax/{jobName}/newVersusFixedAggregatedTrendChart"}, method=RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public LinesChartModel getNewVersusFixedTrendChart(@PathVariable("jobName") String jobName) {
+        logger.info("getNewVersusFixedAggregatedTrendChart (ajax) is called");
+        Job job = jobService.findJobByName(jobName);
+        List<BuildResult<Build>> buildResults = buildService.createBuildResults(job);
+        NewVersusFixedAggregatedTrendChart trendChart = new NewVersusFixedAggregatedTrendChart();
+
+        return trendChart.create(buildResults, new ChartModelConfiguration());
+    }
+
+    /**
+     * Ajax call to get the size of new vs fixed issues for a given tool.
+     *
+     * @param jobName the name of the project
+     * @param toolName the used tool
+     * @return the lines chart model with the size of fixed and new issues for each build
+     */
+    @RequestMapping(path={"/ajax/{jobName}/newVersusFixedTrendChart/{toolName}"}, method=RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public LinesChartModel getNewVersusFixedTrendChartForTool(@PathVariable("jobName") String jobName, @PathVariable("toolName") String toolName) {
+        logger.info("getNewVersusFixedTrendChartForTool (ajax) is called");
+        Job job = jobService.findJobByName(jobName);
+        List<BuildResult<Build>> buildResults = buildService.createBuildResultsForTool(job, toolName);
+        NewVersusFixedTrendChart trendChart = new NewVersusFixedTrendChart();
+
+        return trendChart.create(buildResults, new ChartModelConfiguration());
     }
 }
