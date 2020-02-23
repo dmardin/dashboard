@@ -1,14 +1,13 @@
 package edu.hm.hafner.warningsngui.db.model;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @Table(name="issue")
 public class IssueEntity {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private UUID id;
     private String baseName;
     private String category;
     private int columnEnd;
@@ -52,11 +51,12 @@ public class IssueEntity {
 //        this.reportEntity = reportEntity;
 //    }
 
-    public int getId() {
+
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

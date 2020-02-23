@@ -17,6 +17,7 @@ public class ReportMapper {
         List<IssueEntity> issueEntities = new ArrayList<>();
         report.stream().forEach(issue -> {
             IssueEntity issueEntity = new IssueEntity();
+            issueEntity.setId(issue.getId());
             issueEntity.setBaseName(issue.getBaseName());
             issueEntity.setCategory(issue.getCategory());
             issueEntity.setColumnStart(issue.getColumnStart());
@@ -43,6 +44,9 @@ public class ReportMapper {
 
     public static Issue map(IssueEntity issueEntity){
         IssueBuilder issueBuilder = new IssueBuilder();
+        if(issueEntity.getId() != null){
+            issueBuilder.setId(issueEntity.getId());
+        }
         //TODO Linerange
         return issueBuilder
                 .setCategory(issueEntity.getCategory())

@@ -1,11 +1,11 @@
 package edu.hm.hafner.warningsngui.db.mapper;
 
-import edu.hm.hafner.warningsngui.service.dto.Build;
-import edu.hm.hafner.warningsngui.service.dto.Result;
 import edu.hm.hafner.warningsngui.db.model.BuildEntity;
 import edu.hm.hafner.warningsngui.db.model.ReportEntity;
 import edu.hm.hafner.warningsngui.db.model.ResultEntity;
 import edu.hm.hafner.warningsngui.db.model.WarningTypeEntity;
+import edu.hm.hafner.warningsngui.service.dto.Build;
+import edu.hm.hafner.warningsngui.service.dto.Result;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,7 @@ public class ResultMapper {
 
     public static Result map(ResultEntity resultEntity, Build build) {
         Result result = new Result();
+        result.setId(resultEntity.getId());
         result.setWarningId(resultEntity.getWarningId());
         result.setLatestUrl(resultEntity.getLatestUrl());
         result.setName(resultEntity.getName());
@@ -46,6 +47,7 @@ public class ResultMapper {
 
     public static ResultEntity mapToEntity(Result result, BuildEntity buildEntity) {
         ResultEntity resultEntity = new ResultEntity();
+        resultEntity.setId(result.getId());
         resultEntity.setWarningId(result.getWarningId());
         resultEntity.setLatestUrl(result.getLatestUrl());
         resultEntity.setName(result.getName());

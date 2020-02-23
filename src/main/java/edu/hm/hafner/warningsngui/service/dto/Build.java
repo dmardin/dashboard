@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Build {
 
+    private int id;
     private int number;
     private String url;
 
@@ -44,5 +45,20 @@ public class Build {
 
     public void setJob(Job job) {
         this.job = job;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Result addResult(Result result) {
+        getResults().add(result);
+        result.setBuild(this);
+
+        return result;
     }
 }

@@ -20,12 +20,17 @@ public class JobMapper {
      * @return the converted job
      */
     public static Job map(JobEntity jobEntity) {
-        Job job = new Job();
-        job.setName(jobEntity.getName());
-        job.setLastBuildStatus(jobEntity.getLastBuildStatus());
-        job.setUrl(jobEntity.getUrl());
-        job.setBuilds(BuildMapper.map(jobEntity.getBuildEntities(), job));
-        return job;
+        if(jobEntity != null) {
+            Job job = new Job();
+            job.setId(jobEntity.getId());
+            job.setName(jobEntity.getName());
+            job.setLastBuildStatus(jobEntity.getLastBuildStatus());
+            job.setUrl(jobEntity.getUrl());
+            job.setBuilds(BuildMapper.map(jobEntity.getBuildEntities(), job));
+            return job;
+        }
+        else
+            return null; //TODO other solution?
     }
 
     /**
@@ -46,6 +51,7 @@ public class JobMapper {
      */
     public static JobEntity mapToEntity(Job job) {
         JobEntity jobEntity = new JobEntity();
+        jobEntity.setId(job.getId());
         jobEntity.setName(job.getName());
         jobEntity.setLastBuildStatus(job.getLastBuildStatus());
         jobEntity.setUrl(job.getUrl());

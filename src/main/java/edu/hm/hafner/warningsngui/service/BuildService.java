@@ -1,12 +1,15 @@
 package edu.hm.hafner.warningsngui.service;
 
 import edu.hm.hafner.echarts.BuildResult;
+import edu.hm.hafner.warningsngui.db.BuildEntityService;
+import edu.hm.hafner.warningsngui.db.model.JobEntity;
 import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Job;
 import edu.hm.hafner.warningsngui.service.dto.Result;
 import edu.hm.hafner.warningsngui.ui.table.build.BuildRepositoryStatistics;
 import edu.hm.hafner.warningsngui.ui.table.build.BuildStatistics;
 import edu.hm.hafner.warningsngui.ui.table.build.BuildViewTable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -14,6 +17,13 @@ import java.util.List;
 
 @Service
 public class BuildService {
+
+    @Autowired
+    BuildEntityService buildEntityService;
+
+    public List<Build> saveAll(List<Build> builds, JobEntity jobEntity) {
+        return buildEntityService.saveAll(builds, jobEntity);
+    }
 
     public Build getLatestBuild(Job job) {
         Build latestBuild = new Build();

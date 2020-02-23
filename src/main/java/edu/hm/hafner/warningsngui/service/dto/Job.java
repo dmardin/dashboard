@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Job {
 
+    private int id;
     private String name;
     private String url;
     private String color;
@@ -49,5 +50,20 @@ public class Job {
 
     public void setLastBuildStatus(String lastBuildStatus) {
         this.lastBuildStatus = lastBuildStatus;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Build addBuild(Build build) {
+        getBuilds().add(build);
+        build.setJob(this);
+
+        return build;
     }
 }

@@ -3,10 +3,10 @@ version: '3'
 services:
     mysql:
         image: mysql
-        container_name: mysql
+        container_name: warnings_ng_data
         environment: 
           MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: spring_boot_database
+          MYSQL_DATABASE: warnings_ng_data
           MYSQL_USER: user
           MYSQL_PASSWORD: password
         ports: 

@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Result {
 
+    private int id;
     private String warningId;
     private String latestUrl;
     private String name;
@@ -128,4 +129,13 @@ public class Result {
     public void setInfoMessages(List<String> infoMessages) {
         this.infoMessages = infoMessages;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
 }
