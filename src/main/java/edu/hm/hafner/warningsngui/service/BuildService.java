@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class BuildService {
@@ -68,8 +69,10 @@ public class BuildService {
         return results;
     }
 
-    public Build getBuildWithBuildNumberFromJob(Job job,int buildNumber){
-        return job.getBuilds().stream().filter(b -> b.getNumber() == buildNumber).findFirst().get();
+    public Build getBuildWithBuildNumberFromJob(Job job, int buildNumber){
+        return job.getBuilds().stream().filter(b -> b.getNumber() == buildNumber)
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("Build number "+ buildNumber+ " for the Job "+ job.getName() + " not found" ));
     }
 
     /**
@@ -91,9 +94,7 @@ public class BuildService {
     private List<Object> convertRowsForTheBuildViewTable(List<Build> builds) {
         BuildRepositoryStatistics buildRepositoryStatistics = new BuildRepositoryStatistics();
         ArrayList<BuildStatistics> buildsStatistics = new ArrayList<>();
-        builds.forEach(build -> {
-            buildsStatistics.add(new BuildStatistics(build.getNumber(), build.getUrl()));
-        });
+        builds.forEach(build -> buildsStatistics.add(new BuildStatistics(build.getNumber(), build.getUrl())));
 
         buildRepositoryStatistics.addAll(buildsStatistics);
         BuildViewTable buildViewTable = new BuildViewTable(buildRepositoryStatistics);
