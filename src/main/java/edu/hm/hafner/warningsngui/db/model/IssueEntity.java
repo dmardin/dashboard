@@ -37,21 +37,6 @@ public class IssueEntity {
         this.issues = issues;
     }
 
-    //    @ManyToOne
-//    private Tool tool;
-
-//    @ManyToOne
-//    private ReportEntity reportEntity;
-
-//    public ReportEntity getReportEntity() {
-//        return reportEntity;
-//    }
-//
-//    public void setReportEntity(ReportEntity reportEntity) {
-//        this.reportEntity = reportEntity;
-//    }
-
-
     public UUID getId() {
         return id;
     }
@@ -187,12 +172,4 @@ public class IssueEntity {
     public void setType(String type) {
         this.type = type;
     }
-
-//    public Tool getTool() {
-//        return tool;
-//    }
-//
-//    public void setTool(Tool tool) {
-//        this.tool = tool;
-//    }
 }
