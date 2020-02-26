@@ -13,7 +13,6 @@ import java.util.List;
 @Entity
 @Table(name="job")
 public class JobEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;

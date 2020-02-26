@@ -17,7 +17,6 @@ public class ReportEntity {
     @OneToMany(mappedBy = "issues", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<IssueEntity> issues = new ArrayList<>();
 
-    //@ManyToOne(cascade = CascadeType.ALL)
     @Enumerated(EnumType.STRING)
     @Column(name = "warning_type")
     private WarningTypeEntity warningTypeEntity;
