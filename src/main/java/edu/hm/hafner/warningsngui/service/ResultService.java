@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,7 +29,10 @@ public class ResultService {
     }
 
     public Result getResultByToolId(Build build, String toolId) {
-        return build.getResults().stream().filter(r -> r.getWarningId().equals(toolId)).findFirst().get();
+        return build.getResults().stream()
+                .filter(r -> r.getWarningId().equals(toolId))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException("Tool id "+ toolId + " for the Build "+ build.getNumber() + " from the job" + build.getJob().getName() + " not found" ));
     }
 
     public List<Object> getOutstandingAndNewIssuesForTool(Build build, String toolId) {
@@ -59,14 +63,16 @@ public class ResultService {
     }
 
     private Result getResultFromBuildWithToolId(Build build, String toolId) {
-        return build.getResults().stream().filter(r -> r.getWarningId().equals(toolId)).findFirst().get();
+        return build.getResults().stream()
+                .filter(r -> r.getWarningId().equals(toolId))
+                .findFirst()
+                .orElseThrow(() -> new NoSuchElementException(
+                        "Result for the Job "+ build.getJob().getName() + " with the build number"+ build.getJob() + " and the tool id "+ toolId +"not found" ));
     }
 
     private List<Object> convertIssuesDataForAjax(Report report) {
         ArrayList<IssueStatistics> issueStatisticsList = new ArrayList<>();
-        report.stream().forEach(issue -> {
-            issueStatisticsList.add(new IssueStatistics(issue.getId(), issue.getFileName(), issue.getPackageName(), issue.getCategory(), issue.getType(), issue.getSeverity().toString()));
-        });
+        report.stream().forEach(issue -> issueStatisticsList.add(new IssueStatistics(issue.getId(), issue.getFileName(), issue.getPackageName(), issue.getCategory(), issue.getType(), issue.getSeverity().toString())));
         IssueRepositoryStatistics repositoryStatistics = new IssueRepositoryStatistics();
         repositoryStatistics.addAll(issueStatisticsList);
         IssueViewTable issueViewTable = new IssueViewTable(repositoryStatistics);
