@@ -68,9 +68,7 @@ public class JobService {
     private List<Object> convertRowsForTheJobViewTable(List<Job> jobs) {
         JobRepositoryStatistics jobRepositoryStatistics = new JobRepositoryStatistics();
         ArrayList<JobStatistics> jobsStatistics = new ArrayList<>();
-        jobs.forEach(job -> {
-             jobsStatistics.add(new JobStatistics(job.getName(),job.getLastBuildStatus(),job.getUrl()));
-        });
+        jobs.forEach(job -> jobsStatistics.add(new JobStatistics(job.getName(),job.getLastBuildStatus(),job.getUrl())));
 
         jobRepositoryStatistics.addAll(jobsStatistics);
         JobViewTable jobViewTable = new JobViewTable(jobRepositoryStatistics);
