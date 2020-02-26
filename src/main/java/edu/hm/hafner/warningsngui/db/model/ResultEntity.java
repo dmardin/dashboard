@@ -7,7 +7,6 @@ import java.util.List;
 @Entity
 @Table(name="result")
 public class ResultEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
