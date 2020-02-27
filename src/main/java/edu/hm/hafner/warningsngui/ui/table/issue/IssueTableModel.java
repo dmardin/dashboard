@@ -1,5 +1,6 @@
 package edu.hm.hafner.warningsngui.ui.table.issue;
 
+import edu.hm.hafner.analysis.Issue;
 import io.jenkins.plugins.datatables.api.TableColumn;
 import io.jenkins.plugins.datatables.api.TableModel;
 
@@ -13,7 +14,6 @@ import java.util.stream.Collectors;
  * @author Deniz Mardin
  */
 public class IssueTableModel extends TableModel {
-
     private final IssueRepositoryStatistics statistics;
 
     /**
@@ -43,11 +43,15 @@ public class IssueTableModel extends TableModel {
     @Override
     public List<TableColumn> getColumns() {
         List<TableColumn> columns = new ArrayList<>();
-        columns.add(new TableColumn("File", "fileName")/*.setWidth(2)*/);
-        columns.add(new TableColumn("Package", "package"));
         columns.add(new TableColumn("Category", "category"));
+        columns.add(new TableColumn("ModuleName", "moduleName"));
+        columns.add(new TableColumn("Package", "package"));
+        columns.add(new TableColumn("File", "fileName")/*.setWidth(2)*/);
         columns.add(new TableColumn("Type", "type"));
         columns.add(new TableColumn("Severity", "severity"));
+        columns.add(new TableColumn("Reference", "reference"));
+        columns.add(new TableColumn("Line", "line"));
+        columns.add(new TableColumn("Column", "column"));
 
         return columns;
     }
@@ -59,7 +63,7 @@ public class IssueTableModel extends TableModel {
      */
     @Override
     public List<Object> getRows() {
-        return statistics.getIssueStatistics().stream().map(IssuesRow::new).collect(Collectors.toList());
+        return statistics.getIssue().stream().map(IssuesRow::new).collect(Collectors.toList());
     }
 
     /**
@@ -67,15 +71,15 @@ public class IssueTableModel extends TableModel {
      */
     public static class IssuesRow  {
 
-        private final IssueStatistics issueStatistics;
+        private final Issue issue;
 
         /**
          * Creates a new instance of a {@link IssuesRow}
          *
-         * @param issueStatistics the issue statistic for one line
+         * @param issue the issue statistic for one line
          */
-        IssuesRow(final IssueStatistics issueStatistics) {
-            this.issueStatistics = issueStatistics;
+        IssuesRow(final Issue issue) {
+            this.issue = issue;
         }
 
         /**
@@ -84,7 +88,7 @@ public class IssueTableModel extends TableModel {
          * @return the file name of the issue
          */
         public String getFileName() {
-            return issueStatistics.getFileName();
+            return issue.getFileName();
         }
 
         /**
@@ -93,7 +97,7 @@ public class IssueTableModel extends TableModel {
          * @return the package of the issue
          */
         public String getPackage() {
-            return issueStatistics.getPackageName();
+            return issue.getPackageName();
         }
 
         /**
@@ -102,7 +106,7 @@ public class IssueTableModel extends TableModel {
          * @return the category of the issue
          */
         public String getCategory() {
-            return issueStatistics.getCategory();
+            return issue.getCategory();
         }
 
         /**
@@ -111,7 +115,7 @@ public class IssueTableModel extends TableModel {
          * @return the type of the issue
          */
         public String getType() {
-            return issueStatistics.getType();
+            return issue.getType();
         }
 
         /**
@@ -120,7 +124,23 @@ public class IssueTableModel extends TableModel {
          * @return the severity of the issue
          */
         public String getSeverity() {
-            return issueStatistics.getSeverity();
+            return issue.getSeverity().toString();
+        }
+
+        public String getModuleName() {
+            return issue.getModuleName();
+        }
+
+        public String getReference() {
+            return issue.getReference();
+        }
+
+        public String getLine() {
+            return issue.getLineStart() + ":" + issue.getLineEnd();
+        }
+
+        public String getColumn() {
+            return issue.getColumnStart() + ":" + issue.getColumnEnd();
         }
     }
 }

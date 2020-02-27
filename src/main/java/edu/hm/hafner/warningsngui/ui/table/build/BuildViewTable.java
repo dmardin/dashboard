@@ -10,7 +10,6 @@ import java.util.List;
  * @author Deniz Mardin
  */
 public class BuildViewTable {
-
     private final BuildRepositoryStatistics buildRepositoryStatistics;
 
     /**

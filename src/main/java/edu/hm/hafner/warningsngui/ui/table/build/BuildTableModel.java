@@ -1,5 +1,6 @@
 package edu.hm.hafner.warningsngui.ui.table.build;
 
+import edu.hm.hafner.warningsngui.service.dto.Build;
 import io.jenkins.plugins.datatables.api.TableColumn;
 import io.jenkins.plugins.datatables.api.TableModel;
 
@@ -13,8 +14,6 @@ import java.util.stream.Collectors;
  * @author Deniz Mardin
  */
 public class BuildTableModel extends TableModel {
-
-
     private final BuildRepositoryStatistics buildRepositoryStatistics;
 
     /**
@@ -64,15 +63,14 @@ public class BuildTableModel extends TableModel {
      * A single line in the table that contains the statistics of a build.
      */
     public static class BuildsRow {
-
-        private final BuildStatistics buildStatistics;
+        private final Build buildStatistics;
 
         /**
          * Creates a new instance of a {@link BuildTableModel.BuildsRow}
          *
          * @param buildStatistics the build statistic for one line
          */
-        BuildsRow(final BuildStatistics buildStatistics){
+        BuildsRow(final Build buildStatistics){
             this.buildStatistics = buildStatistics;
         }
 
@@ -82,7 +80,7 @@ public class BuildTableModel extends TableModel {
          * @return the name
          */
         public int getBuildNumber() {
-            return buildStatistics.getBuildNumber();
+            return buildStatistics.getNumber();
         }
 
         /**
@@ -91,7 +89,7 @@ public class BuildTableModel extends TableModel {
          * @return the url
          */
         public String getBuildUrl() {
-            return buildStatistics.getBuildUrl();
+            return buildStatistics.getUrl();
         }
     }
 }

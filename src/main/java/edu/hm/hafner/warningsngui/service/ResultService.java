@@ -1,10 +1,10 @@
 package edu.hm.hafner.warningsngui.service;
 
+import edu.hm.hafner.analysis.Issue;
 import edu.hm.hafner.analysis.Report;
 import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Result;
 import edu.hm.hafner.warningsngui.ui.table.issue.IssueRepositoryStatistics;
-import edu.hm.hafner.warningsngui.ui.table.issue.IssueStatistics;
 import edu.hm.hafner.warningsngui.ui.table.issue.IssueViewTable;
 import org.springframework.stereotype.Service;
 
@@ -71,8 +71,8 @@ public class ResultService {
     }
 
     private List<Object> convertIssuesDataForAjax(Report report) {
-        ArrayList<IssueStatistics> issueStatisticsList = new ArrayList<>();
-        report.stream().forEach(issue -> issueStatisticsList.add(new IssueStatistics(issue.getId(), issue.getFileName(), issue.getPackageName(), issue.getCategory(), issue.getType(), issue.getSeverity().toString())));
+        ArrayList<Issue> issueStatisticsList = new ArrayList<>();
+        report.stream().forEach(issueStatisticsList::add);
         IssueRepositoryStatistics repositoryStatistics = new IssueRepositoryStatistics();
         repositoryStatistics.addAll(issueStatisticsList);
         IssueViewTable issueViewTable = new IssueViewTable(repositoryStatistics);

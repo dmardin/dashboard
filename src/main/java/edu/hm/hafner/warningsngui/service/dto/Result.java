@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Result {
-
     private int id;
     private String warningId;
     private String latestUrl;
@@ -161,5 +160,4 @@ public class Result {
     public void setId(int id) {
         this.id = id;
     }
-
 }

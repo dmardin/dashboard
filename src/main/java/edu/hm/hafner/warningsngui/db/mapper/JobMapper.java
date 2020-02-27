@@ -28,11 +28,7 @@ public class JobMapper {
                     jobEntity.getLastBuildStatus()
             );
             job.setBuilds(BuildMapper.map(jobEntity.getBuildEntities(), job));
-//            job.setId(jobEntity.getId());
-//            job.setName(jobEntity.getName());
-//            job.setLastBuildStatus(jobEntity.getLastBuildStatus());
-//            job.setUrl(jobEntity.getUrl());
-//            job.setBuilds(BuildMapper.map(jobEntity.getBuildEntities(), job));
+
             return job;
         }
         else
@@ -63,11 +59,7 @@ public class JobMapper {
                 job.getLastBuildStatus()
         );
         jobEntity.setBuildEntities(BuildMapper.mapToEntities(job.getBuilds(), jobEntity));
-//        jobEntity.setId(job.getId());
-//        jobEntity.setName(job.getName());
-//        jobEntity.setLastBuildStatus(job.getLastBuildStatus());
-//        jobEntity.setUrl(job.getUrl());
-//        jobEntity.setBuildEntities(BuildMapper.mapToEntities(job.getBuilds(), jobEntity));
+
         return jobEntity;
     }
 

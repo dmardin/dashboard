@@ -16,9 +16,6 @@ public class BuildMapper {
                 buildEntity.getNumber(),
                 buildEntity.getUrl()
         );
-//        build.setId(buildEntity.getId());
-//        build.setNumber(buildEntity.getNumber());
-//        build.setUrl(buildEntity.getUrl());
         build.setJob(job);
         build.setResults(ResultMapper.map(buildEntity.getResultEntities(), build));
 
@@ -35,9 +32,6 @@ public class BuildMapper {
                 build.getNumber(),
                 build.getUrl()
         );
-//        buildEntity.setId(build.getId());
-//        buildEntity.setNumber(build.getNumber());
-//        buildEntity.setUrl(build.getUrl());
         buildEntity.setJobEntity(jobEntity);
         buildEntity.setResultEntities(ResultMapper.mapToEntities(build.getResults(), buildEntity));
 

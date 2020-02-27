@@ -23,8 +23,7 @@ public class ReportEntity {
         this.issues = new ArrayList<>();
     }
 
-    public ReportEntity(int id, WarningTypeEntity warningTypeEntity) {
-        this.id = id;
+    public ReportEntity(WarningTypeEntity warningTypeEntity) {
         this.warningTypeEntity = warningTypeEntity;
         this.resultEntity = new ResultEntity();
         this.issues = new ArrayList<>();

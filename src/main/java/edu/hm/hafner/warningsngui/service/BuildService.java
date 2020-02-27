@@ -7,7 +7,6 @@ import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Job;
 import edu.hm.hafner.warningsngui.service.dto.Result;
 import edu.hm.hafner.warningsngui.ui.table.build.BuildRepositoryStatistics;
-import edu.hm.hafner.warningsngui.ui.table.build.BuildStatistics;
 import edu.hm.hafner.warningsngui.ui.table.build.BuildViewTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,13 +27,6 @@ public class BuildService {
     }
 
     public Build getLatestBuild(Job job) {
-//        Build latestBuild = new Build();
-//        for (Build build : job.getBuilds()){
-//            if(build.getNumber() > latestBuild.getNumber()){
-//                latestBuild = build;
-//            }
-//        }
-
         return job.getBuilds().stream()
                 .max(Comparator.comparing(Build::getNumber))
                 .orElseThrow(() -> new NoSuchElementException("No Build not found" ));
@@ -97,11 +89,9 @@ public class BuildService {
      */
     private List<Object> convertRowsForTheBuildViewTable(List<Build> builds) {
         BuildRepositoryStatistics buildRepositoryStatistics = new BuildRepositoryStatistics();
-        ArrayList<BuildStatistics> buildsStatistics = new ArrayList<>();
-        builds.forEach(build -> buildsStatistics.add(new BuildStatistics(build.getNumber(), build.getUrl())));
-
-        buildRepositoryStatistics.addAll(buildsStatistics);
+        buildRepositoryStatistics.addAll(builds);
         BuildViewTable buildViewTable = new BuildViewTable(buildRepositoryStatistics);
+
         return buildViewTable.getTableRows("builds");
     }
 }

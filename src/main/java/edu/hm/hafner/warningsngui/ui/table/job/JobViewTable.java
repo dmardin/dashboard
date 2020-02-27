@@ -11,7 +11,6 @@ import java.util.List;
  * @author Deniz Mardin
  */
 public class JobViewTable {
-
     private final JobRepositoryStatistics jobRepositoryStatistics;
 
     /**

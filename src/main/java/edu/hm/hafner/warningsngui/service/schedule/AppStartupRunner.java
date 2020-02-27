@@ -1,8 +1,8 @@
 package edu.hm.hafner.warningsngui.service.schedule;
 
 import edu.hm.hafner.analysis.Report;
+import edu.hm.hafner.warningsngui.db.mapper.IssueMapper;
 import edu.hm.hafner.warningsngui.db.mapper.JobMapper;
-import edu.hm.hafner.warningsngui.db.mapper.ReportMapper;
 import edu.hm.hafner.warningsngui.db.model.IssueEntity;
 import edu.hm.hafner.warningsngui.db.model.WarningTypeEntity;
 import edu.hm.hafner.warningsngui.service.BuildService;
@@ -115,9 +115,9 @@ public class AppStartupRunner implements ApplicationRunner {
                         String url = tool.getLatestUrl() + SLASH + warningTypeEntity.toString().toLowerCase() + SLASH + API_JSON;
                         IssuesResponse issuesResponse = restService.getIssues(url);
                         if (issuesResponse != null) {
-                            IssueEntity[] issues = issuesResponse.getIssues();
-                            for (IssueEntity issue : issues) {
-                                report.add(ReportMapper.map(issue));
+                            IssueEntity[] issuesEntities = issuesResponse.getIssues();//TODO streams?
+                            for (IssueEntity issueEntity : issuesEntities) {
+                                report.add(IssueMapper.map(issueEntity));
                             }
                         }
                     }

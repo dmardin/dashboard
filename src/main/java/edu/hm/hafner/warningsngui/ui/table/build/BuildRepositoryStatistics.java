@@ -1,5 +1,7 @@
 package edu.hm.hafner.warningsngui.ui.table.build;
 
+import edu.hm.hafner.warningsngui.service.dto.Build;
+
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -10,8 +12,7 @@ import java.util.stream.Collectors;
  * @author Deniz Mardin
  */
 public class BuildRepositoryStatistics {
-    
-    private final Map<Integer, BuildStatistics> statisticsPerBuild = new HashMap<>();
+    private final Map<Integer, Build> statisticsPerBuild = new HashMap<>();
 
     /**
      * Returns the statistics for the given build.
@@ -19,7 +20,7 @@ public class BuildRepositoryStatistics {
      * @param buildNumber the build number
      * @return the statistic of the build
      */
-    public BuildStatistics get(final int buildNumber) {
+    public Build get(final int buildNumber) {
         if (contains(buildNumber)) {
             return statisticsPerBuild.get(buildNumber);
         }
@@ -68,7 +69,7 @@ public class BuildRepositoryStatistics {
      *
      * @return all build statistics
      */
-    public Collection<BuildStatistics> getBuildStatistics() {
+    public Collection<Build> getBuildStatistics() {
         return statisticsPerBuild.values();
     }
 
@@ -77,9 +78,9 @@ public class BuildRepositoryStatistics {
      *
      * @param additionalStatistics the build statistics to add
      */
-    public void addAll(final Collection<BuildStatistics> additionalStatistics) {
+    public void addAll(final Collection<Build> additionalStatistics) {
         statisticsPerBuild.putAll(
-                additionalStatistics.stream().collect(Collectors.toMap(BuildStatistics::getBuildNumber, Function.identity())));
+                additionalStatistics.stream().collect(Collectors.toMap(Build::getNumber, Function.identity())));
     }
 
     /**
@@ -96,8 +97,8 @@ public class BuildRepositoryStatistics {
      *
      * @param additionalStatistics the additional build statistic to add
      */
-    public void add(final BuildStatistics additionalStatistics) {
-        statisticsPerBuild.put(additionalStatistics.getBuildNumber(), additionalStatistics);
+    public void add(final Build additionalStatistics) {
+        statisticsPerBuild.put(additionalStatistics.getNumber(), additionalStatistics);
     } 
     
 }

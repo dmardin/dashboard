@@ -1,5 +1,6 @@
 package edu.hm.hafner.warningsngui.ui.table.job;
 
+import edu.hm.hafner.warningsngui.service.dto.Job;
 import io.jenkins.plugins.datatables.api.TableColumn;
 import io.jenkins.plugins.datatables.api.TableModel;
 
@@ -13,7 +14,6 @@ import java.util.stream.Collectors;
  * @author Deniz Mardin
  */
 public class JobTableModel extends TableModel {
-
     private final JobRepositoryStatistics jobRepositoryStatistics;
 
     /**
@@ -65,14 +65,14 @@ public class JobTableModel extends TableModel {
      */
     public static class JobsRow {
 
-        private final JobStatistics jobStatistics;
+        private final Job jobStatistics;
 
         /**
          * Creates a new instance of a {@link JobsRow}
          *
          * @param jobStatistics the job statistic for one line
          */
-        JobsRow(final JobStatistics jobStatistics){
+        JobsRow(final Job jobStatistics){
             this.jobStatistics = jobStatistics;
         }
 
@@ -82,7 +82,7 @@ public class JobTableModel extends TableModel {
          * @return the name
          */
         public String getJobName() {
-            return jobStatistics.getJobName();
+            return jobStatistics.getName();
         }
 
         /**
@@ -91,7 +91,7 @@ public class JobTableModel extends TableModel {
          * @return the url
          */
         public String getJobUrl() {
-            return jobStatistics.getJobUrl();
+            return jobStatistics.getUrl();
         }
 
         /**
@@ -100,7 +100,7 @@ public class JobTableModel extends TableModel {
          * @return the status
          */
         public String getJobStatus() {
-            return jobStatistics.getJobStatus();
+            return jobStatistics.getLastBuildStatus();
         }
     }
 }

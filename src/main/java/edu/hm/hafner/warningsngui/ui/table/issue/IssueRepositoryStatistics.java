@@ -1,5 +1,7 @@
 package edu.hm.hafner.warningsngui.ui.table.issue;
 
+import edu.hm.hafner.analysis.Issue;
+
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -10,8 +12,7 @@ import java.util.stream.Collectors;
  * @author Deniz Mardin
  */
 public class IssueRepositoryStatistics {
-
-    private final Map<UUID, IssueStatistics> statisticsPerIssue = new HashMap<>();
+    private final Map<UUID, Issue> statisticsPerIssue = new HashMap<>();
 
     /**
      * Checks if the repository is empty.
@@ -56,7 +57,7 @@ public class IssueRepositoryStatistics {
      *
      * @return all issue statistics
      */
-    public Collection<IssueStatistics> getIssueStatistics() {
+    public Collection<Issue> getIssue() {
         return statisticsPerIssue.values();
     }
 
@@ -66,7 +67,7 @@ public class IssueRepositoryStatistics {
      * @param issueId the id of the issue
      * @return the statistic of the issue
      */
-    public IssueStatistics get(final UUID issueId) {
+    public Issue get(final UUID issueId) {
         if (contains(issueId)) {
             return statisticsPerIssue.get(issueId);
         }
@@ -78,9 +79,9 @@ public class IssueRepositoryStatistics {
      *
      * @param additionalStatistics the issue statistics to add
      */
-    public void addAll(final Collection<IssueStatistics> additionalStatistics) {
+    public void addAll(final Collection<Issue> additionalStatistics) {
         statisticsPerIssue.putAll(
-                additionalStatistics.stream().collect(Collectors.toMap(IssueStatistics::getUuid, Function.identity())));
+                additionalStatistics.stream().collect(Collectors.toMap(issueStatistics -> issueStatistics.getId(), Function.identity())));
     }
 
     /**
@@ -89,7 +90,7 @@ public class IssueRepositoryStatistics {
      * @param additionalStatistics the issue statistics to add
      */
     public void addAll(final IssueRepositoryStatistics additionalStatistics) {
-        addAll(additionalStatistics.getIssueStatistics());
+        addAll(additionalStatistics.getIssue());
     }
 
     /**
@@ -97,7 +98,7 @@ public class IssueRepositoryStatistics {
      *
      * @param additionalStatistics the additional issue statistic to add
      */
-    public void add(final IssueStatistics additionalStatistics) {
-        statisticsPerIssue.put(additionalStatistics.getUuid(), additionalStatistics);
+    public void add(final Issue additionalStatistics) {
+        statisticsPerIssue.put(additionalStatistics.getId(), additionalStatistics);
     }
 }

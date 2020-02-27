@@ -10,7 +10,6 @@ import java.util.List;
  * @author Deniz Mardin
  */
 public class IssueViewTable {
-
     private final IssueRepositoryStatistics issueRepositoryStatistics;
 
     /**

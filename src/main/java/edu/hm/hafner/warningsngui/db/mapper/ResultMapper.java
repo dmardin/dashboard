@@ -1,5 +1,6 @@
 package edu.hm.hafner.warningsngui.db.mapper;
 
+import edu.hm.hafner.analysis.Report;
 import edu.hm.hafner.warningsngui.db.model.BuildEntity;
 import edu.hm.hafner.warningsngui.db.model.ReportEntity;
 import edu.hm.hafner.warningsngui.db.model.ResultEntity;
@@ -23,27 +24,21 @@ public class ResultMapper {
                 resultEntity.getTotalSize(),
                 resultEntity.getQualityGateStatus()
         );
-//        result.setId(resultEntity.getId());
-//        result.setWarningId(resultEntity.getWarningId());
-//        result.setLatestUrl(resultEntity.getLatestUrl());
-//        result.setName(resultEntity.getName());
-//        result.setNewSize(resultEntity.getNewSize());
-//        result.setFixedSize(resultEntity.getFixedSize());
-//        result.setQualityGateStatus(resultEntity.getQualityGateStatus());
-
         result.setErrorMessages(resultEntity.getErrorMessages());
         result.setInfoMessages(resultEntity.getInfoMessages());
-        result.setBuild(build);
         result.setTotalSize(resultEntity.getTotalSize());
+        result.setBuild(build);
         for (ReportEntity reportEntity : resultEntity.getReports()) {
-            if(reportEntity.getWarningTypeEntity() == WarningTypeEntity.OUTSTANDING) {
-                result.setOutstandingIssues(ReportMapper.map(reportEntity));
-            }
-            else if(reportEntity.getWarningTypeEntity() == WarningTypeEntity.NEW) {
-                result.setNewIssues(ReportMapper.map(reportEntity));
-            }
-            else if(reportEntity.getWarningTypeEntity() == WarningTypeEntity.FIXED) {
-                result.setFixedIssues(ReportMapper.map(reportEntity));
+            switch (reportEntity.getWarningTypeEntity()) {
+                case OUTSTANDING:
+                    result.setOutstandingIssues(ReportMapper.map(reportEntity));
+                    break;
+                case NEW:
+                    result.setNewIssues(ReportMapper.map(reportEntity));
+                    break;
+                case FIXED:
+                    result.setFixedIssues(ReportMapper.map(reportEntity));
+                    break;
             }
         }
 
@@ -65,40 +60,35 @@ public class ResultMapper {
                 result.getTotalSize(),
                 result.getQualityGateStatus()
         );
-//        resultEntity.setId(result.getId());
-//        resultEntity.setWarningId(result.getWarningId());
-//        resultEntity.setLatestUrl(result.getLatestUrl());
-//        resultEntity.setName(result.getName());
-//        resultEntity.setTotalSize(result.getTotalSize());
-//        resultEntity.setNewSize(result.getNewSize());
-//        resultEntity.setFixedSize(result.getFixedSize());
-//        resultEntity.setQualityGateStatus(result.getQualityGateStatus());
         resultEntity.setBuildEntity(buildEntity);
         resultEntity.setInfoMessages(result.getInfoMessages());
         resultEntity.setErrorMessages(result.getErrorMessages());
 
         List<ReportEntity> reportEntities = new ArrayList<>();
-        ReportEntity reportEntityOutstanding = new ReportEntity();
-        reportEntityOutstanding.setResultEntity(resultEntity);
-        reportEntityOutstanding.setWarningTypeEntity(WarningTypeEntity.OUTSTANDING);
-        reportEntityOutstanding.setIssues(ReportMapper.mapToEntities(result.getOutstandingIssues(), reportEntityOutstanding));
-        reportEntities.add(reportEntityOutstanding);
-
-        ReportEntity reportEntityFixed = new ReportEntity();
-        reportEntityFixed.setResultEntity(resultEntity);
-        reportEntityFixed.setWarningTypeEntity(WarningTypeEntity.FIXED);
-        reportEntityFixed.setIssues(ReportMapper.mapToEntities(result.getFixedIssues(), reportEntityFixed));
-        reportEntities.add(reportEntityFixed);
-
-        ReportEntity reportEntityNew = new ReportEntity();
-        reportEntityNew.setResultEntity(resultEntity);
-        reportEntityNew.setWarningTypeEntity(WarningTypeEntity.NEW);
-        reportEntityNew.setIssues(ReportMapper.mapToEntities(result.getNewIssues(), reportEntityNew));
-        reportEntities.add(reportEntityNew);
-
+        for(WarningTypeEntity warningTypeEntity : WarningTypeEntity.values()) {
+            switch (warningTypeEntity) {
+                case OUTSTANDING:
+                    reportEntities.add(createReportEntity(result.getOutstandingIssues(), resultEntity));
+                    break;
+                case NEW:
+                    reportEntities.add(createReportEntity(result.getFixedIssues(), resultEntity));
+                    break;
+                case FIXED:
+                    reportEntities.add(createReportEntity(result.getNewIssues(), resultEntity));
+                    break;
+            }
+        }
         resultEntity.setReports(reportEntities);
 
         return resultEntity;
+    }
+
+    private static ReportEntity createReportEntity(Report issueReport, ResultEntity resultEntity) {
+        ReportEntity reportEntity = new ReportEntity(WarningTypeEntity.NEW);
+        reportEntity.setResultEntity(resultEntity);
+        reportEntity.setIssues(ReportMapper.mapToEntities(issueReport, reportEntity));
+
+        return reportEntity;
     }
 
     public static List<ResultEntity> mapToEntities(List<Result> results, BuildEntity buildEntity) {

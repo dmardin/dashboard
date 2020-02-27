@@ -4,19 +4,19 @@ import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
-@Table(name="issue")
+@Table(name = "issue")
 public class IssueEntity {
     @Id
     private UUID id;
     private String baseName;
     private String category;
-    private int columnEnd;
     private int columnStart;
+    private int columnEnd;
     private String description;
     private String fileName;
     private String fingerprint;
-    private int lineEnd;
     private int lineStart;
+    private int lineEnd;
     @Column(length = 1024)
     private String message;
     private String moduleName;
@@ -25,9 +25,48 @@ public class IssueEntity {
     private String reference;
     private String severity;
     private String type;
-
     @ManyToOne
     ReportEntity issues;
+
+    public IssueEntity() {
+        issues = new ReportEntity();
+    }
+
+    public IssueEntity(
+            UUID id,
+            int columnStart,
+            int columnEnd,
+            int lineStart,
+            int lineEnd,
+            String category,
+            String description,
+            String fileName,
+            String fingerprint,
+            String message,
+            String moduleName,
+            String origin,
+            String packageName,
+            String reference,
+            String severity,
+            String type) {
+        this.id = id;
+        this.category = category;
+        this.columnStart = columnStart;
+        this.columnEnd = columnEnd;
+        this.description = description;
+        this.fileName = fileName;
+        this.fingerprint = fingerprint;
+        this.lineStart = lineStart;
+        this.lineEnd = lineEnd;
+        this.message = message;
+        this.moduleName = moduleName;
+        this.origin = origin;
+        this.packageName = packageName;
+        this.reference = reference;
+        this.severity = severity;
+        this.type = type;
+        issues = new ReportEntity();
+    }
 
     public ReportEntity getIssues() {
         return issues;

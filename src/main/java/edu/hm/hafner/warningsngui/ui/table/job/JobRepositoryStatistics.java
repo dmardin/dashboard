@@ -1,5 +1,7 @@
 package edu.hm.hafner.warningsngui.ui.table.job;
 
+import edu.hm.hafner.warningsngui.service.dto.Job;
+
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -10,8 +12,7 @@ import java.util.stream.Collectors;
  * @author Deniz Mardin
  */
 public class JobRepositoryStatistics {
-
-    private final Map<String, JobStatistics> statisticsPerJob = new HashMap<>();
+    private final Map<String, Job> statisticsPerJob = new HashMap<>();
 
     /**
      * Returns the statistics for the given job.
@@ -19,7 +20,7 @@ public class JobRepositoryStatistics {
      * @param jobName the job name
      * @return the statistic of the job
      */
-    public JobStatistics get(final String jobName) {
+    public Job get(final String jobName) {
         if (contains(jobName)) {
             return statisticsPerJob.get(jobName);
         }
@@ -68,7 +69,7 @@ public class JobRepositoryStatistics {
      *
      * @return all job statistics
      */
-    public Collection<JobStatistics> getJobStatistics() {
+    public Collection<Job> getJobStatistics() {
         return statisticsPerJob.values();
     }
 
@@ -77,9 +78,9 @@ public class JobRepositoryStatistics {
      *
      * @param additionalStatistics the job statistics to add
      */
-    public void addAll(final Collection<JobStatistics> additionalStatistics) {
+    public void addAll(final Collection<Job> additionalStatistics) {
         statisticsPerJob.putAll(
-                additionalStatistics.stream().collect(Collectors.toMap(JobStatistics::getJobName, Function.identity())));
+                additionalStatistics.stream().collect(Collectors.toMap(Job::getName, Function.identity())));
     }
 
     /**
@@ -96,7 +97,7 @@ public class JobRepositoryStatistics {
      *
      * @param additionalStatistics the additional job statistic to add
      */
-    public void add(final JobStatistics additionalStatistics) {
-        statisticsPerJob.put(additionalStatistics.getJobName(), additionalStatistics);
+    public void add(final Job additionalStatistics) {
+        statisticsPerJob.put(additionalStatistics.getName(), additionalStatistics);
     }
 }
