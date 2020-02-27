@@ -16,15 +16,39 @@ public class Result {
     private int newSize;
     private String qualityGateStatus;
     private int totalSize;
-
     @JsonIgnoreProperties("results")
     private Build build;
-    private List<String> errorMessages = new ArrayList<>();
-    private List<String> infoMessages = new ArrayList<>();
+    private List<String> errorMessages;
+    private List<String> infoMessages;
     private Report outstandingIssues;
     private Report newIssues;
     private Report fixedIssues;
 
+    public Result(int id, String warningId, String latestUrl, String name, int fixedSize, int newSize, int totalSize, String qualityGateStatus) {
+        this.id = id;
+        this.warningId = warningId;
+        this.latestUrl = latestUrl;
+        this.name = name;
+        this.fixedSize = fixedSize;
+        this.newSize = newSize;
+        this.totalSize = totalSize;
+        this.qualityGateStatus = qualityGateStatus;
+        this.build = new Build();
+        this.errorMessages = new ArrayList<>();
+        this.infoMessages = new ArrayList<>();
+        this.outstandingIssues = new Report();
+        this.newIssues = new Report();
+        this.fixedIssues = new Report();
+    }
+
+    public Result() {
+        this.build = new Build();
+        this.errorMessages = new ArrayList<>();
+        this.infoMessages = new ArrayList<>();
+        this.outstandingIssues = new Report();
+        this.newIssues = new Report();
+        this.fixedIssues = new Report();
+    }
 
     public String getWarningId() {
         return warningId;

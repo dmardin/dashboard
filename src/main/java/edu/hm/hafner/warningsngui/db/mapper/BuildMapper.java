@@ -11,10 +11,14 @@ import java.util.stream.Collectors;
 public class BuildMapper {
 
     public static Build map(BuildEntity buildEntity, Job job) {
-        Build build = new Build();
-        build.setId(buildEntity.getId());
-        build.setNumber(buildEntity.getNumber());
-        build.setUrl(buildEntity.getUrl());
+        Build build = new Build(
+                buildEntity.getId(),
+                buildEntity.getNumber(),
+                buildEntity.getUrl()
+        );
+//        build.setId(buildEntity.getId());
+//        build.setNumber(buildEntity.getNumber());
+//        build.setUrl(buildEntity.getUrl());
         build.setJob(job);
         build.setResults(ResultMapper.map(buildEntity.getResultEntities(), build));
 
@@ -26,10 +30,14 @@ public class BuildMapper {
     }
 
     public static BuildEntity mapToEntity(Build build, JobEntity jobEntity){
-        BuildEntity buildEntity = new BuildEntity();
-        buildEntity.setId(build.getId());
-        buildEntity.setNumber(build.getNumber());
-        buildEntity.setUrl(build.getUrl());
+        BuildEntity buildEntity = new BuildEntity(
+                build.getId(),
+                build.getNumber(),
+                build.getUrl()
+        );
+//        buildEntity.setId(build.getId());
+//        buildEntity.setNumber(build.getNumber());
+//        buildEntity.setUrl(build.getUrl());
         buildEntity.setJobEntity(jobEntity);
         buildEntity.setResultEntities(ResultMapper.mapToEntities(build.getResults(), buildEntity));
 

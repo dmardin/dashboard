@@ -17,20 +17,38 @@ public class ResultEntity {
     private int newSize;
     private String qualityGateStatus;
     private int totalSize;
-
     @ManyToOne
     private BuildEntity buildEntity;
-
     @OrderColumn
     @ElementCollection(targetClass = String.class)
-    private List<String> errorMessages = new ArrayList<>();
-
+    private List<String> errorMessages;
     @OrderColumn
     @ElementCollection(targetClass = String.class)
-    private List<String> infoMessages = new ArrayList<>();
-
+    private List<String> infoMessages;
     @OneToMany(mappedBy = "resultEntity", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<ReportEntity> reports = new ArrayList<>();
+    private List<ReportEntity> reports;
+
+    public ResultEntity() {
+        this.buildEntity = new BuildEntity();
+        this.errorMessages = new ArrayList<>();
+        this.infoMessages = new ArrayList<>();
+        this.reports = new ArrayList<>();
+    }
+
+    public ResultEntity(int id, String warningId, String latestUrl, String name, int fixedSize, int newSize, int totalSize, String qualityGateStatus) {
+        this.id = id;
+        this.warningId = warningId;
+        this.latestUrl = latestUrl;
+        this.name = name;
+        this.fixedSize = fixedSize;
+        this.newSize = newSize;
+        this.qualityGateStatus = qualityGateStatus;
+        this.totalSize = totalSize;
+        this.buildEntity = new BuildEntity();
+        this.errorMessages = new ArrayList<>();
+        this.infoMessages = new ArrayList<>();
+        this.reports = new ArrayList<>();
+    }
 
     public List<ReportEntity> getReports() {
         return reports;

@@ -20,7 +20,19 @@ public class JobEntity {
     private String url;
     private String lastBuildStatus;
     @OneToMany(fetch=FetchType.EAGER, mappedBy = "jobEntity", cascade = CascadeType.ALL)
-    private List<BuildEntity> buildEntities = new ArrayList<>();
+    private List<BuildEntity> buildEntities;
+
+    protected JobEntity() {
+        this.buildEntities = new ArrayList<>();
+    }
+
+    public JobEntity(int id, String name, String url, String lastBuildStatus){
+        this.id = id;
+        this.name = name;
+        this.url = url;
+        this.lastBuildStatus = lastBuildStatus;
+        this.buildEntities = new ArrayList<>();
+    }
 
     /**
      * Returns the id of the {@link JobEntity}.

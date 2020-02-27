@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -27,13 +28,16 @@ public class BuildService {
     }
 
     public Build getLatestBuild(Job job) {
-        Build latestBuild = new Build();
-        for (Build build : job.getBuilds()){
-            if(build.getNumber() > latestBuild.getNumber()){
-                latestBuild = build;
-            }
-        }
-        return latestBuild;
+//        Build latestBuild = new Build();
+//        for (Build build : job.getBuilds()){
+//            if(build.getNumber() > latestBuild.getNumber()){
+//                latestBuild = build;
+//            }
+//        }
+
+        return job.getBuilds().stream()
+                .max(Comparator.comparing(Build::getNumber))
+                .orElseThrow(() -> new NoSuchElementException("No Build not found" ));
     }
 
     public List<BuildResult<Build>> createBuildResults(Job job) {

@@ -6,14 +6,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Build {
-
     private int id;
     private int number;
     private String url;
-
     @JsonIgnoreProperties("builds")
     private Job job;
-    private List<Result> results = new ArrayList<>();
+    private List<Result> results;
+
+    public Build(int id, int number, String url) {
+        this.id = id;
+        this.number = number;
+        this.url = url;
+        this.job = new Job();
+        this.results = new ArrayList<>();
+    }
+
+    public Build(){
+        this.job = new Job();
+        this.results = new ArrayList<>();
+    }
 
     public List<Result> getResults() {
         return results;

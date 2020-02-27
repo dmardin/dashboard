@@ -10,7 +10,17 @@ public class Job {
     private String url;
     private String color;
     private String lastBuildStatus;
-    private List<Build> builds = new ArrayList<>();
+    private List<Build> builds;
+
+    public Job(int id, String name, String url, String lastBuildStatus) {
+        this.id = id;
+        this.name = name;
+        this.url = url;
+        this.lastBuildStatus = lastBuildStatus;
+        this.builds = new ArrayList<>();
+    }
+
+    Job() {}
 
     public String getName() {
         return name;

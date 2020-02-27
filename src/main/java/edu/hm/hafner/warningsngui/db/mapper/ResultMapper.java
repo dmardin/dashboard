@@ -12,18 +12,27 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ResultMapper {
-
     public static Result map(ResultEntity resultEntity, Build build) {
-        Result result = new Result();
-        result.setId(resultEntity.getId());
-        result.setWarningId(resultEntity.getWarningId());
-        result.setLatestUrl(resultEntity.getLatestUrl());
-        result.setName(resultEntity.getName());
-        result.setNewSize(resultEntity.getNewSize());
-        result.setFixedSize(resultEntity.getFixedSize());
+        Result result = new Result(
+                resultEntity.getId(),
+                resultEntity.getWarningId(),
+                resultEntity.getLatestUrl(),
+                resultEntity.getName(),
+                resultEntity.getFixedSize(),
+                resultEntity.getNewSize(),
+                resultEntity.getTotalSize(),
+                resultEntity.getQualityGateStatus()
+        );
+//        result.setId(resultEntity.getId());
+//        result.setWarningId(resultEntity.getWarningId());
+//        result.setLatestUrl(resultEntity.getLatestUrl());
+//        result.setName(resultEntity.getName());
+//        result.setNewSize(resultEntity.getNewSize());
+//        result.setFixedSize(resultEntity.getFixedSize());
+//        result.setQualityGateStatus(resultEntity.getQualityGateStatus());
+
         result.setErrorMessages(resultEntity.getErrorMessages());
         result.setInfoMessages(resultEntity.getInfoMessages());
-        result.setQualityGateStatus(resultEntity.getQualityGateStatus());
         result.setBuild(build);
         result.setTotalSize(resultEntity.getTotalSize());
         for (ReportEntity reportEntity : resultEntity.getReports()) {
@@ -46,18 +55,27 @@ public class ResultMapper {
     }
 
     public static ResultEntity mapToEntity(Result result, BuildEntity buildEntity) {
-        ResultEntity resultEntity = new ResultEntity();
-        resultEntity.setId(result.getId());
-        resultEntity.setWarningId(result.getWarningId());
-        resultEntity.setLatestUrl(result.getLatestUrl());
-        resultEntity.setName(result.getName());
-        resultEntity.setTotalSize(result.getTotalSize());
-        resultEntity.setNewSize(result.getNewSize());
-        resultEntity.setFixedSize(result.getFixedSize());
+        ResultEntity resultEntity = new ResultEntity(
+                result.getId(),
+                result.getWarningId(),
+                result.getLatestUrl(),
+                result.getName(),
+                result.getFixedSize(),
+                result.getNewSize(),
+                result.getTotalSize(),
+                result.getQualityGateStatus()
+        );
+//        resultEntity.setId(result.getId());
+//        resultEntity.setWarningId(result.getWarningId());
+//        resultEntity.setLatestUrl(result.getLatestUrl());
+//        resultEntity.setName(result.getName());
+//        resultEntity.setTotalSize(result.getTotalSize());
+//        resultEntity.setNewSize(result.getNewSize());
+//        resultEntity.setFixedSize(result.getFixedSize());
+//        resultEntity.setQualityGateStatus(result.getQualityGateStatus());
+        resultEntity.setBuildEntity(buildEntity);
         resultEntity.setInfoMessages(result.getInfoMessages());
         resultEntity.setErrorMessages(result.getErrorMessages());
-        resultEntity.setQualityGateStatus(result.getQualityGateStatus());
-        resultEntity.setBuildEntity(buildEntity);
 
         List<ReportEntity> reportEntities = new ArrayList<>();
         ReportEntity reportEntityOutstanding = new ReportEntity();

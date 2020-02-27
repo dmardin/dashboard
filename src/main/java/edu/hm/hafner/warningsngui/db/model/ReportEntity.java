@@ -10,16 +10,25 @@ public class ReportEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-
     @ManyToOne
     private ResultEntity resultEntity;
-
     @OneToMany(mappedBy = "issues", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<IssueEntity> issues = new ArrayList<>();
-
+    private List<IssueEntity> issues;
     @Enumerated(EnumType.STRING)
     @Column(name = "warning_type")
     private WarningTypeEntity warningTypeEntity;
+
+    public ReportEntity() {
+        this.resultEntity = new ResultEntity();
+        this.issues = new ArrayList<>();
+    }
+
+    public ReportEntity(int id, WarningTypeEntity warningTypeEntity) {
+        this.id = id;
+        this.warningTypeEntity = warningTypeEntity;
+        this.resultEntity = new ResultEntity();
+        this.issues = new ArrayList<>();
+    }
 
     public int getId() {
         return id;
