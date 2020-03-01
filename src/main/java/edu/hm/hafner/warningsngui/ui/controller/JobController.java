@@ -28,7 +28,7 @@ public class JobController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
-     * Controller to load the header of the jobs for the table at the main page.
+     * Loads the header of the jobs for the table at the main page.
      *
      * @param model the model with the headers of the jobs
      * @return the home page

@@ -20,6 +20,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
+/**
+ * Provides the Controller for a specific result of a build.
+ *
+ * @author Deniz Mardin
+ */
 @Controller
 public class ResultController {
 
@@ -31,6 +36,14 @@ public class ResultController {
     ResultService resultService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    /**
+     * Displays the specific results of a build.
+     *
+     * @param jobName the name of the job
+     * @param buildNumber the build number
+     * @param model the model with the needed build information
+     * @return the result page
+     */
     @RequestMapping(path={"/job/{jobName}/build/{buildNumber}"}, method= RequestMethod.GET)
     public String getResults(@PathVariable("jobName") String jobName, @PathVariable("buildNumber") String buildNumber, final Model model) {
         logger.info("getResults was called");
@@ -43,6 +56,14 @@ public class ResultController {
         return "result";
     }
 
+    /**
+     * Ajax call to display a summarize of a result of a build.
+     *
+     * @param jobName the name of the job
+     * @param buildNumber the build number
+     * @param toolName the name of the used tool (e.g. checkstyle)
+     * @return the {@link BarChartModel} with the summarize of a result
+     */
     @RequestMapping(path={"/ajax/job/{jobName}/build/{buildNumber}/{toolName}/result"}, method=RequestMethod.GET, produces = "application/json")
     @ResponseBody
     BarChartModel getResultSummarize(@PathVariable("jobName") String jobName,
@@ -53,8 +74,7 @@ public class ResultController {
         Build build = buildService.getBuildWithBuildNumberFromJob(job, buildNumber);
         Result result = resultService.getResultByToolId(build, toolName);
         ResultChart resultChart = new ResultChart();
-        BarChartModel model = resultChart.create(result);
 
-        return model;
+        return resultChart.create(result);
     }
 }

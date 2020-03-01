@@ -19,6 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
+/**
+ * Provides the Controller for the issue page.
+ *
+ * @author Deniz Mardin
+ */
 @Controller
 public class IssueController {
 
@@ -30,6 +35,15 @@ public class IssueController {
     ResultService resultService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    /**
+     * Loads the header of the issues by the total size of issues (containing outstanding and new issues)for the table at the issue page.
+     *
+     * @param jobName the name of the job
+     * @param buildNumber the build number
+     * @param toolId the tool id (e.g. checkstyle)
+     * @param model the configured model with the headers of the issue
+     * @return the issue page
+     */
     @RequestMapping(path={"/job/{jobName}/build/{buildNumber}/{toolId}"}, method= RequestMethod.GET)
     public String getIssueHeadersForTool(
             @PathVariable("jobName") String jobName,
@@ -44,6 +58,16 @@ public class IssueController {
         return "issue";
     }
 
+    /**
+     * Loads the header of the issues for the table at the issue page with a given issue type e.g. fixed, outstanding or new.
+     *
+     * @param jobName the name of the job
+     * @param buildNumber the build number
+     * @param toolId the tool id (e.g. checkstyle)
+     * @param issueType the issue type (e.g. fixed, outstanding or new)
+     * @param model the configured model with the headers of the issue
+     * @return the issue page
+     */
     @RequestMapping(path={"/job/{jobName}/build/{buildNumber}/{toolId}/{issueType}"}, method=RequestMethod.GET)
     public String getIssueHeaders(
             @PathVariable("jobName") String jobName,
@@ -60,6 +84,14 @@ public class IssueController {
         return "issue";
     }
 
+    /**
+     * Ajax call to fetch the total size of issues (containing outstanding and new issues) and display them in a table.
+     *
+     * @param jobName the name of the job
+     * @param buildNumber the build number
+     * @param toolId the tool id (e.g. checkstyle)
+     * @return rows of the table
+     */
     @RequestMapping(path={"/ajax/job/{jobName}/build/{buildNumber}/{toolId}"}, method=RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public List<Object> getIssuesDataForToolWithTotalSize(
@@ -73,6 +105,15 @@ public class IssueController {
         return resultService.getOutstandingAndNewIssuesForTool(build, toolId);
     }
 
+    /**
+     * Ajax call to fetch the total size of issues (containing outstanding and new issues) and display them in a table.
+     *
+     * @param jobName the name of the job
+     * @param buildNumber the build number
+     * @param toolId the tool id (e.g. checkstyle)
+     * @param issueType the issue type (e.g. fixed, outstanding or new)
+     * @return rows of the table
+     */
     @RequestMapping(path={"/ajax/job/{jobName}/build/{buildNumber}/{toolId}/{issueType}"}, method=RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public List<Object> getIssuesDataForToolWithIssueType(

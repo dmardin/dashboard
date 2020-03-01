@@ -25,6 +25,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
+/**
+ * Provides the Controller for the builds.
+ *
+ * @author Deniz Mardin
+ */
 @Controller
 public class BuildController {
 
@@ -36,6 +41,13 @@ public class BuildController {
     ResultService resultService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    /**
+     * Loads the header of the builds.
+     *
+     * @param jobName the name of the job
+     * @param model the model with the headers of the builds and used tools e.g. checkstyle etc.
+     * @return the build page
+     */
     @RequestMapping(path={"/job/{jobName}/build"}, method= RequestMethod.GET)
     public String getBuilds(@PathVariable("jobName") String jobName, final Model model) {
         logger.info("getBuilds is called");
@@ -63,6 +75,12 @@ public class BuildController {
         return buildService.prepareRowsForBuildViewTable(job.getBuilds());
     }
 
+    /**
+     * Ajax call that prepares the aggregated analysis results as {@link LinesChartModel} to display an echart.
+     *
+     * @param jobName the name of the job
+     * @return the {@link LinesChartModel}
+     */
     @RequestMapping(path={"/ajax/aggregatedAnalysisResults/{jobName}"}, method=RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public LinesChartModel getAggregatedAnalysisResultsTrendCharts(@PathVariable("jobName") String jobName) {
@@ -70,11 +88,17 @@ public class BuildController {
         Job job = jobService.findJobByName(jobName);
         List<BuildResult<Build>> buildResults = buildService.createBuildResults(job);
         ToolTrendChart toolTrendChart = new ToolTrendChart();
-        LinesChartModel model = toolTrendChart.create(buildResults, new ChartModelConfiguration());
 
-        return model;
+        return toolTrendChart.create(buildResults, new ChartModelConfiguration());
     }
 
+    /**
+     * Ajax call that prepares a single tool like checkstyle, pmd or spotbugs as {@link LinesChartModel} to display an echart.
+     *
+     * @param jobName the name of the job
+     * @param toolName the name of the used tool
+     * @return the {@link LinesChartModel}
+     */
     @RequestMapping(path={"/ajax/{jobName}/tool/{toolName}"}, method=RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public LinesChartModel getTrendChartForTool(@PathVariable("jobName") String jobName, @PathVariable("toolName") String toolName) {
@@ -82,16 +106,15 @@ public class BuildController {
         Job job = jobService.findJobByName(jobName);
         List<BuildResult<Build>> results = buildService.createBuildResultsForTool(job, toolName);
         ToolTrendChart toolTrendChart = new ToolTrendChart();
-        LinesChartModel model = toolTrendChart.create(results, new ChartModelConfiguration());
 
-        return model;
+        return toolTrendChart.create(results, new ChartModelConfiguration());
     }
 
     /**
      * Ajax call to get the aggregated size of new vs fixed issues.
      *
      * @param jobName the name of the project
-     * @return the lines chart model with the size of fixed and new issues for each build
+     * @return the {@link LinesChartModel} model with the size of fixed and new issues for each build
      */
     @RequestMapping(path={"/ajax/{jobName}/newVersusFixedAggregatedTrendChart"}, method=RequestMethod.GET, produces = "application/json")
     @ResponseBody
@@ -105,11 +128,11 @@ public class BuildController {
     }
 
     /**
-     * Ajax call to get the size of new vs fixed issues for a given tool.
+     * Ajax call to get the size of new vs fixed issues for a given tool (e.g. checkstyle or pmd).
      *
      * @param jobName the name of the project
      * @param toolName the used tool
-     * @return the lines chart model with the size of fixed and new issues for each build
+     * @return the {@link LinesChartModel} with the size of fixed and new issues for each build
      */
     @RequestMapping(path={"/ajax/{jobName}/newVersusFixedTrendChart/{toolName}"}, method=RequestMethod.GET, produces = "application/json")
     @ResponseBody

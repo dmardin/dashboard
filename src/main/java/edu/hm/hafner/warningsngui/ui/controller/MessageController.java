@@ -1,10 +1,10 @@
 package edu.hm.hafner.warningsngui.ui.controller;
 
-import edu.hm.hafner.warningsngui.service.dto.Build;
-import edu.hm.hafner.warningsngui.service.dto.Job;
 import edu.hm.hafner.warningsngui.service.BuildService;
 import edu.hm.hafner.warningsngui.service.JobService;
 import edu.hm.hafner.warningsngui.service.ResultService;
+import edu.hm.hafner.warningsngui.service.dto.Build;
+import edu.hm.hafner.warningsngui.service.dto.Job;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
+/**
+ * Provides the Controller to display the error and info messages.
+ *
+ * @author Deniz Mardin
+ */
 @Controller
 public class MessageController {
 
@@ -27,6 +32,15 @@ public class MessageController {
     ResultService resultService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    /**
+     * Displays error and info messages.
+     *
+     * @param jobName the name of the job
+     * @param buildNumber the build number
+     * @param toolId the used tool id (e.g checkstyle)
+     * @param model the model with the messages
+     * @return the message page
+     */
     @RequestMapping(path={"/job/{jobName}/build/{buildNumber}/{toolId}/messages"}, method= RequestMethod.GET)
     public String getInfoAndErrorMessages(
             @PathVariable("jobName") String jobName,
