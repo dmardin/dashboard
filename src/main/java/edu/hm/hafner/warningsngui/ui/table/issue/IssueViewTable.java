@@ -25,7 +25,7 @@ public class IssueViewTable {
      * Returns the {@link IssueViewTable}.
      *
      * @param id the id of the table
-     * @return the {@link IssueViewTable}
+     * @return the {@link IssueTableModel}
      */
     public TableModel getTableModel(String id) {
         IssueTableModel issueTableModel = new IssueTableModel(issueRepositoryStatistics);

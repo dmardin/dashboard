@@ -66,7 +66,7 @@ public class BuildTableModel extends TableModel {
         private final Build buildStatistics;
 
         /**
-         * Creates a new instance of a {@link BuildTableModel.BuildsRow}
+         * Creates a new instance of a {@link BuildsRow}
          *
          * @param buildStatistics the build statistic for one line
          */
@@ -77,7 +77,7 @@ public class BuildTableModel extends TableModel {
         /**
          * Returns the build number of the build.
          *
-         * @return the name
+         * @return the build number
          */
         public int getBuildNumber() {
             return buildStatistics.getNumber();
@@ -86,7 +86,7 @@ public class BuildTableModel extends TableModel {
         /**
          * Returns the url of the build.
          *
-         * @return the url
+         * @return the url of the build
          */
         public String getBuildUrl() {
             return buildStatistics.getUrl();

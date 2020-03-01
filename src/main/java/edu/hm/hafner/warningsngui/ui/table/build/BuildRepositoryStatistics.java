@@ -48,7 +48,7 @@ public class BuildRepositoryStatistics {
     /**
      * Checks if the given build is contained by the repository.
      *
-     * @param buildNumber the name of the build
+     * @param buildNumber the build number of the build
      * @return {@code true} if the build is in the repository, otherwise {@code false}
      */
     public boolean contains(final int buildNumber) {
@@ -99,6 +99,5 @@ public class BuildRepositoryStatistics {
      */
     public void add(final Build additionalStatistics) {
         statisticsPerBuild.put(additionalStatistics.getNumber(), additionalStatistics);
-    } 
-    
+    }
 }

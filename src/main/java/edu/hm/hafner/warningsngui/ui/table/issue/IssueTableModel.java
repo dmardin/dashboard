@@ -127,18 +127,38 @@ public class IssueTableModel extends TableModel {
             return issue.getSeverity().toString();
         }
 
+        /**
+         * Returns the module name of the issue.
+         *
+         * @return the module name of the issue
+         */
         public String getModuleName() {
             return issue.getModuleName();
         }
 
+        /**
+         * Returns the reference of the issue.
+         *
+         * @return the reference of the issue
+         */
         public String getReference() {
             return issue.getReference();
         }
 
+        /**
+         * Returns the start and end line of the issue.
+         *
+         * @return the start and end line of the issue
+         */
         public String getLine() {
             return issue.getLineStart() + ":" + issue.getLineEnd();
         }
 
+        /**
+         * Returns the start and end column of the issue.
+         *
+         * @return the start and end column of the issue
+         */
         public String getColumn() {
             return issue.getColumnStart() + ":" + issue.getColumnEnd();
         }
