@@ -7,7 +7,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Provides the Mapping between {@link Job} and {@link JobEntity}.
+ * Enables the conversion from a {@link Job} to a {@link JobEntity} and visa versa.
+ * Furthermore a list of {@link Job}s can be converted to a list ob {@link JobEntity}s and visa versa.
  *
  * @author Deniz Mardin
  */
@@ -36,7 +37,7 @@ public class JobMapper {
     }
 
     /**
-     * Converts a list of {@link JobEntity}s to a list {@link Job}s.
+     * Converts a list of {@link JobEntity}s to a list of {@link Job}s.
      *
      * @param jobEntities the job entities
      * @return the converted jobs
@@ -64,7 +65,7 @@ public class JobMapper {
     }
 
     /**
-     * Converts a list of {@link Job}s to a list {@link JobEntity}s.
+     * Converts a list of {@link Job}s to a list of {@link JobEntity}s.
      *
      * @param jobs the jobs
      * @return the job entities

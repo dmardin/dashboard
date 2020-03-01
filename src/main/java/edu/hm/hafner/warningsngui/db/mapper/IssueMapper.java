@@ -5,8 +5,19 @@ import edu.hm.hafner.analysis.IssueBuilder;
 import edu.hm.hafner.analysis.Severity;
 import edu.hm.hafner.warningsngui.db.model.IssueEntity;
 
+/**
+ * Enables the conversion from a {@link Issue} to a {@link IssueEntity} and visa versa.
+ *
+ * @author Deniz Mardin
+ */
 public class IssueMapper {
 
+    /**
+     * Converts a {@link Issue} to a {@link IssueEntity}.
+     *
+     * @param issue the {@link Issue}
+     * @return the converted {@link IssueEntity}
+     */
     public static IssueEntity mapToEntity(Issue issue) {
         return new IssueEntity(
                 issue.getId(),
@@ -28,12 +39,18 @@ public class IssueMapper {
         );
     }
 
+    /**
+     * Converts a {@link IssueEntity} to a {@link Issue}.
+     *
+     * @param issueEntity the {@link IssueEntity}
+     * @return the converted {@link Issue}
+     */
     public static Issue map(IssueEntity issueEntity){
         IssueBuilder issueBuilder = new IssueBuilder();
         if(issueEntity.getId() != null){
             issueBuilder.setId(issueEntity.getId());
         }
-        //TODO Linerange
+
         return issueBuilder
                 .setCategory(issueEntity.getCategory())
                 .setColumnEnd(issueEntity.getColumnEnd())

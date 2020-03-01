@@ -38,7 +38,6 @@ public class RestApiProperties {
      * Configuration to get access to the REST Endpoint from Jenkins.
      */
     public static class RestConfiguration {
-
         private String endPoint;
 
         /**
