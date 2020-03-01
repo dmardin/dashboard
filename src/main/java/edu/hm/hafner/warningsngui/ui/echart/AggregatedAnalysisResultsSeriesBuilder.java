@@ -6,6 +6,11 @@ import edu.hm.hafner.warningsngui.service.dto.Build;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Builds the series for a line chart showing issues.
+ *
+ * @author Deniz Mardin
+ */
 public class AggregatedAnalysisResultsSeriesBuilder extends SeriesBuilder<Build> {
     @Override
     protected Map<String, Integer> computeSeries(Build current) {

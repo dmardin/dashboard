@@ -7,8 +7,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Builds the {@link BarChartModel} for a given {@link Result}.
+ */
 public class ResultChart {
 
+    /**
+     * Creates a {@link BarChartModel} for a given {@link Result}.
+     *
+     * @param result the {@link Result}
+     * @return the {@link BarChartModel}
+     */
     public BarChartModel create(Result result) {
         BarChartModel model = new BarChartModel();
         int outstandingSize = result.getOutstandingIssues().getSize();

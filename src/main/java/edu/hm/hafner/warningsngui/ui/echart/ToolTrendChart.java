@@ -3,8 +3,20 @@ package edu.hm.hafner.warningsngui.ui.echart;
 import edu.hm.hafner.echarts.*;
 import edu.hm.hafner.warningsngui.service.dto.Build;
 
+/**
+ * Builds the line model for a trend chart showing the total number of issues per tool for a given number of builds.
+ *
+ * @author Deniz Mardin
+ */
 public class ToolTrendChart {
 
+    /**
+     * Creates the {@link LinesChartModel} for a given tool (e.g. checkstyle or pmd).
+     *
+     * @param buildResults the build results to render
+     * @param configuration the {@link ChartModelConfiguration}
+     * @return the {@link LinesChartModel}
+     */
     public LinesChartModel create(final Iterable<? extends BuildResult<Build>> buildResults,
                                   final ChartModelConfiguration configuration) {
 
