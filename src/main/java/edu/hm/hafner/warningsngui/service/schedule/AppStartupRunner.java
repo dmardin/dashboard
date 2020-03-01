@@ -82,18 +82,18 @@ public class AppStartupRunner implements ApplicationRunner {
                 for (ToolsResponse.Tool tool : tools) {
 
                     logger.info("Start requesting ToolDetails for Tool with name " + tool.getName());
-                    ToolDetailResponse toolDetailResponse = restService.getToolsDetail(build.getUrl() + tool.getId().toLowerCase() + SLASH + API_JSON);
+                    ResultResponse resultResponse = restService.getToolsDetail(build.getUrl() + tool.getId().toLowerCase() + SLASH + API_JSON);
 
                     Result result = new Result();
                     result.setWarningId(tool.getId());
                     result.setName(tool.getName());
                     result.setLatestUrl(tool.getLatestUrl());
-                    Arrays.stream(toolDetailResponse.getErrorMessages()).forEach(errorMessage -> result.getErrorMessages().add(errorMessage));
-                    Arrays.stream(toolDetailResponse.getInfoMessages()).forEach(infoMessage -> result.getInfoMessages().add(infoMessage));
-                    result.setFixedSize(toolDetailResponse.getFixedSize());
-                    result.setNewSize(toolDetailResponse.getNewSize());
-                    result.setQualityGateStatus(toolDetailResponse.getQualityGateStatus());
-                    result.setTotalSize(toolDetailResponse.getTotalSize());
+                    Arrays.stream(resultResponse.getErrorMessages()).forEach(errorMessage -> result.getErrorMessages().add(errorMessage));
+                    Arrays.stream(resultResponse.getInfoMessages()).forEach(infoMessage -> result.getInfoMessages().add(infoMessage));
+                    result.setFixedSize(resultResponse.getFixedSize());
+                    result.setNewSize(resultResponse.getNewSize());
+                    result.setQualityGateStatus(resultResponse.getQualityGateStatus());
+                    result.setTotalSize(resultResponse.getTotalSize());
                     build.addResult(result);
 
                     for (WarningTypeEntity warningTypeEntity : WarningTypeEntity.values()) {

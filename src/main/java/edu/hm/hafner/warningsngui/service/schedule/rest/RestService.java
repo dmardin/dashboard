@@ -41,14 +41,14 @@ public class RestService {
         return toolsResponse;
     }
 
-    public ToolDetailResponse getToolsDetail(String url){
-        ToolDetailResponse toolDetailResponse = null;
+    public ResultResponse getToolsDetail(String url){
+        ResultResponse resultResponse = null;
         try{
-            toolDetailResponse = restTemplate.getForObject(url, ToolDetailResponse.class);
+            resultResponse = restTemplate.getForObject(url, ResultResponse.class);
         }catch (HttpClientErrorException ex) {
             logger.info("ToolsDetail not Found for url: " + url);
         }
-        return toolDetailResponse;
+        return resultResponse;
     }
 
     public IssuesResponse getIssues(String url) {
