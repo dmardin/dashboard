@@ -9,27 +9,50 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+/**
+ * Service to request data from the Jenkins Endpoint.
+ */
 @Service
 public class RestService {
 
+    @Autowired
+    private RestApiProperties restApiProperties;
     private final RestTemplate restTemplate;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
-    private RestApiProperties restApiProperties;
-
+    /**
+     * Creates a new instance of a {@link RestService}.
+     */
     public RestService() {
         this.restTemplate = new RestTemplate();
     }
 
+    /**
+     * Starts a request to get the jobs as a {@link JobsResponse} from the Jenkins Endpoint.
+     *
+     * @return the {@link JobsResponse}
+     */
     public JobsResponse getProjects() {
         return restTemplate.getForObject( restApiProperties.getRestConfiguration().getEndPoint(), JobsResponse.class);
     }
 
+    /**
+     * Starts a request to get the builds as a {@link BuildsResponse} from the Jenkins Endpoint.
+     *
+     * @param url the url of the Endpoint
+     * @return the {@link BuildsResponse}
+     */
     public BuildsResponse getBuilds(String url) {
         return restTemplate.getForObject(url, BuildsResponse.class);
     }
 
+    /**
+     * Starts a request to get the tools as a {@link ToolsResponse} from the Jenkins Endpoint.
+     * The {@link ToolsResponse} is part of {@link edu.hm.hafner.warningsngui.service.dto.Result}.
+     *
+     * @param url the url of the Endpoint
+     * @return the {@link ToolsResponse}
+     */
     public ToolsResponse getTools(String url) {
         ToolsResponse toolsResponse = null;
         try{
@@ -41,6 +64,13 @@ public class RestService {
         return toolsResponse;
     }
 
+    /**
+     * Starts a request to get the results as a {@link ResultResponse} from the Jenkins Endpoint.
+     * The {@link ResultResponse} is part of {@link edu.hm.hafner.warningsngui.service.dto.Result}.
+     *
+     * @param url the url of the Endpoint
+     * @return the {@link ResultResponse}
+     */
     public ResultResponse getToolsDetail(String url){
         ResultResponse resultResponse = null;
         try{
@@ -51,6 +81,12 @@ public class RestService {
         return resultResponse;
     }
 
+    /**
+     * Starts a request to get the issues as a {@link IssuesResponse} from the Jenkins Endpoint.
+     *
+     * @param url the url of the Endpoint
+     * @return the {@link IssuesResponse}
+     */
     public IssuesResponse getIssues(String url) {
         IssuesResponse issuesResponse = null;
         try {
