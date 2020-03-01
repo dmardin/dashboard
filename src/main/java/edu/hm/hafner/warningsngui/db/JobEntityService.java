@@ -1,9 +1,7 @@
 package edu.hm.hafner.warningsngui.db;
 
-import edu.hm.hafner.warningsngui.db.mapper.JobMapper;
 import edu.hm.hafner.warningsngui.db.model.JobEntity;
 import edu.hm.hafner.warningsngui.db.repository.JobRepository;
-import edu.hm.hafner.warningsngui.service.dto.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +19,12 @@ public class JobEntityService {
     JobRepository jobRepository;
 
     /**
-     * Fetches all jobs form the database.
+     * Fetches all {@link JobEntity}s form the database.
      *
-     * @return the jobs
+     * @return the fetched {@link JobEntity}s
      */
-    public List<Job> findAll() {
-        List<JobEntity> jobEntities = jobRepository.findAll();
-        return JobMapper.map(jobEntities);
+    public List<JobEntity> findAll() {
+        return jobRepository.findAll();
     }
 
     /**
@@ -36,30 +33,17 @@ public class JobEntityService {
      * @param name the name of the job
      * @return the job
      */
-    public Job findJobByName(String name) {
-        JobEntity jobEntity = jobRepository.findByName(name);
-        return JobMapper.map(jobEntity);
+    public JobEntity findJobByName(String name) {
+        return jobRepository.findByName(name);
     }
 
     /**
-     * Saves all jobs.
+     * Saves all given {@link JobEntity}s.
      *
-     * @param jobs the jobs to save
-     * @return the saved jobs
+     * @param jobEntities the {@link JobEntity}s to save
+     * @return the saved {@link JobEntity}s
      */
-    public List<Job> saveAll(List<Job> jobs) {
-        List<JobEntity> jobEntities = jobRepository.saveAll(JobMapper.mapToEntities(jobs));
-        return JobMapper.map(jobEntities);
-    }
-
-    /**
-     * Saves a specific job.
-     *
-     * @param job the job
-     * @return the saved job
-     */
-    public Job save (Job job) {
-        JobEntity jobEntity = jobRepository.save(JobMapper.mapToEntity(job));
-        return JobMapper.map(jobEntity);
+    public List<JobEntity> saveAll(List<JobEntity> jobEntities) {
+        return jobRepository.saveAll(jobEntities);
     }
 }

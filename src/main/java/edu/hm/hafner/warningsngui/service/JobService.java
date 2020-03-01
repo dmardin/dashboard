@@ -1,6 +1,8 @@
 package edu.hm.hafner.warningsngui.service;
 
 import edu.hm.hafner.warningsngui.db.JobEntityService;
+import edu.hm.hafner.warningsngui.db.mapper.JobMapper;
+import edu.hm.hafner.warningsngui.db.model.JobEntity;
 import edu.hm.hafner.warningsngui.service.dto.Job;
 import edu.hm.hafner.warningsngui.ui.table.job.JobRepositoryStatistics;
 import edu.hm.hafner.warningsngui.ui.table.job.JobViewTable;
@@ -24,7 +26,7 @@ public class JobService {
      * @return the jobs
      */
     public List<Job> getAllJobs(){
-        return jobEntityService.findAll();
+        return JobMapper.map(jobEntityService.findAll());
     }
 
     /**
@@ -34,7 +36,7 @@ public class JobService {
      * @return the job
      */
     public Job findJobByName(String name){
-        return jobEntityService.findJobByName(name);
+        return JobMapper.map(jobEntityService.findJobByName(name));
     }
 
     /**
@@ -43,18 +45,19 @@ public class JobService {
      * @return prepared table rows
      */
     public List<Object> prepareRowsForJobViewTable(){
-        List<Job> allJobs = getAllJobs();
-        return convertRowsForTheJobViewTable(allJobs);
+        return convertRowsForTheJobViewTable(getAllJobs());
     }
 
     /**
-     * Saves all jobs.
+     * Saves a given list of {@link Job}.
      *
-     * @param jobs the jobs to save
+     * @param jobs the {@link Job}s to save
      * @return the saves jobs
      */
     public List<Job> saveAll(List<Job> jobs) {
-        return jobEntityService.saveAll(jobs);
+        List<JobEntity> jobEntities = JobMapper.mapToEntities(jobs);
+        List<JobEntity> savedJobs = jobEntityService.saveAll(jobEntities);
+        return JobMapper.map(savedJobs);
     }
 
     /**
