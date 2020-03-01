@@ -3,7 +3,7 @@ This project is depending on the [Jenkins Warnings Next Generation Plugin](https
 
 ## Preparation
 - Start a Jenkins
-- Import the project to InelliJ
+- Import this project to InelliJ
 - Set the property **jenkins.api.rest-configuration.end-point** from the [application.properties](https://github.com/dmardin/warnings-ng-ui/blob/master/src/main/resources/application.properties) to the main Jenkins Endpoint. If Jenkins is runningn on http://localhost:8080 then the endpoint is
   ```
   jenkins.api.rest-configuration.end-point=http://localhost:8080/jenkins/api/json
