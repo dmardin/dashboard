@@ -20,12 +20,22 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
+/**
+ * Service to handle {@link Build}s between the ui and database.
+ */
 @Service
 public class BuildService {
 
     @Autowired
     BuildEntityService buildEntityService;
 
+    /**
+     * saves a given list of {@link Build}s by adding them to the corresponding {@link Job}.
+     *
+     * @param fetchedJob the fetched {@link Job}
+     * @param builds list of {@link Build}s
+     * @return the saved {@link Build}s
+     */
     public List<Build> saveAll(Job fetchedJob, List<Build> builds) {
         JobEntity jobEntity = JobMapper.mapToEntity(fetchedJob);
         List<BuildEntity> buildEntities = builds.stream().map(build -> jobEntity.addBuildEntity(BuildMapper.mapToEntity(build))).collect(Collectors.toList());
@@ -34,12 +44,24 @@ public class BuildService {
         return savedBuildEntities.stream().map(BuildMapper::map).collect(Collectors.toList());
     }
 
+    /**
+     * Determines the last {@link Build} of a given {@link Job}.
+     *
+     * @param job the {@link Job}
+     * @return the last {@link Build}
+     */
     public Build getLatestBuild(Job job) {
         return job.getBuilds().stream()
                 .max(Comparator.comparing(Build::getNumber))
                 .orElseThrow(() -> new NoSuchElementException("No Build not found" ));
     }
 
+    /**
+     * Creates a list of {@link BuildResult}s of {@link Build}s for a given {@link Job}.
+     *
+     * @param job the needed {@link Job}
+     * @return the needed list of {@link BuildResult}s for the echarts
+     */
     public List<BuildResult<Build>> createBuildResults(Job job) {
         List<BuildResult<Build>> buildResults = new ArrayList<>();
         for (Build b : job.getBuilds()) {
@@ -52,6 +74,13 @@ public class BuildService {
         return buildResults;
     }
 
+    /**
+     * Creates a list of {@link BuildResult}s of {@link Build}s for a given {@link Job} and tool name (e.g. checkstyle).
+     *
+     * @param job the needed {@link Job}
+     * @param toolName the tool name
+     * @return the needed list of {@link BuildResult}s for the echarts
+     */
     public List<BuildResult<Build>> createBuildResultsForTool(Job job, String toolName) {
         List<BuildResult<Build>> results = new ArrayList<>();
 
@@ -66,13 +95,20 @@ public class BuildService {
                 }
             }
 
-            BuildResult<Build> my = new BuildResult<>(build, neededBuild);
-            results.add(my);
+            BuildResult<Build> buildResult = new BuildResult<>(build, neededBuild);
+            results.add(buildResult);
         });
 
         return results;
     }
 
+    /**
+     * Determines the {@link Build} from a {@link Job} by given build number.
+     *
+     * @param job the {@link Job}
+     * @param buildNumber the build number
+     * @return the {@link Build}
+     */
     public Build getBuildWithBuildNumberFromJob(Job job, int buildNumber){
         return job.getBuilds().stream().filter(b -> b.getNumber() == buildNumber)
                 .findFirst()

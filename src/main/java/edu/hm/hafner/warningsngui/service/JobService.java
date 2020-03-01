@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Service to prepare a {@link Job} or {@link Job}s for the ui.
+ * Service to handle {@link Job}s between the ui and database.
  */
 @Service
 public class JobService {
