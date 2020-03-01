@@ -1,5 +1,6 @@
 package edu.hm.hafner.warningsngui.service.schedule;
 
+import edu.hm.hafner.analysis.Issue;
 import edu.hm.hafner.analysis.Report;
 import edu.hm.hafner.warningsngui.db.mapper.IssueMapper;
 import edu.hm.hafner.warningsngui.db.model.IssueEntity;
@@ -23,18 +24,20 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Startup Runner to request data from the Jenkins API and stores it into the database.
+ * If the database is empty all fetched data (jobs. builds, results, reports, issues) will be stored, otherwise only the new jobs or new
+ * builds with results, report and issues will be added to the database.
+ */
 @Component
 public class AppStartupRunner implements ApplicationRunner {
 
     @Autowired
     private RestService restService;
-
     @Autowired
     private JobService jobService;
-
     @Autowired
     private BuildService buildService;
-
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private static final String SLASH = "/";
     private static final String API_JSON = "api/json";
@@ -70,6 +73,13 @@ public class AppStartupRunner implements ApplicationRunner {
         logger.info("Requested data saved to database");
     }
 
+    /**
+     * Adds to a given {@link Job} the corresponding {@link Build}s, with the {@link Result}s to every {@link Build} and the {@link Report} of fixed,
+     * outstanding and new {@link Issue}s.
+     *
+     * @param job the {@link Job}
+     * @param buildList the {@link Build}s
+     */
     private void addBuildsToJob(Job job, List<Build> buildList) {
         for (Build build : buildList) {
             job.addBuild(build);
@@ -125,6 +135,12 @@ public class AppStartupRunner implements ApplicationRunner {
         }
     }
 
+    /**
+     * Maps the color from the response to the build status.
+     *
+     * @param color the color
+     * @return the build status
+     */
     private String getBuildStatusFromColor(String color) {
         switch (color) {
             case "blue":
