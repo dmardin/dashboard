@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- * Service to handle the interactions with the database for a job.
+ * Service to handle the interactions for {@link JobEntity}s with the database by using the {@link JobRepository}.
  *
  * @author Deniz Mardin
  */

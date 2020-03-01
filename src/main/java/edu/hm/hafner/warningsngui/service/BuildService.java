@@ -2,6 +2,9 @@ package edu.hm.hafner.warningsngui.service;
 
 import edu.hm.hafner.echarts.BuildResult;
 import edu.hm.hafner.warningsngui.db.BuildEntityService;
+import edu.hm.hafner.warningsngui.db.mapper.BuildMapper;
+import edu.hm.hafner.warningsngui.db.mapper.JobMapper;
+import edu.hm.hafner.warningsngui.db.model.BuildEntity;
 import edu.hm.hafner.warningsngui.db.model.JobEntity;
 import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Job;
@@ -15,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 public class BuildService {
@@ -22,8 +26,12 @@ public class BuildService {
     @Autowired
     BuildEntityService buildEntityService;
 
-    public List<Build> saveAll(List<Build> builds, JobEntity jobEntity) {
-        return buildEntityService.saveAll(builds, jobEntity);
+    public List<Build> saveAll(Job fetchedJob, List<Build> builds) {
+        JobEntity jobEntity = JobMapper.mapToEntity(fetchedJob);
+        List<BuildEntity> buildEntities = builds.stream().map(build -> jobEntity.addBuildEntity(BuildMapper.mapToEntity(build))).collect(Collectors.toList());
+        List<BuildEntity> savedBuildEntities = buildEntityService.saveAll(buildEntities);
+
+        return savedBuildEntities.stream().map(BuildMapper::map).collect(Collectors.toList());
     }
 
     public Build getLatestBuild(Job job) {

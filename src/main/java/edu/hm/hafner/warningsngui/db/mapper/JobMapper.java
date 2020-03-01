@@ -1,5 +1,6 @@
 package edu.hm.hafner.warningsngui.db.mapper;
 
+import edu.hm.hafner.warningsngui.db.model.BuildEntity;
 import edu.hm.hafner.warningsngui.db.model.JobEntity;
 import edu.hm.hafner.warningsngui.service.dto.Job;
 
@@ -17,8 +18,8 @@ public class JobMapper {
     /**
      * Converts a {@link JobEntity} to a {@link Job}.
      *
-     * @param jobEntity the job entity
-     * @return the converted job
+     * @param jobEntity the {@link JobEntity}
+     * @return the converted {@link Job}
      */
     public static Job map(JobEntity jobEntity) {
         if(jobEntity != null) {
@@ -28,7 +29,7 @@ public class JobMapper {
                     jobEntity.getUrl(),
                     jobEntity.getLastBuildStatus()
             );
-            job.setBuilds(BuildMapper.map(jobEntity.getBuildEntities(), job));
+            jobEntity.getBuildEntities().forEach(buildEntity -> job.addBuild(BuildMapper.map(buildEntity)));
 
             return job;
         }
@@ -39,8 +40,8 @@ public class JobMapper {
     /**
      * Converts a list of {@link JobEntity}s to a list of {@link Job}s.
      *
-     * @param jobEntities the job entities
-     * @return the converted jobs
+     * @param jobEntities the list of {@link JobEntity}s
+     * @return the converted list of  {@link Job}s
      */
     public static List<Job> map(List<JobEntity> jobEntities){
         return jobEntities.stream().map(JobMapper::map).collect(Collectors.toList());
@@ -49,8 +50,8 @@ public class JobMapper {
     /**
      * Converts a {@link Job} to a {@link JobEntity}.
      *
-     * @param job the job
-     * @return the converted job entity
+     * @param job the {@link Job}
+     * @return the converted {@link JobEntity}
      */
     public static JobEntity mapToEntity(Job job) {
         JobEntity jobEntity = new JobEntity(
@@ -59,7 +60,10 @@ public class JobMapper {
                 job.getUrl(),
                 job.getLastBuildStatus()
         );
-        jobEntity.setBuildEntities(BuildMapper.mapToEntities(job.getBuilds(), jobEntity));
+        job.getBuilds().forEach(build -> {
+            BuildEntity buildEntity = BuildMapper.mapToEntity(build);
+            jobEntity.addBuildEntity(buildEntity);
+        });
 
         return jobEntity;
     }
@@ -67,8 +71,8 @@ public class JobMapper {
     /**
      * Converts a list of {@link Job}s to a list of {@link JobEntity}s.
      *
-     * @param jobs the jobs
-     * @return the job entities
+     * @param jobs the {@link Job}s
+     * @return the converted list of {@link JobEntity}s
      */
     public static List<JobEntity> mapToEntities(List<Job> jobs) {
         return jobs.stream().map(JobMapper::mapToEntity).collect(Collectors.toList());

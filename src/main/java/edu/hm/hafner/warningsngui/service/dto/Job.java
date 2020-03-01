@@ -19,7 +19,9 @@ public class Job {
         this.builds = new ArrayList<>();
     }
 
-    Job() {}
+    Job() {
+        this.builds = new ArrayList<>();
+    }
 
     public String getName() {
         return name;

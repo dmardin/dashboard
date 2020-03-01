@@ -2,7 +2,6 @@ package edu.hm.hafner.warningsngui.service.schedule;
 
 import edu.hm.hafner.analysis.Report;
 import edu.hm.hafner.warningsngui.db.mapper.IssueMapper;
-import edu.hm.hafner.warningsngui.db.mapper.JobMapper;
 import edu.hm.hafner.warningsngui.db.model.IssueEntity;
 import edu.hm.hafner.warningsngui.db.model.WarningTypeEntity;
 import edu.hm.hafner.warningsngui.service.BuildService;
@@ -57,7 +56,7 @@ public class AppStartupRunner implements ApplicationRunner {
                 if (!newBuilds.isEmpty()) {
                     fetchedJob.setLastBuildStatus(getBuildStatusFromColor(job.getColor()));
                     addBuildsToJob(fetchedJob, newBuilds);
-                    buildService.saveAll(newBuilds, JobMapper.mapToEntity(fetchedJob));
+                    buildService.saveAll(fetchedJob, newBuilds);
                 }
             } else {
                 job.setLastBuildStatus(getBuildStatusFromColor(job.getColor()));

@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
+ * Repository to handle the access to the database for the {@link BuildEntity}.
+ *
  * @author Deniz Mardin
  */
 @Repository

@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Entity that represents a job.
+ * POJO to store a {@link JobEntity} to the database.
  *
  * @author Deniz Mardin
  */
@@ -22,10 +22,21 @@ public class JobEntity {
     @OneToMany(fetch=FetchType.EAGER, mappedBy = "jobEntity", cascade = CascadeType.ALL)
     private List<BuildEntity> buildEntities;
 
+    /**
+     * Creates a new instance of {@link JobEntity}.
+     */
     protected JobEntity() {
         this.buildEntities = new ArrayList<>();
     }
 
+    /**
+     * Creates a new instance of {@link JobEntity}.
+     *
+     * @param id the id of the {@link JobEntity}
+     * @param name the name of the {@link JobEntity}
+     * @param url the url of the {@link JobEntity}
+     * @param lastBuildStatus the last build status of the {@link JobEntity}
+     */
     public JobEntity(int id, String name, String url, String lastBuildStatus){
         this.id = id;
         this.name = name;
@@ -122,5 +133,18 @@ public class JobEntity {
      */
     public void setBuildEntities(List<BuildEntity> buildEntities) {
         this.buildEntities = buildEntities;
+    }
+
+    /**
+     * Adds a {@link BuildEntity} to the {@link JobEntity}.
+     *
+     * @param buildEntity the {@link BuildEntity}
+     * @return the added {@link BuildEntity}
+     */
+    public BuildEntity addBuildEntity(BuildEntity buildEntity){
+        getBuildEntities().add(buildEntity);
+        buildEntity.setJobEntity(this);
+
+        return buildEntity;
     }
 }
