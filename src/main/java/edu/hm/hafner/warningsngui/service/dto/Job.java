@@ -157,4 +157,30 @@ public class Job {
 
         return build;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Job job = (Job) o;
+
+        if (id != job.id) return false;
+        if (!name.equals(job.name)) return false;
+        if (!url.equals(job.url)) return false;
+        if (color != null ? !color.equals(job.color) : job.color != null) return false;
+        if (!lastBuildStatus.equals(job.lastBuildStatus)) return false;
+        return builds.equals(job.builds);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + url.hashCode();
+        result = 31 * result + (color != null ? color.hashCode() : 0);
+        result = 31 * result + lastBuildStatus.hashCode();
+        result = 31 * result + builds.hashCode();
+        return result;
+    }
 }

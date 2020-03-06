@@ -147,4 +147,26 @@ public class BuildEntity {
 
         return resultEntity;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        BuildEntity that = (BuildEntity) o;
+
+        if (id != that.id) return false;
+        if (number != that.number) return false;
+        if (!url.equals(that.url)) return false;
+        return resultEntities.equals(that.resultEntities);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + number;
+        result = 31 * result + url.hashCode();
+        result = 31 * result + resultEntities.hashCode();
+        return result;
+    }
 }

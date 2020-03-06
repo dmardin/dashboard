@@ -147,4 +147,28 @@ public class JobEntity {
 
         return buildEntity;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        JobEntity jobEntity = (JobEntity) o;
+
+        if (id != jobEntity.id) return false;
+        if (!name.equals(jobEntity.name)) return false;
+        if (!url.equals(jobEntity.url)) return false;
+        if (!lastBuildStatus.equals(jobEntity.lastBuildStatus)) return false;
+        return buildEntities.equals(jobEntity.buildEntities);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + name.hashCode();
+        result = 31 * result + url.hashCode();
+        result = 31 * result + lastBuildStatus.hashCode();
+        result = 31 * result + buildEntities.hashCode();
+        return result;
+    }
 }

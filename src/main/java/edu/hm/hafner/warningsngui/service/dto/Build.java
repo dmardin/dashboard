@@ -141,4 +141,26 @@ public class Build {
 
         return result;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Build build = (Build) o;
+
+        if (id != build.id) return false;
+        if (number != build.number) return false;
+        if (!url.equals(build.url)) return false;
+        return results.equals(build.results);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + number;
+        result = 31 * result + url.hashCode();
+        result = 31 * result + results.hashCode();
+        return result;
+    }
 }

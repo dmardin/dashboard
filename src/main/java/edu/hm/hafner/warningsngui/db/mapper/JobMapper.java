@@ -4,8 +4,8 @@ import edu.hm.hafner.warningsngui.db.model.BuildEntity;
 import edu.hm.hafner.warningsngui.db.model.JobEntity;
 import edu.hm.hafner.warningsngui.service.dto.Job;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Enables the conversion from a {@link Job} to a {@link JobEntity} and visa versa.
@@ -22,19 +22,17 @@ public class JobMapper {
      * @return the converted {@link Job}
      */
     public static Job map(JobEntity jobEntity) {
-        if(jobEntity != null) {
-            Job job = new Job(
-                    jobEntity.getId(),
-                    jobEntity.getName(),
-                    jobEntity.getUrl(),
-                    jobEntity.getLastBuildStatus()
-            );
-            jobEntity.getBuildEntities().forEach(buildEntity -> job.addBuild(BuildMapper.map(buildEntity)));
+        Job job = new Job(
+            jobEntity.getId(),
+            jobEntity.getName(),
+            jobEntity.getUrl(),
+            jobEntity.getLastBuildStatus()
+        );
+        jobEntity.getBuildEntities().forEach(buildEntity -> {
+            job.addBuild(BuildMapper.map(buildEntity));
+        });
 
-            return job;
-        }
-        else
-            return null; //TODO other solution?
+        return job;
     }
 
     /**
@@ -44,7 +42,12 @@ public class JobMapper {
      * @return the converted list of  {@link Job}s
      */
     public static List<Job> map(List<JobEntity> jobEntities){
-        return jobEntities.stream().map(JobMapper::map).collect(Collectors.toList());
+        List<Job> list = new ArrayList<>();
+        for (JobEntity jobEntity : jobEntities) {
+            Job map = map(jobEntity);
+            list.add(map);
+        }
+        return list;
     }
 
     /**
@@ -75,6 +78,11 @@ public class JobMapper {
      * @return the converted list of {@link JobEntity}s
      */
     public static List<JobEntity> mapToEntities(List<Job> jobs) {
-        return jobs.stream().map(JobMapper::mapToEntity).collect(Collectors.toList());
+        List<JobEntity> list = new ArrayList<>();
+        for (Job job : jobs) {
+            JobEntity jobEntity = mapToEntity(job);
+            list.add(jobEntity);
+        }
+        return list;
     }
 }

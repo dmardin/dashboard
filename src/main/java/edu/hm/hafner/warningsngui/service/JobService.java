@@ -36,7 +36,11 @@ public class JobService {
      * @return the job
      */
     public Job findJobByName(String name){
-        return JobMapper.map(jobEntityService.findJobByName(name));
+        JobEntity jobEntity = jobEntityService.findJobByName(name);
+        if(jobEntity != null) {
+            return JobMapper.map(jobEntity);
+        }
+        return null;
     }
 
     /**
