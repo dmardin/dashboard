@@ -1,7 +1,7 @@
 package edu.hm.hafner.warningsngui.service;
 
 import edu.hm.hafner.warningsngui.db.JobEntityService;
-import edu.hm.hafner.warningsngui.db.mapper.JobMapper;
+import edu.hm.hafner.warningsngui.db.mapper.Mapper;
 import edu.hm.hafner.warningsngui.db.model.JobEntity;
 import edu.hm.hafner.warningsngui.service.dto.Job;
 import edu.hm.hafner.warningsngui.ui.table.job.JobRepositoryStatistics;
@@ -26,7 +26,7 @@ public class JobService {
      * @return the jobs
      */
     public List<Job> getAllJobs(){
-        return JobMapper.map(jobEntityService.findAll());
+        return Mapper.map(jobEntityService.findAll());
     }
 
     /**
@@ -38,7 +38,7 @@ public class JobService {
     public Job findJobByName(String name){
         JobEntity jobEntity = jobEntityService.findJobByName(name);
         if(jobEntity != null) {
-            return JobMapper.map(jobEntity);
+            return Mapper.map(jobEntity);
         }
         return null;
     }
@@ -59,9 +59,9 @@ public class JobService {
      * @return the saves jobs
      */
     public List<Job> saveAll(List<Job> jobs) {
-        List<JobEntity> jobEntities = JobMapper.mapToEntities(jobs);
+        List<JobEntity> jobEntities = Mapper.mapToEntities(jobs);
         List<JobEntity> savedJobs = jobEntityService.saveAll(jobEntities);
-        return JobMapper.map(savedJobs);
+        return Mapper.map(savedJobs);
     }
 
     /**

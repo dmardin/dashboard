@@ -2,8 +2,7 @@ package edu.hm.hafner.warningsngui.service;
 
 import edu.hm.hafner.echarts.BuildResult;
 import edu.hm.hafner.warningsngui.db.BuildEntityService;
-import edu.hm.hafner.warningsngui.db.mapper.BuildMapper;
-import edu.hm.hafner.warningsngui.db.mapper.JobMapper;
+import edu.hm.hafner.warningsngui.db.mapper.Mapper;
 import edu.hm.hafner.warningsngui.db.model.BuildEntity;
 import edu.hm.hafner.warningsngui.db.model.JobEntity;
 import edu.hm.hafner.warningsngui.service.dto.Build;
@@ -37,11 +36,11 @@ public class BuildService {
      * @return the saved {@link Build}s
      */
     public List<Build> saveAll(Job fetchedJob, List<Build> builds) {
-        JobEntity jobEntity = JobMapper.mapToEntity(fetchedJob);
-        List<BuildEntity> buildEntities = builds.stream().map(build -> jobEntity.addBuildEntity(BuildMapper.mapToEntity(build))).collect(Collectors.toList());
+        JobEntity jobEntity = Mapper.mapToEntity(fetchedJob);
+        List<BuildEntity> buildEntities = builds.stream().map(build -> jobEntity.addBuildEntity(Mapper.mapToEntity(build))).collect(Collectors.toList());
         List<BuildEntity> savedBuildEntities = buildEntityService.saveAll(buildEntities);
 
-        return savedBuildEntities.stream().map(BuildMapper::map).collect(Collectors.toList());
+        return savedBuildEntities.stream().map(Mapper::map).collect(Collectors.toList());
     }
 
     /**

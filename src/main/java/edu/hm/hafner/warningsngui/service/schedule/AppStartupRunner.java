@@ -2,7 +2,7 @@ package edu.hm.hafner.warningsngui.service.schedule;
 
 import edu.hm.hafner.analysis.Issue;
 import edu.hm.hafner.analysis.Report;
-import edu.hm.hafner.warningsngui.db.mapper.IssueMapper;
+import edu.hm.hafner.warningsngui.db.mapper.Mapper;
 import edu.hm.hafner.warningsngui.db.model.IssueEntity;
 import edu.hm.hafner.warningsngui.db.model.WarningTypeEntity;
 import edu.hm.hafner.warningsngui.service.BuildService;
@@ -126,7 +126,7 @@ public class AppStartupRunner implements ApplicationRunner {
                         if (issuesResponse != null) {
                             IssueEntity[] issuesEntities = issuesResponse.getIssues();//TODO streams?
                             for (IssueEntity issueEntity : issuesEntities) {
-                                report.add(IssueMapper.map(issueEntity));
+                                report.add(Mapper.map(issueEntity));
                             }
                         }
                     }
