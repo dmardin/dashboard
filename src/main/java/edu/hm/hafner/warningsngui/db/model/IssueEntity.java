@@ -13,7 +13,6 @@ import java.util.UUID;
 public class IssueEntity {
     @Id
     private UUID id;
-    private String baseName;
     private String category;
     private int columnStart;
     private int columnEnd;
@@ -130,24 +129,6 @@ public class IssueEntity {
      */
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    /**
-     * Returns the base name of the {@link IssueEntity}.
-     *
-     * @return the base name
-     */
-    public String getBaseName() {
-        return baseName;
-    }
-
-    /**
-     * Setter for the base name of the {@link IssueEntity}.
-     *
-     * @param baseName the base name
-     */
-    public void setBaseName(String baseName) {
-        this.baseName = baseName;
     }
 
     /**
@@ -418,5 +399,51 @@ public class IssueEntity {
      */
     public void setType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        IssueEntity that = (IssueEntity) o;
+
+        if (columnStart != that.columnStart) return false;
+        if (columnEnd != that.columnEnd) return false;
+        if (lineStart != that.lineStart) return false;
+        if (lineEnd != that.lineEnd) return false;
+        if (!id.equals(that.id)) return false;
+        if (!category.equals(that.category)) return false;
+        if (!description.equals(that.description)) return false;
+        if (!fileName.equals(that.fileName)) return false;
+        if (!fingerprint.equals(that.fingerprint)) return false;
+        if (!message.equals(that.message)) return false;
+        if (!moduleName.equals(that.moduleName)) return false;
+        if (!origin.equals(that.origin)) return false;
+        if (!packageName.equals(that.packageName)) return false;
+        if (!reference.equals(that.reference)) return false;
+        if (!severity.equals(that.severity)) return false;
+        return type.equals(that.type);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + category.hashCode();
+        result = 31 * result + columnStart;
+        result = 31 * result + columnEnd;
+        result = 31 * result + description.hashCode();
+        result = 31 * result + fileName.hashCode();
+        result = 31 * result + fingerprint.hashCode();
+        result = 31 * result + lineStart;
+        result = 31 * result + lineEnd;
+        result = 31 * result + message.hashCode();
+        result = 31 * result + moduleName.hashCode();
+        result = 31 * result + origin.hashCode();
+        result = 31 * result + packageName.hashCode();
+        result = 31 * result + reference.hashCode();
+        result = 31 * result + severity.hashCode();
+        result = 31 * result + type.hashCode();
+        return result;
     }
 }
