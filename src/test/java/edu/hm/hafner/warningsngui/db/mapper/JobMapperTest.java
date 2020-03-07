@@ -21,269 +21,343 @@ class JobMapperTest {
     private static final String FAILED = "Failed";
     private static final String JOB_NAME = "jobName";
     private static final String OTHER_JOB_NAME = "otherJobName";
+    private static final int FIVE_BUILDS = 5;
+    private static final int NO_BUILDS = 0;
 
     @Test
-    void shouldMapJobEntityToJob() {
+    void shouldMapJobEntityToJobWithoutBuildEntities() {
         SoftAssertions.assertSoftly((softly) -> {
-            JobEntity jobEntity = createJobEntity(1, JOB_NAME, SUCCESS);
+            JobEntity jobEntity = createJobEntityWithBuildEntities(1, JOB_NAME, SUCCESS, NO_BUILDS);
             Job job = JobMapper.map(jobEntity);
-            Job expectedJob = createJob(1, JOB_NAME, SUCCESS);
+            Job expectedJob = createJobWithBuilds(1, JOB_NAME, SUCCESS, NO_BUILDS);
+            softly.assertThat(job.getBuilds()).hasSize(NO_BUILDS);
             softly.assertThat(job).isEqualTo(expectedJob);
 
-            jobEntity = createJobEntity(2, JOB_NAME, FAILED);
+            jobEntity = createJobEntityWithBuildEntities(2, JOB_NAME, FAILED, NO_BUILDS);
             job = JobMapper.map(jobEntity);
-            expectedJob = createJob(2, JOB_NAME, FAILED);
-            softly.assertThat(job).isEqualTo(expectedJob);
-
-            jobEntity = createJobEntityWithBuildEntities(1, JOB_NAME, SUCCESS);
-            job = JobMapper.map(jobEntity);
-            expectedJob = createJobWithBuilds(1, JOB_NAME, SUCCESS);
-            softly.assertThat(job).isEqualTo(expectedJob);
-
-            jobEntity = createJobEntityWithBuildEntities(2, JOB_NAME, FAILED);
-            job = JobMapper.map(jobEntity);
-            expectedJob = createJobWithBuilds(2, JOB_NAME, FAILED);
+            expectedJob = createJobWithBuilds(2, JOB_NAME, FAILED, NO_BUILDS);
+            softly.assertThat(job.getBuilds()).hasSize(NO_BUILDS);
             softly.assertThat(job).isEqualTo(expectedJob);
         });
     }
 
     @Test
-    void shouldNotMapJobEntityToJob() {
+    void shouldMapJobEntityToJobWithBuildEntities() {
         SoftAssertions.assertSoftly((softly) -> {
-            JobEntity jobEntity = createJobEntity(1, JOB_NAME, SUCCESS);
+            JobEntity jobEntity = createJobEntityWithBuildEntities(1, JOB_NAME, SUCCESS, FIVE_BUILDS);
             Job job = JobMapper.map(jobEntity);
-            Job expectedJob = createJob(1, OTHER_JOB_NAME, SUCCESS);
+            Job expectedJob = createJobWithBuilds(1, JOB_NAME, SUCCESS, FIVE_BUILDS);
+            softly.assertThat(job.getBuilds()).hasSize(FIVE_BUILDS);
+            softly.assertThat(job).isEqualTo(expectedJob);
+
+            jobEntity = createJobEntityWithBuildEntities(2, JOB_NAME, FAILED, FIVE_BUILDS);
+            job = JobMapper.map(jobEntity);
+            expectedJob = createJobWithBuilds(2, JOB_NAME, FAILED, FIVE_BUILDS);
+            softly.assertThat(job.getBuilds()).hasSize(FIVE_BUILDS);
+            softly.assertThat(job).isEqualTo(expectedJob);
+        });
+    }
+
+    @Test
+    void shouldNotMapJobEntityToJobWithoutBuildEntities() {
+        SoftAssertions.assertSoftly((softly) -> {
+            JobEntity jobEntity = createJobEntityWithBuildEntities(1, JOB_NAME, SUCCESS, NO_BUILDS);
+            Job job = JobMapper.map(jobEntity);
+            Job expectedJob = this.createJobWithBuilds(1, OTHER_JOB_NAME, SUCCESS, NO_BUILDS);
+            softly.assertThat(job.getBuilds()).hasSize(NO_BUILDS);
             softly.assertThat(job).isNotEqualTo(expectedJob);
 
-            jobEntity = createJobEntity(2, JOB_NAME, SUCCESS);
+            jobEntity = createJobEntityWithBuildEntities(2, JOB_NAME, SUCCESS, NO_BUILDS);
             job = JobMapper.map(jobEntity);
-            expectedJob = createJob(2, JOB_NAME, FAILED);
+            expectedJob = this.createJobWithBuilds(2, JOB_NAME, FAILED, NO_BUILDS);
+            softly.assertThat(job.getBuilds()).hasSize(NO_BUILDS);
             softly.assertThat(job).isNotEqualTo(expectedJob);
 
-            jobEntity = createJobEntity(1, JOB_NAME, SUCCESS);
+            jobEntity = createJobEntityWithBuildEntities(1, JOB_NAME, SUCCESS, NO_BUILDS);
             job = JobMapper.map(jobEntity);
-            expectedJob = createJob(2, JOB_NAME, SUCCESS);
+            expectedJob = this.createJobWithBuilds(2, JOB_NAME, SUCCESS, NO_BUILDS);
+            softly.assertThat(job.getBuilds()).hasSize(NO_BUILDS);
+            softly.assertThat(job).isNotEqualTo(expectedJob);
+        });
+    }
+
+    @Test
+    void shouldNotMapJobEntityToJobWithBuildEntities() {
+        SoftAssertions.assertSoftly((softly) -> {
+            JobEntity jobEntity = createJobEntityWithBuildEntities(1, JOB_NAME, SUCCESS, FIVE_BUILDS);
+            Job job = JobMapper.map(jobEntity);
+            Job expectedJob = createJobWithBuilds(1, OTHER_JOB_NAME, SUCCESS, FIVE_BUILDS);
+            softly.assertThat(job.getBuilds()).hasSize(FIVE_BUILDS);
             softly.assertThat(job).isNotEqualTo(expectedJob);
 
-            jobEntity = createJobEntityWithBuildEntities(1, JOB_NAME, SUCCESS);
+            jobEntity = createJobEntityWithBuildEntities(2, JOB_NAME, SUCCESS, FIVE_BUILDS);
             job = JobMapper.map(jobEntity);
-            expectedJob = createJobWithBuilds(1, OTHER_JOB_NAME, SUCCESS);
+            expectedJob = createJobWithBuilds(2, JOB_NAME, FAILED, FIVE_BUILDS);
+            softly.assertThat(job.getBuilds()).hasSize(FIVE_BUILDS);
             softly.assertThat(job).isNotEqualTo(expectedJob);
 
-            jobEntity = createJobEntityWithBuildEntities(2, JOB_NAME, SUCCESS);
+            jobEntity = createJobEntityWithBuildEntities(1, JOB_NAME, SUCCESS, FIVE_BUILDS);
             job = JobMapper.map(jobEntity);
-            expectedJob = createJobWithBuilds(2, JOB_NAME, FAILED);
-            softly.assertThat(job).isNotEqualTo(expectedJob);
-
-            jobEntity = createJobEntityWithBuildEntities(1, JOB_NAME, SUCCESS);
-            job = JobMapper.map(jobEntity);
-            expectedJob = createJobWithBuilds(2, JOB_NAME, SUCCESS);
+            expectedJob = createJobWithBuilds(2, JOB_NAME, SUCCESS, FIVE_BUILDS);
+            softly.assertThat(job.getBuilds()).hasSize(FIVE_BUILDS);
             softly.assertThat(job).isNotEqualTo(expectedJob);
 
         });
     }
 
     @Test
-    void shouldMapJobEntitiesToJobs() {
+    void shouldMapJobEntitiesToJobsWithoutBuildEntities() {
         SoftAssertions.assertSoftly((softly) -> {
-            List<JobEntity> jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntity(i, JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
+            List<JobEntity> jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, SUCCESS, NO_BUILDS)).collect(Collectors.toList());
             List<Job> jobs = JobMapper.map(jobEntities);
-            List<Job> expectedJobs = IntStream.range(0, 5).mapToObj(i -> createJob(i, JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
+            List<Job> expectedJobs = IntStream.range(0, 5).mapToObj(i -> this.createJobWithBuilds(i, JOB_NAME + i, SUCCESS, NO_BUILDS)).collect(Collectors.toList());
+            jobs.forEach(j -> softly.assertThat(j.getBuilds()).hasSize(NO_BUILDS));
             softly.assertThat(jobs).isEqualTo(expectedJobs);
 
-            jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntity(i, JOB_NAME + i, FAILED)).collect(Collectors.toList());
+            jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, FAILED, NO_BUILDS)).collect(Collectors.toList());
             jobs = JobMapper.map(jobEntities);
-            expectedJobs = IntStream.range(0, 5).mapToObj(i -> createJob(i, JOB_NAME + i, FAILED)).collect(Collectors.toList());
-            softly.assertThat(jobs).isEqualTo(expectedJobs);
-
-            jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
-            jobs = JobMapper.map(jobEntities);
-            expectedJobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
-            softly.assertThat(jobs).isEqualTo(expectedJobs);
-
-            jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, FAILED)).collect(Collectors.toList());
-            jobs = JobMapper.map(jobEntities);
-            expectedJobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, FAILED)).collect(Collectors.toList());
+            expectedJobs = IntStream.range(0, 5).mapToObj(i -> this.createJobWithBuilds(i, JOB_NAME + i, FAILED, NO_BUILDS)).collect(Collectors.toList());
+            jobs.forEach(j -> softly.assertThat(j.getBuilds()).hasSize(NO_BUILDS));
             softly.assertThat(jobs).isEqualTo(expectedJobs);
         });
     }
 
     @Test
-    void shouldNotMapJobEntitiesToJobs() {
+    void shouldMapJobEntitiesToJobsWithBuildEntities() {
         SoftAssertions.assertSoftly((softly) -> {
-            List<JobEntity> jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntity(i, JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
+            List<JobEntity> jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, SUCCESS, FIVE_BUILDS)).collect(Collectors.toList());
             List<Job> jobs = JobMapper.map(jobEntities);
-            List<Job> expectedJobs = IntStream.range(0, 5).mapToObj(i -> createJob(i, OTHER_JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
+            List<Job> expectedJobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, SUCCESS, FIVE_BUILDS)).collect(Collectors.toList());
+            jobs.forEach(j -> softly.assertThat(j.getBuilds()).hasSize(FIVE_BUILDS));
+            softly.assertThat(jobs).isEqualTo(expectedJobs);
+
+            jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, FAILED, FIVE_BUILDS)).collect(Collectors.toList());
+            jobs = JobMapper.map(jobEntities);
+            expectedJobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, FAILED, FIVE_BUILDS)).collect(Collectors.toList());
+            jobs.forEach(j -> softly.assertThat(j.getBuilds()).hasSize(FIVE_BUILDS));
+            softly.assertThat(jobs).isEqualTo(expectedJobs);
+        });
+    }
+
+    @Test
+    void shouldNotMapJobEntitiesToJobsWithoutBuildEntities() {
+        SoftAssertions.assertSoftly((softly) -> {
+            List<JobEntity> jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, SUCCESS, NO_BUILDS)).collect(Collectors.toList());
+            List<Job> jobs = JobMapper.map(jobEntities);
+            List<Job> expectedJobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, OTHER_JOB_NAME + i, SUCCESS, NO_BUILDS)).collect(Collectors.toList());
+            jobs.forEach(j -> softly.assertThat(j.getBuilds()).hasSize(NO_BUILDS));
             softly.assertThat(jobs).isNotEqualTo(expectedJobs);
 
-            jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntity(i, JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
+            jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, SUCCESS, NO_BUILDS)).collect(Collectors.toList());
             jobs = JobMapper.map(jobEntities);
-            expectedJobs = IntStream.range(0, 5).mapToObj(i -> createJob(i, JOB_NAME + i, FAILED)).collect(Collectors.toList());
+            expectedJobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, FAILED, NO_BUILDS)).collect(Collectors.toList());
+            jobs.forEach(j -> softly.assertThat(j.getBuilds()).hasSize(NO_BUILDS));
             softly.assertThat(jobs).isNotEqualTo(expectedJobs);
 
-            jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntity(i, JOB_NAME + i, FAILED)).collect(Collectors.toList());
+            jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, FAILED, NO_BUILDS)).collect(Collectors.toList());
             jobs = JobMapper.map(jobEntities);
-            expectedJobs = IntStream.range(6, 11).mapToObj(i -> createJob(i, JOB_NAME + i, FAILED)).collect(Collectors.toList());
-            softly.assertThat(jobs).isNotEqualTo(expectedJobs);
-
-            jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
-            jobs = JobMapper.map(jobEntities);
-            expectedJobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, OTHER_JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
-            softly.assertThat(jobs).isNotEqualTo(expectedJobs);
-
-            jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
-            jobs = JobMapper.map(jobEntities);
-            expectedJobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, FAILED)).collect(Collectors.toList());
-            softly.assertThat(jobs).isNotEqualTo(expectedJobs);
-
-            jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, FAILED)).collect(Collectors.toList());
-            jobs = JobMapper.map(jobEntities);
-            expectedJobs = IntStream.range(6, 11).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, FAILED)).collect(Collectors.toList());
+            expectedJobs = IntStream.range(6, 11).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, FAILED, NO_BUILDS)).collect(Collectors.toList());
+            jobs.forEach(j -> softly.assertThat(j.getBuilds()).hasSize(NO_BUILDS));
             softly.assertThat(jobs).isNotEqualTo(expectedJobs);
         });
     }
 
     @Test
-    void shouldMapJobJobToEntity() {
+    void shouldNotMapJobEntitiesToJobsWithBuildEntities() {
         SoftAssertions.assertSoftly((softly) -> {
-            Job job = createJob(1, JOB_NAME, SUCCESS);
+            List<JobEntity> jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, SUCCESS, FIVE_BUILDS)).collect(Collectors.toList());
+            List<Job> jobs = JobMapper.map(jobEntities);
+            List<Job> expectedJobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, OTHER_JOB_NAME + i, SUCCESS, FIVE_BUILDS)).collect(Collectors.toList());
+            jobs.forEach(j -> softly.assertThat(j.getBuilds()).hasSize(FIVE_BUILDS));
+            softly.assertThat(jobs).isNotEqualTo(expectedJobs);
+
+            jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, SUCCESS, FIVE_BUILDS)).collect(Collectors.toList());
+            jobs = JobMapper.map(jobEntities);
+            expectedJobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, FAILED, FIVE_BUILDS)).collect(Collectors.toList());
+            jobs.forEach(j -> softly.assertThat(j.getBuilds()).hasSize(FIVE_BUILDS));
+            softly.assertThat(jobs).isNotEqualTo(expectedJobs);
+
+            jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, FAILED, FIVE_BUILDS)).collect(Collectors.toList());
+            jobs = JobMapper.map(jobEntities);
+            expectedJobs = IntStream.range(6, 11).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, FAILED, FIVE_BUILDS)).collect(Collectors.toList());
+            jobs.forEach(j -> softly.assertThat(j.getBuilds()).hasSize(FIVE_BUILDS));
+            softly.assertThat(jobs).isNotEqualTo(expectedJobs);
+        });
+    }
+
+    @Test
+    void shouldMapJobJobToEntityWithoutBuilds() {
+        SoftAssertions.assertSoftly((softly) -> {
+            Job job = createJobWithBuilds(1, JOB_NAME, SUCCESS, NO_BUILDS);
             JobEntity jobEntity = JobMapper.mapToEntity(job);
-            JobEntity expectedJobEntity = createJobEntity(1, JOB_NAME, SUCCESS);
+            JobEntity expectedJobEntity = createJobEntityWithBuildEntities(1, JOB_NAME, SUCCESS, NO_BUILDS);
+            softly.assertThat(jobEntity.getBuildEntities()).hasSize(NO_BUILDS);
             softly.assertThat(jobEntity).isEqualTo(expectedJobEntity);
 
-            job = createJob(2, JOB_NAME, FAILED);
+            job = createJobWithBuilds(2, JOB_NAME, FAILED, NO_BUILDS);
             jobEntity = JobMapper.mapToEntity(job);
-            expectedJobEntity = createJobEntity(2, JOB_NAME, FAILED);
-            softly.assertThat(jobEntity).isEqualTo(expectedJobEntity);
-
-            job = createJobWithBuilds(1, JOB_NAME, SUCCESS);
-            jobEntity = JobMapper.mapToEntity(job);
-            expectedJobEntity = createJobEntityWithBuildEntities(1, JOB_NAME, SUCCESS);
-            softly.assertThat(jobEntity).isEqualTo(expectedJobEntity);
-
-            job = createJobWithBuilds(2, JOB_NAME, FAILED);
-            jobEntity = JobMapper.mapToEntity(job);
-            expectedJobEntity = createJobEntityWithBuildEntities(2, JOB_NAME, FAILED);
+            expectedJobEntity = createJobEntityWithBuildEntities(2, JOB_NAME, FAILED, NO_BUILDS);
+            softly.assertThat(jobEntity.getBuildEntities()).hasSize(NO_BUILDS);
             softly.assertThat(jobEntity).isEqualTo(expectedJobEntity);
         });
     }
 
     @Test
-    void shouldNotMapJobToJobEntity() {
+    void shouldMapJobJobToEntityWithBuilds() {
         SoftAssertions.assertSoftly((softly) -> {
-            Job job = createJob(1, JOB_NAME, SUCCESS);
+            Job job = createJobWithBuilds(1, JOB_NAME, SUCCESS, FIVE_BUILDS);
             JobEntity jobEntity = JobMapper.mapToEntity(job);
-            JobEntity expectedJobEntity = createJobEntity(1, OTHER_JOB_NAME, SUCCESS);
+            JobEntity expectedJobEntity = createJobEntityWithBuildEntities(1, JOB_NAME, SUCCESS, FIVE_BUILDS);
+            softly.assertThat(jobEntity.getBuildEntities()).hasSize(FIVE_BUILDS);
+            softly.assertThat(jobEntity).isEqualTo(expectedJobEntity);
+
+            job = createJobWithBuilds(2, JOB_NAME, FAILED, FIVE_BUILDS);
+            jobEntity = JobMapper.mapToEntity(job);
+            expectedJobEntity = createJobEntityWithBuildEntities(2, JOB_NAME, FAILED, FIVE_BUILDS);
+            softly.assertThat(jobEntity.getBuildEntities()).hasSize(FIVE_BUILDS);
+            softly.assertThat(jobEntity).isEqualTo(expectedJobEntity);
+        });
+    }
+
+    @Test
+    void shouldNotMapJobToJobEntityWithoutBuilds() {
+        SoftAssertions.assertSoftly((softly) -> {
+            Job job = createJobWithBuilds(1, JOB_NAME, SUCCESS, NO_BUILDS);
+            JobEntity jobEntity = JobMapper.mapToEntity(job);
+            JobEntity expectedJobEntity = createJobEntityWithBuildEntities(1, OTHER_JOB_NAME, SUCCESS, NO_BUILDS);
+            softly.assertThat(jobEntity.getBuildEntities()).hasSize(NO_BUILDS);
             softly.assertThat(jobEntity).isNotEqualTo(expectedJobEntity);
 
-            job = createJob(2, JOB_NAME, SUCCESS);
+            job = createJobWithBuilds(2, JOB_NAME, SUCCESS, NO_BUILDS);
             jobEntity = JobMapper.mapToEntity(job);
-            expectedJobEntity = createJobEntity(2, JOB_NAME, FAILED);
+            expectedJobEntity = createJobEntityWithBuildEntities(2, JOB_NAME, FAILED, NO_BUILDS);
+            softly.assertThat(jobEntity.getBuildEntities()).hasSize(NO_BUILDS);
             softly.assertThat(jobEntity).isNotEqualTo(expectedJobEntity);
 
-            job = createJob(1, JOB_NAME, FAILED);
+            job = createJobWithBuilds(1, JOB_NAME, FAILED, NO_BUILDS);
             jobEntity = JobMapper.mapToEntity(job);
-            expectedJobEntity = createJobEntity(2, JOB_NAME, FAILED);
-            softly.assertThat(jobEntity).isNotEqualTo(expectedJobEntity);
-
-            job = createJobWithBuilds(1, JOB_NAME, SUCCESS);
-            jobEntity = JobMapper.mapToEntity(job);
-            expectedJobEntity = createJobEntityWithBuildEntities(1, OTHER_JOB_NAME, SUCCESS);
-            softly.assertThat(jobEntity).isNotEqualTo(expectedJobEntity);
-
-            job = createJobWithBuilds(2, JOB_NAME, SUCCESS);
-            jobEntity = JobMapper.mapToEntity(job);
-            expectedJobEntity = createJobEntityWithBuildEntities(2, JOB_NAME, FAILED);
-            softly.assertThat(jobEntity).isNotEqualTo(expectedJobEntity);
-
-            job = createJobWithBuilds(1, JOB_NAME, FAILED);
-            jobEntity = JobMapper.mapToEntity(job);
-            expectedJobEntity = createJobEntityWithBuildEntities(2, JOB_NAME, FAILED);
+            expectedJobEntity = createJobEntityWithBuildEntities(2, JOB_NAME, FAILED, NO_BUILDS);
+            softly.assertThat(jobEntity.getBuildEntities()).hasSize(NO_BUILDS);
             softly.assertThat(jobEntity).isNotEqualTo(expectedJobEntity);
         });
     }
 
     @Test
-    void shouldMapJobsToJobEntities() {
+    void shouldNotMapJobToJobEntityWithBuilds() {
         SoftAssertions.assertSoftly((softly) -> {
-            List<Job> jobs = IntStream.range(0, 5).mapToObj(i -> createJob(i, JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
+            Job job = createJobWithBuilds(1, JOB_NAME, SUCCESS, FIVE_BUILDS);
+            JobEntity jobEntity = JobMapper.mapToEntity(job);
+            JobEntity expectedJobEntity = createJobEntityWithBuildEntities(1, OTHER_JOB_NAME, SUCCESS, FIVE_BUILDS);
+            softly.assertThat(jobEntity.getBuildEntities()).hasSize(FIVE_BUILDS);
+            softly.assertThat(jobEntity).isNotEqualTo(expectedJobEntity);
+
+            job = createJobWithBuilds(2, JOB_NAME, SUCCESS, FIVE_BUILDS);
+            jobEntity = JobMapper.mapToEntity(job);
+            expectedJobEntity = createJobEntityWithBuildEntities(2, JOB_NAME, FAILED, FIVE_BUILDS);
+            softly.assertThat(jobEntity.getBuildEntities()).hasSize(FIVE_BUILDS);
+            softly.assertThat(jobEntity).isNotEqualTo(expectedJobEntity);
+
+            job = createJobWithBuilds(1, JOB_NAME, FAILED, FIVE_BUILDS);
+            jobEntity = JobMapper.mapToEntity(job);
+            expectedJobEntity = createJobEntityWithBuildEntities(2, JOB_NAME, FAILED, FIVE_BUILDS);
+            softly.assertThat(jobEntity.getBuildEntities()).hasSize(FIVE_BUILDS);
+            softly.assertThat(jobEntity).isNotEqualTo(expectedJobEntity);
+        });
+    }
+
+    @Test
+    void shouldMapJobsToJobEntitiesWithoutBuilds() {
+        SoftAssertions.assertSoftly((softly) -> {
+            List<Job> jobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, SUCCESS, NO_BUILDS)).collect(Collectors.toList());
             List<JobEntity> jobEntities = JobMapper.mapToEntities(jobs);
-            List<JobEntity> expectedJobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntity(i, JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
+            List<JobEntity> expectedJobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, SUCCESS, NO_BUILDS)).collect(Collectors.toList());
+            jobEntities.forEach(j -> softly.assertThat(j.getBuildEntities()).hasSize(NO_BUILDS));
             softly.assertThat(jobEntities).isEqualTo(expectedJobEntities);
 
-            jobs = IntStream.range(0, 5).mapToObj(i -> createJob(i, JOB_NAME + i, FAILED)).collect(Collectors.toList());
+            jobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, FAILED, NO_BUILDS)).collect(Collectors.toList());
             jobEntities = JobMapper.mapToEntities(jobs);
-            expectedJobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntity(i, JOB_NAME + i, FAILED)).collect(Collectors.toList());
-            softly.assertThat(jobEntities).isEqualTo(expectedJobEntities);
-
-            jobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
-            jobEntities = JobMapper.mapToEntities(jobs);
-            expectedJobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
-            softly.assertThat(jobEntities).isEqualTo(expectedJobEntities);
-
-            jobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, FAILED)).collect(Collectors.toList());
-            jobEntities = JobMapper.mapToEntities(jobs);
-            expectedJobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, FAILED)).collect(Collectors.toList());
+            expectedJobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, FAILED, NO_BUILDS)).collect(Collectors.toList());
+            jobEntities.forEach(j -> softly.assertThat(j.getBuildEntities()).hasSize(NO_BUILDS));
             softly.assertThat(jobEntities).isEqualTo(expectedJobEntities);
         });
     }
 
     @Test
-    void shouldNotMapJobsToJobEntities() {
+    void shouldMapJobsToJobEntitiesWithBuilds() {
         SoftAssertions.assertSoftly((softly) -> {
-            List<Job> jobs = IntStream.range(0, 5).mapToObj(i -> createJob(i, JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
+            List<Job> jobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, SUCCESS, FIVE_BUILDS)).collect(Collectors.toList());
             List<JobEntity> jobEntities = JobMapper.mapToEntities(jobs);
-            List<JobEntity> expectedJobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntity(i, OTHER_JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
+            List<JobEntity> expectedJobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, SUCCESS, FIVE_BUILDS)).collect(Collectors.toList());
+            jobEntities.forEach(j -> softly.assertThat(j.getBuildEntities()).hasSize(FIVE_BUILDS));
+            softly.assertThat(jobEntities).isEqualTo(expectedJobEntities);
+
+            jobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, FAILED, FIVE_BUILDS)).collect(Collectors.toList());
+            jobEntities = JobMapper.mapToEntities(jobs);
+            expectedJobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, FAILED, FIVE_BUILDS)).collect(Collectors.toList());
+            jobEntities.forEach(j -> softly.assertThat(j.getBuildEntities()).hasSize(FIVE_BUILDS));
+            softly.assertThat(jobEntities).isEqualTo(expectedJobEntities);
+        });
+    }
+
+    @Test
+    void shouldNotMapJobsToJobEntitiesWithoutBuilds() {
+        SoftAssertions.assertSoftly((softly) -> {
+            List<Job> jobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, SUCCESS, NO_BUILDS)).collect(Collectors.toList());
+            List<JobEntity> jobEntities = JobMapper.mapToEntities(jobs);
+            List<JobEntity> expectedJobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, OTHER_JOB_NAME + i, SUCCESS, NO_BUILDS)).collect(Collectors.toList());
+            jobEntities.forEach(j -> softly.assertThat(j.getBuildEntities()).hasSize(NO_BUILDS));
             softly.assertThat(jobEntities).isNotEqualTo(expectedJobEntities);
 
-            jobs = IntStream.range(0, 5).mapToObj(i -> createJob(i, JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
+            jobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, SUCCESS, NO_BUILDS)).collect(Collectors.toList());
             jobEntities = JobMapper.mapToEntities(jobs);
-            expectedJobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntity(i, JOB_NAME + i, FAILED)).collect(Collectors.toList());
+            expectedJobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, FAILED, NO_BUILDS)).collect(Collectors.toList());
+            jobEntities.forEach(j -> softly.assertThat(j.getBuildEntities()).hasSize(NO_BUILDS));
             softly.assertThat(jobEntities).isNotEqualTo(expectedJobEntities);
 
-            jobs = IntStream.range(0, 5).mapToObj(i -> createJob(i, JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
+            jobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, SUCCESS, NO_BUILDS)).collect(Collectors.toList());
             jobEntities = JobMapper.mapToEntities(jobs);
-            expectedJobEntities = IntStream.range(6, 11).mapToObj(i -> createJobEntity(i, JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
-            softly.assertThat(jobEntities).isNotEqualTo(expectedJobEntities);
-
-            jobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
-            jobEntities = JobMapper.mapToEntities(jobs);
-            expectedJobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, OTHER_JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
-            softly.assertThat(jobEntities).isNotEqualTo(expectedJobEntities);
-
-            jobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
-            jobEntities = JobMapper.mapToEntities(jobs);
-            expectedJobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, FAILED)).collect(Collectors.toList());
-            softly.assertThat(jobEntities).isNotEqualTo(expectedJobEntities);
-
-            jobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
-            jobEntities = JobMapper.mapToEntities(jobs);
-            expectedJobEntities = IntStream.range(6, 11).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, SUCCESS)).collect(Collectors.toList());
+            expectedJobEntities = IntStream.range(6, 11).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, SUCCESS, NO_BUILDS)).collect(Collectors.toList());
+            jobEntities.forEach(j -> softly.assertThat(j.getBuildEntities()).hasSize(NO_BUILDS));
             softly.assertThat(jobEntities).isNotEqualTo(expectedJobEntities);
         });
     }
 
-    private JobEntity createJobEntity(int idNumber, String jobName, String lastBuildStatus) {
-        return new JobEntity(idNumber, jobName,"http://localhost:8080/jenkins/job/" + jobName +"/", lastBuildStatus);
+    @Test
+    void shouldNotMapJobsToJobEntitiesWithBuilds() {
+        SoftAssertions.assertSoftly((softly) -> {
+            List<Job> jobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, SUCCESS, FIVE_BUILDS)).collect(Collectors.toList());
+            List<JobEntity> jobEntities = JobMapper.mapToEntities(jobs);
+            List<JobEntity> expectedJobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, OTHER_JOB_NAME + i, SUCCESS, FIVE_BUILDS)).collect(Collectors.toList());
+            jobEntities.forEach(j -> softly.assertThat(j.getBuildEntities()).hasSize(FIVE_BUILDS));
+            softly.assertThat(jobEntities).isNotEqualTo(expectedJobEntities);
+
+            jobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, SUCCESS, FIVE_BUILDS)).collect(Collectors.toList());
+            jobEntities = JobMapper.mapToEntities(jobs);
+            expectedJobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, FAILED, FIVE_BUILDS)).collect(Collectors.toList());
+            jobEntities.forEach(j -> softly.assertThat(j.getBuildEntities()).hasSize(FIVE_BUILDS));
+            softly.assertThat(jobEntities).isNotEqualTo(expectedJobEntities);
+
+            jobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, SUCCESS, FIVE_BUILDS)).collect(Collectors.toList());
+            jobEntities = JobMapper.mapToEntities(jobs);
+            expectedJobEntities = IntStream.range(6, 11).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, SUCCESS, FIVE_BUILDS)).collect(Collectors.toList());
+            jobEntities.forEach(j -> softly.assertThat(j.getBuildEntities()).hasSize(FIVE_BUILDS));
+            softly.assertThat(jobEntities).isNotEqualTo(expectedJobEntities);
+        });
     }
 
-    private Job createJob(int idNumber, String jobName, String lastBuildStatus) {
-        return new Job(idNumber, jobName,"http://localhost:8080/jenkins/job/" + jobName +"/", lastBuildStatus);
-    }
-
-    private JobEntity createJobEntityWithBuildEntities(int idNumber, String jobName, String lastBuildStatus) {
-        JobEntity jobEntity = createJobEntity(idNumber, jobName, lastBuildStatus);
-        for(int i = 0; i < 5; i++) {
-            jobEntity.addBuildEntity(new BuildEntity(i, i, "http://localhost:8080/jenkins/job/"+ JOB_NAME +"/" + i + "/"));
+    private JobEntity createJobEntityWithBuildEntities(int idNumber, String jobName, String lastBuildStatus, int numberOfBuilds) {
+        JobEntity jobEntity = new JobEntity(idNumber, jobName, "http://localhost:8080/jenkins/job/" + jobName + "/", lastBuildStatus);
+        for (int i = 0; i < numberOfBuilds; i++) {
+            jobEntity.addBuildEntity(new BuildEntity(i, i, "http://localhost:8080/jenkins/job/" + jobName + "/" + i + "/"));
         }
 
         return jobEntity;
     }
 
-    private Job createJobWithBuilds(int idNumber, String jobName, String lastBuildStatus) {
-        Job job = createJob(idNumber, jobName, lastBuildStatus);
-        for(int i = 0; i < 5; i++) {
-            job.addBuild(new Build(i, i, "http://localhost:8080/jenkins/job/"+ JOB_NAME +"/" + i + "/"));
+    private Job createJobWithBuilds(int idNumber, String jobName, String lastBuildStatus, int numberOfBuilds) {
+        Job job = new Job(idNumber, jobName, "http://localhost:8080/jenkins/job/" + jobName + "/", lastBuildStatus);
+        for (int i = 0; i < numberOfBuilds; i++) {
+            job.addBuild(new Build(i, i, "http://localhost:8080/jenkins/job/" + jobName + "/" + i + "/"));
         }
 
         return job;
