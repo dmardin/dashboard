@@ -24,7 +24,7 @@ public class ReportEntity {
     /**
      * Creates a new instance of {@link ReportEntity}.
      */
-    public ReportEntity() {
+    protected ReportEntity() {
         this.resultEntity = new ResultEntity();
         this.issues = new ArrayList<>();
     }
@@ -123,5 +123,25 @@ public class ReportEntity {
         issueEntity.setIssues(this);
 
         return issueEntity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ReportEntity that = (ReportEntity) o;
+
+        if (id != that.id) return false;
+        if (!issues.equals(that.issues)) return false;
+        return warningTypeEntity == that.warningTypeEntity;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + issues.hashCode();
+        result = 31 * result + warningTypeEntity.hashCode();
+        return result;
     }
 }

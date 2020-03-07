@@ -34,7 +34,7 @@ public class ResultEntity {
     /**
      * Creates a new instance of {@link ResultEntity}.
      */
-    public ResultEntity() {
+    protected ResultEntity() {
         this.buildEntity = new BuildEntity();
         this.errorMessages = new ArrayList<>();
         this.infoMessages = new ArrayList<>();
@@ -295,5 +295,41 @@ public class ResultEntity {
         reportEntity.setResultEntity(this);
 
         return  reportEntity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ResultEntity that = (ResultEntity) o;
+
+        if (id != that.id) return false;
+        if (fixedSize != that.fixedSize) return false;
+        if (newSize != that.newSize) return false;
+        if (totalSize != that.totalSize) return false;
+        if (!latestUrl.equals(that.latestUrl)) return false;
+        if (!warningId.equals(that.warningId)) return false;
+        if (!name.equals(that.name)) return false;
+        if (!qualityGateStatus.equals(that.qualityGateStatus)) return false;
+        if (!errorMessages.equals(that.errorMessages)) return false;
+        if (!infoMessages.equals(that.infoMessages)) return false;
+        return reports.equals(that.reports);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + latestUrl.hashCode();
+        result = 31 * result + warningId.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + fixedSize;
+        result = 31 * result + newSize;
+        result = 31 * result + qualityGateStatus.hashCode();
+        result = 31 * result + totalSize;
+        result = 31 * result + errorMessages.hashCode();
+        result = 31 * result + infoMessages.hashCode();
+        result = 31 * result + reports.hashCode();
+        return result;
     }
 }

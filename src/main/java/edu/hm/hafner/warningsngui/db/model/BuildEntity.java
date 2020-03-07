@@ -25,7 +25,7 @@ public class BuildEntity {
     /**
      * Creates a new instance of {@link BuildEntity}.
      */
-    public BuildEntity() {
+    protected BuildEntity() {
         this.jobEntity = new JobEntity();
         this.resultEntities = new ArrayList<>();
     }

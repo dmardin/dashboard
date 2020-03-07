@@ -308,4 +308,44 @@ public class Result {
     public void setId(int id) {
         this.id = id;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Result result = (Result) o;
+
+        if (id != result.id) return false;
+        if (fixedSize != result.fixedSize) return false;
+        if (newSize != result.newSize) return false;
+        if (totalSize != result.totalSize) return false;
+        if (!warningId.equals(result.warningId)) return false;
+        if (!latestUrl.equals(result.latestUrl)) return false;
+        if (!name.equals(result.name)) return false;
+        if (!qualityGateStatus.equals(result.qualityGateStatus)) return false;
+        if (!errorMessages.equals(result.errorMessages)) return false;
+        if (!infoMessages.equals(result.infoMessages)) return false;
+        if (!outstandingIssues.equals(result.outstandingIssues)) return false;
+        if (!newIssues.equals(result.newIssues)) return false;
+        return fixedIssues.equals(result.fixedIssues);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + warningId.hashCode();
+        result = 31 * result + latestUrl.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + fixedSize;
+        result = 31 * result + newSize;
+        result = 31 * result + qualityGateStatus.hashCode();
+        result = 31 * result + totalSize;
+        result = 31 * result + errorMessages.hashCode();
+        result = 31 * result + infoMessages.hashCode();
+        result = 31 * result + outstandingIssues.hashCode();
+        result = 31 * result + newIssues.hashCode();
+        result = 31 * result + fixedIssues.hashCode();
+        return result;
+    }
 }
