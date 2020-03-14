@@ -14,7 +14,6 @@ import java.util.List;
  */
 @Service
 public class JobEntityService {
-
     JobRepository jobRepository;
 
     @Autowired
