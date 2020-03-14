@@ -16,6 +16,11 @@ import java.util.List;
 public class JobEntityService {
     JobRepository jobRepository;
 
+    /**
+     * Creates a new instance of {@link JobEntityService}.
+     *
+     * @param jobRepository the repository for jobs
+     */
     @Autowired
     JobEntityService(JobRepository jobRepository) {
         this.jobRepository = jobRepository;

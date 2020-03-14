@@ -16,6 +16,11 @@ import java.util.List;
 public class BuildEntityService {
     BuildRepository buildRepository;
 
+    /**
+     * Creates a new instance of {@link BuildEntityService}.
+     *
+     * @param buildRepository the repository for builds
+     */
     @Autowired
     public BuildEntityService(BuildRepository buildRepository) {
         this.buildRepository = buildRepository;
