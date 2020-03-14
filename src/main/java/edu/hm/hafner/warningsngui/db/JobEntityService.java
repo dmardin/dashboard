@@ -15,8 +15,12 @@ import java.util.List;
 @Service
 public class JobEntityService {
 
-    @Autowired
     JobRepository jobRepository;
+
+    @Autowired
+    JobEntityService(JobRepository jobRepository) {
+        this.jobRepository = jobRepository;
+    }
 
     /**
      * Fetches all {@link JobEntity}s form the database.
