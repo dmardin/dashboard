@@ -8,15 +8,18 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- *  Service to handle the interactions for {@link BuildEntity}s with the database by using the {@link BuildRepository}.
+ * Service to handle the interactions for {@link BuildEntity}s with the database by using the {@link BuildRepository}.
  *
  * @author Deniz Mardin
  */
 @Service
 public class BuildEntityService {
+    BuildRepository buildRepository;
 
     @Autowired
-    BuildRepository buildRepository;
+    public BuildEntityService(BuildRepository buildRepository) {
+        this.buildRepository = buildRepository;
+    }
 
     /**
      * Saves a list of {@link BuildEntity}s to the database.
