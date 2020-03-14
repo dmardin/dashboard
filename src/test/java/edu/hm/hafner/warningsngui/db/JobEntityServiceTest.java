@@ -22,7 +22,6 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(MockitoJUnitRunner.class)
 class JobEntityServiceTest {
-
     private static final String JOB_NAME = "jobName";
     private static final String SUCCESS = "Success";
     private static final int NUMBER_OF_JOBS = 5;
