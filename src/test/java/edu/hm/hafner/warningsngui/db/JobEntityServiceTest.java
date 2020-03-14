@@ -86,11 +86,18 @@ class JobEntityServiceTest {
     void shouldSaveAllJobEntities() {
         JobRepository jobRepository = mock(JobRepository.class);
         JobEntityService jobEntityService = new JobEntityService(jobRepository);
-        List<JobEntity> jobEntitiesToSave = createJobEntities();
+
 
         SoftAssertions.assertSoftly((softly) -> {
-            when(jobRepository.saveAll(jobEntitiesToSave)).thenReturn(createJobEntities());
+            List<JobEntity> jobEntitiesToSave = new ArrayList<>();
+            when(jobRepository.saveAll(jobEntitiesToSave)).thenReturn(jobEntitiesToSave);
             List<JobEntity> savedJobEntities = jobEntityService.saveAll(jobEntitiesToSave);
+            softly.assertThat(savedJobEntities).isNotNull();
+            softly.assertThat(savedJobEntities).isEmpty();
+
+            jobEntitiesToSave = createJobEntities();
+            when(jobRepository.saveAll(jobEntitiesToSave)).thenReturn(jobEntitiesToSave);
+            savedJobEntities = jobEntityService.saveAll(jobEntitiesToSave);
             softly.assertThat(savedJobEntities).isEqualTo(jobEntitiesToSave);
         });
     }
