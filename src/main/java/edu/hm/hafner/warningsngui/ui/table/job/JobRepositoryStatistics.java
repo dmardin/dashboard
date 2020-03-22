@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * @author Deniz Mardin
  */
 public class JobRepositoryStatistics {
-    private final Map<String, Job> statisticsPerJob = new HashMap<>();
+    private final Map<String, Job> statisticsPerJob = new LinkedHashMap<>();
 
     /**
      * Returns the statistics for the given job.
@@ -79,8 +79,14 @@ public class JobRepositoryStatistics {
      * @param additionalStatistics the job statistics to add
      */
     public void addAll(final Collection<Job> additionalStatistics) {
-        statisticsPerJob.putAll(
-                additionalStatistics.stream().collect(Collectors.toMap(Job::getName, Function.identity())));
+        Map<String, Job> collect = additionalStatistics.stream().collect(Collectors.toMap(
+                Job::getName,
+                Function.identity(),
+                (u, v) -> {
+                    throw new IllegalStateException(String.format("Duplicate key %s", u));
+                },
+                LinkedHashMap::new));
+        statisticsPerJob.putAll(collect);
     }
 
     /**

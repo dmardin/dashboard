@@ -16,9 +16,17 @@ import java.util.List;
  */
 @Service
 public class JobService {
-
-    @Autowired
     JobEntityService jobEntityService;
+
+    /**
+     * Creates a new instance of {@link JobService}.
+     *
+     * @param jobEntityService the entity service for jobs
+     */
+    @Autowired
+    public JobService(JobEntityService jobEntityService) {
+        this.jobEntityService = jobEntityService;
+    }
 
     /**
      * Returns all Jobs.
