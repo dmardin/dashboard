@@ -75,7 +75,7 @@ class JobServiceTest {
     }
 
     @Test
-    void prepareRowsForJobViewTable() {
+    void shouldPrepareRowsForJobViewTable() {
         JobEntityService jobEntityService = mock(JobEntityService.class);
         JobService jobService = new JobService(jobEntityService);
         SoftAssertions.assertSoftly((softly) -> {
@@ -97,7 +97,7 @@ class JobServiceTest {
     }
 
     @Test
-    void saveAll() {
+    void shouldSaveAllJobs() {
         JobEntityService jobEntityService = mock(JobEntityService.class);
         JobService jobService = new JobService(jobEntityService);
         SoftAssertions.assertSoftly((softly) -> {
