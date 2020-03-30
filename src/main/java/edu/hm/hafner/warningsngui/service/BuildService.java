@@ -24,15 +24,23 @@ import java.util.stream.Collectors;
  */
 @Service
 public class BuildService {
-
-    @Autowired
     BuildEntityService buildEntityService;
+
+    /**
+     * Creates a new instance of {@link BuildService}.
+     *
+     * @param buildEntityService the entity service for buildss
+     */
+    @Autowired
+    public BuildService(BuildEntityService buildEntityService) {
+        this.buildEntityService = buildEntityService;
+    }
 
     /**
      * saves a given list of {@link Build}s by adding them to the corresponding {@link Job}.
      *
      * @param fetchedJob the fetched {@link Job}
-     * @param builds list of {@link Build}s
+     * @param builds     list of {@link Build}s
      * @return the saved {@link Build}s
      */
     public List<Build> saveAll(Job fetchedJob, List<Build> builds) {
@@ -52,7 +60,7 @@ public class BuildService {
     public Build getLatestBuild(Job job) {
         return job.getBuilds().stream()
                 .max(Comparator.comparing(Build::getNumber))
-                .orElseThrow(() -> new NoSuchElementException("No Build not found" ));
+                .orElseThrow(() -> new NoSuchElementException("No Build not found"));
     }
 
     /**
@@ -111,7 +119,7 @@ public class BuildService {
     public Build getBuildWithBuildNumberFromJob(Job job, int buildNumber){
         return job.getBuilds().stream().filter(b -> b.getNumber() == buildNumber)
                 .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("Build number "+ buildNumber+ " for the Job "+ job.getName() + " not found" ));
+                .orElseThrow(() -> new NoSuchElementException("Build number " + buildNumber + " for the Job " + job.getName() + " not found"));
     }
 
     /**
