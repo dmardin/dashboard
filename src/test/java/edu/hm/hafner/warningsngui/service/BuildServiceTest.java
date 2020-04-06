@@ -1,16 +1,17 @@
 package edu.hm.hafner.warningsngui.service;
 
+import edu.hm.hafner.analysis.Report;
+import edu.hm.hafner.echarts.BuildResult;
 import edu.hm.hafner.warningsngui.db.BuildEntityService;
 import edu.hm.hafner.warningsngui.db.model.BuildEntity;
+import edu.hm.hafner.warningsngui.db.model.WarningTypeEntity;
 import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Job;
+import edu.hm.hafner.warningsngui.service.dto.Result;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -26,6 +27,7 @@ class BuildServiceTest {
     private static final String JOB_NAME = "jobName";
     private static final String SUCCESS = "Success";
     private static final int NUMBER_OF_BUILDS = 5;
+    private static final int NUMBER_OF_RESULTS = 3;
 
     @Test
     void shouldSaveAllBuilds() {
@@ -84,6 +86,46 @@ class BuildServiceTest {
         });
     }
 
+    @Test
+    void shouldCreateBuildResult() {
+        BuildEntityService buildEntityService = mock(BuildEntityService.class);
+        BuildService buildService = new BuildService(buildEntityService);
+
+        SoftAssertions.assertSoftly((softly) -> {
+            Job job = createJobWithBuildsAndResults();
+            List<BuildResult<Build>> buildResults = buildService.createBuildResults(job);
+            for (int i = 0; i < buildResults.size(); i++) {
+                BuildResult<Build> buildBuildResult = buildResults.get(i);
+                softly.assertThat(buildBuildResult.getBuild().getDisplayName()).isEqualTo("#" + i);
+                softly.assertThat(buildBuildResult.getBuild().getNumber()).isEqualTo(i);
+                softly.assertThat(buildBuildResult.getBuild().getBuildTime()).isEqualTo(0); //TODO BuildTime
+                softly.assertThat(buildBuildResult.getResult()).isEqualTo(createBuildWithResults(i, i, JOB_NAME, NUMBER_OF_RESULTS));
+            }
+        });
+    }
+
+
+    @Test
+    void shouldCreateBuildResultForTool() {
+        BuildEntityService buildEntityService = mock(BuildEntityService.class);
+        BuildService buildService = new BuildService(buildEntityService);
+
+        SoftAssertions.assertSoftly((softly) -> {
+            Job job = createJobWithBuildsAndResults();
+            List<BuildResult<Build>> buildResults = buildService.createBuildResultsForTool(job, "toolName0 Warnings");
+            for (int i = 0; i < buildResults.size(); i++) {
+                BuildResult<Build> buildBuildResult = buildResults.get(i);
+                softly.assertThat(buildBuildResult.getBuild().getDisplayName()).isEqualTo("#" + i);
+                softly.assertThat(buildBuildResult.getBuild().getNumber()).isEqualTo(i);
+                softly.assertThat(buildBuildResult.getBuild().getBuildTime()).isEqualTo(0);
+                List<Result> results = buildBuildResult.getResult().getResults();
+                results.forEach(result -> {
+                    softly.assertThat(result.getName()).isEqualTo("toolName0 Warnings");
+                });
+            }
+        });
+    }
+
     private Job createJob(int numberOfJob) {
         return new Job(
                 numberOfJob,
@@ -134,5 +176,58 @@ class BuildServiceTest {
         builds.forEach(job::addBuild);
 
         return job;
+    }
+
+    private Job createJobWithBuildsAndResults() {
+        Job job = createJob(1);
+        List<Build> builds = new ArrayList<>();
+        for (int i = 0; i < NUMBER_OF_BUILDS; i++) {
+            builds.add(createBuildWithResults(i, i, JOB_NAME, NUMBER_OF_RESULTS));
+        }
+        builds.forEach(job::addBuild);
+
+        return job;
+    }
+
+    private Build createBuildWithResults(int id, int buildNumber, String jobName, int numberOfResults) {
+        Build build = new Build(id, buildNumber, "http://localhost:8080/jenkins/job/" + jobName + "/" + buildNumber + "/");
+        for (int i = 0; i < numberOfResults; i++) {
+            Result result = new Result(
+                    i,
+                    "toolId" + i,
+                    "http://localhost:8080/jenkins/job/" + jobName + "/" + buildNumber + "/" + "toolId" + i,
+                    "toolName" + i + " Warnings",
+                    i * 10,
+                    i * 10,
+                    i * 10 * 2,
+                    "INACTIVE"
+            );
+            result.setInfoMessages(createInfoMessage(i));
+            result.setErrorMessages(createErrorMessage(i));
+            for (WarningTypeEntity warningTypeEntity : WarningTypeEntity.values()) {
+                switch (warningTypeEntity) {
+                    case OUTSTANDING:
+                        result.setOutstandingIssues(new Report());
+                        break;
+                    case NEW:
+                        result.setNewIssues(new Report());
+                        break;
+                    case FIXED:
+                        result.setFixedIssues(new Report());
+                        break;
+                }
+            }
+            build.addResult(result);
+        }
+
+        return build;
+    }
+
+    private List<String> createErrorMessage(int i) {
+        return Arrays.asList("Error", "Message", ": " + i);
+    }
+
+    private List<String> createInfoMessage(int i) {
+        return Arrays.asList("Info", "Message", ": " + i);
     }
 }
