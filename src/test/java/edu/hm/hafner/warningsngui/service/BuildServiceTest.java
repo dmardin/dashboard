@@ -8,6 +8,7 @@ import edu.hm.hafner.warningsngui.db.model.WarningTypeEntity;
 import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Job;
 import edu.hm.hafner.warningsngui.service.dto.Result;
+import edu.hm.hafner.warningsngui.service.table.build.BuildTableModel;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
@@ -119,9 +120,29 @@ class BuildServiceTest {
                 softly.assertThat(buildBuildResult.getBuild().getNumber()).isEqualTo(i);
                 softly.assertThat(buildBuildResult.getBuild().getBuildTime()).isEqualTo(0);
                 List<Result> results = buildBuildResult.getResult().getResults();
-                results.forEach(result -> {
+                for (int j = 0; j < results.size(); j++) { //TODO improve test by adding results
+                    Result result = results.get(j);
                     softly.assertThat(result.getName()).isEqualTo("toolName0 Warnings");
-                });
+                    softly.assertThat(result.getFixedSize()).isEqualTo(j * 10);
+                    softly.assertThat(result.getNewSize()).isEqualTo(j * 10);
+                    softly.assertThat(result.getTotalSize()).isEqualTo(j * 10 * 2);
+                }
+            }
+        });
+    }
+
+    @Test
+    void shouldConvertRowsForTheBuildViewTable() {
+        BuildEntityService buildEntityService = mock(BuildEntityService.class);
+        BuildService buildService = new BuildService(buildEntityService);
+
+        SoftAssertions.assertSoftly((softly) -> {
+            List<Build> builds = createBuilds();
+            List<Object> objects = buildService.prepareRowsForBuildViewTable(builds);
+            for (int i = 0; i < objects.size(); i++) {
+                BuildTableModel.BuildsRow buildsRow = (BuildTableModel.BuildsRow) objects.get(i);
+                softly.assertThat(buildsRow.getBuildNumber()).isEqualTo(i);
+                softly.assertThat(buildsRow.getBuildUrl()).isEqualTo(getUrlForBuildWithBuildNumber(i));
             }
         });
     }
@@ -166,8 +187,12 @@ class BuildServiceTest {
         return new Build(
                 numberOfBuild,
                 numberOfBuild,
-                "http://localhost:8080/jenkins/job/" + JOB_NAME + "/" + numberOfBuild + "/"
+                getUrlForBuildWithBuildNumber(numberOfBuild)
         );
+    }
+
+    private String getUrlForBuildWithBuildNumber(int number) {
+        return "http://localhost:8080/jenkins/job/" + JOB_NAME + "/" + number + "/";
     }
 
     private Job createJobWithBuilds() {
