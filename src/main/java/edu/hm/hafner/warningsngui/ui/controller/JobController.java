@@ -33,7 +33,7 @@ public class JobController {
      * @param model the model with the headers of the jobs
      * @return the home page
      */
-    @RequestMapping(path = {"/", "home"}, method= RequestMethod.GET)
+    @RequestMapping(path = {"/"}, method = RequestMethod.GET)
     public String getJobHeaders(final Model model) {
         logger.info("getJobHeaders is called");
         JobViewTable jobViewTable = new JobViewTable(new JobRepositoryStatistics());
@@ -43,11 +43,21 @@ public class JobController {
     }
 
     /**
+     * Redirects "/home" to "/".
+     *
+     * @return the home page
+     */
+    @RequestMapping(path = {"/home"}, method = RequestMethod.GET)
+    public String getHome() {
+        return "redirect:/";
+    }
+
+    /**
      * Ajax call for the table at the main page that prepares the rows for the table with jobs.
      *
      * @return rows of the table
      */
-    @RequestMapping(path={"/ajax"}, method=RequestMethod.GET, produces = "application/json")
+    @RequestMapping(path = {"/ajax"}, method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public List<Object> getRowsForJobViewTable() {
         logger.info("getRowsForJobViewTable is called");
