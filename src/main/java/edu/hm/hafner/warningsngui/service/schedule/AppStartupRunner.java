@@ -3,10 +3,8 @@ package edu.hm.hafner.warningsngui.service.schedule;
 import edu.hm.hafner.analysis.Issue;
 import edu.hm.hafner.analysis.Report;
 import edu.hm.hafner.warningsngui.db.mapper.Mapper;
-import edu.hm.hafner.warningsngui.db.model.IssueEntity;
 import edu.hm.hafner.warningsngui.db.model.WarningTypeEntity;
-import edu.hm.hafner.warningsngui.service.BuildService;
-import edu.hm.hafner.warningsngui.service.JobService;
+import edu.hm.hafner.warningsngui.service.AppStartupService;
 import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Job;
 import edu.hm.hafner.warningsngui.service.dto.Result;
@@ -31,17 +29,24 @@ import java.util.stream.Collectors;
  */
 @Component
 public class AppStartupRunner implements ApplicationRunner {
-
-    @Autowired
-    private RestService restService;
-    @Autowired
-    private JobService jobService;
-    @Autowired
-    private BuildService buildService;
+    private final RestService restService;
+    private final AppStartupService appStartupService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     private static final String SLASH = "/";
     private static final String API_JSON = "api/json";
     private static final String WARNINGS = "warnings-ng";
+
+    /**
+     * Creates a new instance of {@link AppStartupRunner}.
+     *
+     * @param restService       the needed REST service to Jenkins
+     * @param appStartupService the needed app startup service
+     */
+    @Autowired
+    public AppStartupRunner(RestService restService, AppStartupService appStartupService) {
+        this.restService = restService;
+        this.appStartupService = appStartupService;
+    }
 
     @Override
     public void run(ApplicationArguments args) {
@@ -52,14 +57,14 @@ public class AppStartupRunner implements ApplicationRunner {
         for (Job job : jobsResponse.getJobs()) {
             logger.info("Start requesting Builds for " + job.getName());
             BuildsResponse buildsResponse = restService.getBuilds(job.getUrl() + API_JSON);
-            Job fetchedJob = jobService.findJobByName(job.getName());
+            Job fetchedJob = appStartupService.findJobByName(job.getName());
             if (fetchedJob != null) {
-                int buildNumberFromDatabaseJob = buildService.getLatestBuild(fetchedJob).getNumber();
+                int buildNumberFromDatabaseJob = appStartupService.getLatestBuildNumberFromJob(fetchedJob);
                 List<Build> newBuilds = Arrays.stream(buildsResponse.getBuilds()).filter(build -> build.getNumber() > buildNumberFromDatabaseJob).collect(Collectors.toList());
                 if (!newBuilds.isEmpty()) {
                     fetchedJob.setLastBuildStatus(getBuildStatusFromColor(job.getColor()));
                     addBuildsToJob(fetchedJob, newBuilds);
-                    buildService.saveAll(fetchedJob, newBuilds);
+                    appStartupService.saveNewBuildsFromJob(fetchedJob, newBuilds);
                 }
             } else {
                 job.setLastBuildStatus(getBuildStatusFromColor(job.getColor()));
@@ -68,7 +73,7 @@ public class AppStartupRunner implements ApplicationRunner {
             }
         }
         if (!allJobs.isEmpty()) {
-            jobService.saveAll(allJobs);
+            appStartupService.saveNewJobs(allJobs);
         }
         logger.info("Requested data saved to database");
     }
@@ -124,8 +129,8 @@ public class AppStartupRunner implements ApplicationRunner {
                         String url = tool.getLatestUrl() + SLASH + warningTypeEntity.toString().toLowerCase() + SLASH + API_JSON;
                         IssuesResponse issuesResponse = restService.getIssues(url);
                         if (issuesResponse != null) {
-                            IssueEntity[] issuesEntities = issuesResponse.getIssues();//TODO streams?
-                            for (IssueEntity issueEntity : issuesEntities) {
+                            IssuesResponse.Issue[] issues = issuesResponse.getIssues();
+                            for (IssuesResponse.Issue issueEntity : issues) {
                                 report.add(Mapper.map(issueEntity));
                             }
                         }

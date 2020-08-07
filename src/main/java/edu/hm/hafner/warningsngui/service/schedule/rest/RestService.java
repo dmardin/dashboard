@@ -14,16 +14,18 @@ import org.springframework.web.client.RestTemplate;
  */
 @Service
 public class RestService {
-
-    @Autowired
-    private RestApiProperties restApiProperties;
+    private final RestApiProperties restApiProperties;
     private final RestTemplate restTemplate;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /**
      * Creates a new instance of a {@link RestService}.
+     *
+     * @param restApiProperties the rest api properties
      */
-    public RestService() {
+    @Autowired
+    public RestService(RestApiProperties restApiProperties) {
+        this.restApiProperties = restApiProperties;
         this.restTemplate = new RestTemplate();
     }
 

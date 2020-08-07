@@ -1,18 +1,7 @@
 package edu.hm.hafner.warningsngui.ui.controller;
 
-import edu.hm.hafner.echarts.BuildResult;
-import edu.hm.hafner.echarts.ChartModelConfiguration;
 import edu.hm.hafner.echarts.LinesChartModel;
-import edu.hm.hafner.warningsngui.service.BuildService;
-import edu.hm.hafner.warningsngui.service.JobService;
-import edu.hm.hafner.warningsngui.service.ResultService;
-import edu.hm.hafner.warningsngui.service.dto.Build;
-import edu.hm.hafner.warningsngui.service.dto.Job;
-import edu.hm.hafner.warningsngui.ui.echart.NewVersusFixedAggregatedTrendChart;
-import edu.hm.hafner.warningsngui.ui.echart.NewVersusFixedTrendChart;
-import edu.hm.hafner.warningsngui.ui.echart.ToolTrendChart;
-import edu.hm.hafner.warningsngui.ui.table.build.BuildRepositoryStatistics;
-import edu.hm.hafner.warningsngui.ui.table.build.BuildViewTable;
+import edu.hm.hafner.warningsngui.service.UiService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,14 +21,18 @@ import java.util.List;
  */
 @Controller
 public class BuildController {
-
-    @Autowired
-    JobService jobService;
-    @Autowired
-    BuildService buildService;
-    @Autowired
-    ResultService resultService;
+    private final UiService uiService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    /**
+     * Creates a new instance of {@link BuildController}.
+     *
+     * @param uiService the service for interactions with the ui
+     */
+    @Autowired
+    public BuildController(UiService uiService) {
+        this.uiService = uiService;
+    }
 
     /**
      * Loads the header of the builds.
@@ -51,12 +44,8 @@ public class BuildController {
     @RequestMapping(path={"/job/{jobName}/build"}, method= RequestMethod.GET)
     public String getBuilds(@PathVariable("jobName") String jobName, final Model model) {
         logger.info("getBuilds is called");
-        Job job = jobService.findJobByName(jobName);
-        Build build = buildService.getLatestBuild(job);
-        List<String> usedTools = resultService.getUsedToolsFromBuild(build);
-        BuildViewTable buildViewTable = new BuildViewTable(new BuildRepositoryStatistics());
-        model.addAttribute("usedTools", usedTools);
-        model.addAttribute("buildViewTable", buildViewTable);
+        model.addAttribute("usedTools", uiService.getUsedToolsFromLastBuild(jobName));
+        model.addAttribute("buildViewTable", uiService.createBuildViewTable());
 
         return "build";
     }
@@ -64,15 +53,15 @@ public class BuildController {
     /**
      * Ajax call for the table with builds that prepares the rows.
      *
+     * @param jobName the name of the job
      * @return rows of the table
      */
     @RequestMapping(path={"/ajax/job/{jobName}/build"}, method=RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public List<Object> getRowsForBuildViewTable(@PathVariable("jobName") String jobName) {
         logger.info("getRowsForBuildViewTable is called");
-        Job job = jobService.findJobByName(jobName);
 
-        return buildService.prepareRowsForBuildViewTable(job.getBuilds());
+        return uiService.getRowsForBuildViewTable(jobName);
     }
 
     /**
@@ -85,11 +74,8 @@ public class BuildController {
     @ResponseBody
     public LinesChartModel getAggregatedAnalysisResultsTrendCharts(@PathVariable("jobName") String jobName) {
         logger.info("getAggregatedAnalysisResultsTrendChartsExample (ajax) is called");
-        Job job = jobService.findJobByName(jobName);
-        List<BuildResult<Build>> buildResults = buildService.createBuildResults(job);
-        ToolTrendChart toolTrendChart = new ToolTrendChart();
 
-        return toolTrendChart.create(buildResults, new ChartModelConfiguration());
+        return uiService.getAggregatedAnalysisResultsTrendCharts(jobName);
     }
 
     /**
@@ -103,11 +89,8 @@ public class BuildController {
     @ResponseBody
     public LinesChartModel getTrendChartForTool(@PathVariable("jobName") String jobName, @PathVariable("toolName") String toolName) {
         logger.info("getTrendChartForTool (ajax) is called");
-        Job job = jobService.findJobByName(jobName);
-        List<BuildResult<Build>> results = buildService.createBuildResultsForTool(job, toolName);
-        ToolTrendChart toolTrendChart = new ToolTrendChart();
 
-        return toolTrendChart.create(results, new ChartModelConfiguration());
+        return uiService.getTrendChartForTool(jobName, toolName);
     }
 
     /**
@@ -120,11 +103,8 @@ public class BuildController {
     @ResponseBody
     public LinesChartModel getNewVersusFixedTrendChart(@PathVariable("jobName") String jobName) {
         logger.info("getNewVersusFixedAggregatedTrendChart (ajax) is called");
-        Job job = jobService.findJobByName(jobName);
-        List<BuildResult<Build>> buildResults = buildService.createBuildResults(job);
-        NewVersusFixedAggregatedTrendChart trendChart = new NewVersusFixedAggregatedTrendChart();
 
-        return trendChart.create(buildResults, new ChartModelConfiguration());
+        return uiService.getNewVersusFixedTrendChart(jobName);
     }
 
     /**
@@ -138,10 +118,7 @@ public class BuildController {
     @ResponseBody
     public LinesChartModel getNewVersusFixedTrendChartForTool(@PathVariable("jobName") String jobName, @PathVariable("toolName") String toolName) {
         logger.info("getNewVersusFixedTrendChartForTool (ajax) is called");
-        Job job = jobService.findJobByName(jobName);
-        List<BuildResult<Build>> buildResults = buildService.createBuildResultsForTool(job, toolName);
-        NewVersusFixedTrendChart trendChart = new NewVersusFixedTrendChart();
 
-        return trendChart.create(buildResults, new ChartModelConfiguration());
+        return uiService.getNewVersusFixedTrendChartForTool(jobName, toolName);
     }
 }

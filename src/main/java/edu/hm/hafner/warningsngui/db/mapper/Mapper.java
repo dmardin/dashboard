@@ -8,9 +8,11 @@ import edu.hm.hafner.warningsngui.db.model.*;
 import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Job;
 import edu.hm.hafner.warningsngui.service.dto.Result;
+import edu.hm.hafner.warningsngui.service.schedule.rest.response.IssuesResponse;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -34,10 +36,10 @@ public class Mapper {
      */
     public static Job map(JobEntity jobEntity) {
         Job job = new Job(
-            jobEntity.getId(),
-            jobEntity.getName(),
-            jobEntity.getUrl(),
-            jobEntity.getLastBuildStatus()
+                jobEntity.getId(),
+                jobEntity.getName(),
+                jobEntity.getUrl(),
+                jobEntity.getLastBuildStatus()
         );
         jobEntity.getBuildEntities().forEach(buildEntity -> job.addBuild(map(buildEntity)));
 
@@ -50,7 +52,7 @@ public class Mapper {
      * @param jobEntities the list of {@link JobEntity}s
      * @return the converted list of  {@link Job}s
      */
-    public static List<Job> map(List<JobEntity> jobEntities){
+    public static List<Job> map(List<JobEntity> jobEntities) {
         List<Job> list = new ArrayList<>();
         for (JobEntity jobEntity : jobEntities) {
             Job map = map(jobEntity);
@@ -121,13 +123,13 @@ public class Mapper {
      * @param build the {@link Build} to convert
      * @return the converted {@link BuildEntity}
      */
-    public static BuildEntity mapToEntity(Build build){
+    public static BuildEntity mapToEntity(Build build) {
         BuildEntity buildEntity = new BuildEntity(
                 build.getId(),
                 build.getNumber(),
                 build.getUrl()
         );
-        build.getResults().forEach(result ->  {
+        build.getResults().forEach(result -> {
             ResultEntity resultEntity = mapToEntity(result);
             buildEntity.addResultEntity(resultEntity);
         });
@@ -191,7 +193,7 @@ public class Mapper {
         );
         resultEntity.setInfoMessages(result.getInfoMessages());
         resultEntity.setErrorMessages(result.getErrorMessages());
-        for(WarningTypeEntity warningTypeEntity : WarningTypeEntity.values()) {
+        for (WarningTypeEntity warningTypeEntity : WarningTypeEntity.values()) {
             switch (warningTypeEntity) {
                 case OUTSTANDING:
                     resultEntity.addReportEntity(mapToEntity(result.getOutstandingIssues(), warningTypeEntity));
@@ -225,7 +227,7 @@ public class Mapper {
     /**
      * Converts {@link Report} to a {@link ReportEntity}.
      *
-     * @param issueReport the {@link Report}
+     * @param issueReport       the {@link Report}
      * @param warningTypeEntity the {@link WarningTypeEntity} in the database (e.g. FIXED, OUTSTANDING or NEW)
      * @return the converted {@link ReportEntity}
      */
@@ -272,28 +274,76 @@ public class Mapper {
      * @param issueEntity the {@link IssueEntity}
      * @return the converted {@link Issue}
      */
-    public static Issue map(IssueEntity issueEntity){
+    public static Issue map(IssueEntity issueEntity) {
+        return getIssue(
+                issueEntity.getId(),
+                issueEntity.getCategory(),
+                issueEntity.getColumnEnd(),
+                issueEntity.getColumnStart(),
+                issueEntity.getDescription(),
+                issueEntity.getFileName(),
+                issueEntity.getFingerprint(),
+                issueEntity.getLineEnd(),
+                issueEntity.getLineStart(),
+                issueEntity.getMessage(),
+                issueEntity.getModuleName(),
+                issueEntity.getOrigin(),
+                issueEntity.getPackageName(),
+                issueEntity.getReference(),
+                issueEntity.getSeverity(),
+                issueEntity.getType()
+        );
+    }
+
+    /**
+     * Converts a {@link IssuesResponse.Issue} to a {@link Issue}.
+     *
+     * @param issue the {@link IssuesResponse.Issue}
+     * @return the converted {@link Issue}
+     */
+    public static Issue map(IssuesResponse.Issue issue) {
+        return getIssue(
+                issue.getId(),
+                issue.getCategory(),
+                issue.getColumnEnd(),
+                issue.getColumnStart(),
+                issue.getDescription(),
+                issue.getFileName(),
+                issue.getFingerprint(),
+                issue.getLineEnd(),
+                issue.getLineStart(),
+                issue.getMessage(),
+                issue.getModuleName(),
+                issue.getOrigin(),
+                issue.getPackageName(),
+                issue.getReference(),
+                issue.getSeverity(),
+                issue.getType()
+        );
+    }
+
+    private static Issue getIssue(UUID id, String category, int columnEnd, int columnStart, String description, String fileName, String fingerprint, int lineEnd, int lineStart, String message, String moduleName, String origin, String packageName, String reference, String severity, String type) {
         IssueBuilder issueBuilder = new IssueBuilder();
-        if(issueEntity.getId() != null){
-            issueBuilder.setId(issueEntity.getId());
+        if (id != null) {
+            issueBuilder.setId(id);
         }
 
         return issueBuilder
-                .setCategory(issueEntity.getCategory())
-                .setColumnEnd(issueEntity.getColumnEnd())
-                .setColumnStart(issueEntity.getColumnStart())
-                .setDescription(issueEntity.getDescription())
-                .setFileName(issueEntity.getFileName())
-                .setFingerprint(issueEntity.getFingerprint())
-                .setLineEnd(issueEntity.getLineEnd())
-                .setLineStart(issueEntity.getLineStart())
-                .setMessage(issueEntity.getMessage())
-                .setModuleName(issueEntity.getModuleName())
-                .setOrigin(issueEntity.getOrigin())
-                .setPackageName(issueEntity.getPackageName())
-                .setReference(issueEntity.getReference())
-                .setSeverity(Severity.valueOf(issueEntity.getSeverity()))
-                .setType(issueEntity.getType())
+                .setCategory(category)
+                .setColumnEnd(columnEnd)
+                .setColumnStart(columnStart)
+                .setDescription(description)
+                .setFileName(fileName)
+                .setFingerprint(fingerprint)
+                .setLineEnd(lineEnd)
+                .setLineStart(lineStart)
+                .setMessage(message)
+                .setModuleName(moduleName)
+                .setOrigin(origin)
+                .setPackageName(packageName)
+                .setReference(reference)
+                .setSeverity(Severity.valueOf(severity))
+                .setType(type)
                 .build();
     }
 }

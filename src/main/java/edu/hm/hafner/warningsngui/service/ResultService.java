@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
  * Service to handle {@link Result}s between the ui and database.
  */
 @Service
-public class ResultService {
+class ResultService {
 
     /**
      * Determines the used tools (e.g checkstyle or pmd) for a given {@link Build}.
@@ -138,5 +138,14 @@ public class ResultService {
         IssueViewTable issueViewTable = new IssueViewTable(repositoryStatistics);
 
         return issueViewTable.getTableRows("issues");
+    }
+
+    /**
+     * Creates a new {@link IssueViewTable}.
+     *
+     * @return the IssueViewTable
+     */
+    public IssueViewTable createIssueViewTable() {
+        return new IssueViewTable(new IssueRepositoryStatistics());
     }
 }

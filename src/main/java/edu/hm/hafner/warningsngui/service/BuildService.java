@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
  * Service to handle {@link Build}s between the ui and database.
  */
 @Service
-public class BuildService {
+class BuildService {
     BuildEntityService buildEntityService;
 
     /**
@@ -144,5 +144,9 @@ public class BuildService {
         BuildViewTable buildViewTable = new BuildViewTable(buildRepositoryStatistics);
 
         return buildViewTable.getTableRows("builds");
+    }
+
+    public BuildViewTable createBuildViewTable() {
+        return new BuildViewTable(new BuildRepositoryStatistics());
     }
 }

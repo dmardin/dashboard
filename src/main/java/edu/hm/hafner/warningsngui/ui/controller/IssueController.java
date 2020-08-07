@@ -1,12 +1,6 @@
 package edu.hm.hafner.warningsngui.ui.controller;
 
-import edu.hm.hafner.warningsngui.service.BuildService;
-import edu.hm.hafner.warningsngui.service.JobService;
-import edu.hm.hafner.warningsngui.service.ResultService;
-import edu.hm.hafner.warningsngui.service.dto.Build;
-import edu.hm.hafner.warningsngui.service.dto.Job;
-import edu.hm.hafner.warningsngui.ui.table.issue.IssueRepositoryStatistics;
-import edu.hm.hafner.warningsngui.ui.table.issue.IssueViewTable;
+import edu.hm.hafner.warningsngui.service.UiService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,22 +20,26 @@ import java.util.List;
  */
 @Controller
 public class IssueController {
-
-    @Autowired
-    JobService jobService;
-    @Autowired
-    BuildService buildService;
-    @Autowired
-    ResultService resultService;
+    private final UiService uiService;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    /**
+     * Creates a new instance of {@link IssueController}.
+     *
+     * @param uiService the service for interactions with the ui
+     */
+    @Autowired
+    public IssueController(UiService uiService) {
+        this.uiService = uiService;
+    }
 
     /**
      * Loads the header of the issues by the total size of issues (containing outstanding and new issues)for the table at the issue page.
      *
-     * @param jobName the name of the job
+     * @param jobName     the name of the job
      * @param buildNumber the build number
-     * @param toolId the tool id (e.g. checkstyle)
-     * @param model the configured model with the headers of the issue
+     * @param toolId      the tool id (e.g. checkstyle)
+     * @param model       the configured model with the headers of the issue
      * @return the issue page
      */
     @RequestMapping(path={"/job/{jobName}/build/{buildNumber}/{toolId}"}, method= RequestMethod.GET)
@@ -50,8 +48,7 @@ public class IssueController {
             @PathVariable("buildNumber") Integer buildNumber,
             @PathVariable("toolId") String toolId,
             final Model model) {
-        IssueViewTable issueViewTable = new IssueViewTable(new IssueRepositoryStatistics());
-        model.addAttribute("issueViewTable", issueViewTable);
+        model.addAttribute("issueViewTable", uiService.createIssueViewTable());
         model.addAttribute("toolId", toolId);
         model.addAttribute("toolIdWithIssueType", toolId);
 
@@ -75,8 +72,7 @@ public class IssueController {
             @PathVariable("toolId") String toolId,
             @PathVariable("issueType") String issueType,
             final Model model) {
-        IssueViewTable issueViewTable = new IssueViewTable(new IssueRepositoryStatistics());
-        model.addAttribute("issueViewTable", issueViewTable);
+        model.addAttribute("issueViewTable", uiService.createIssueViewTable());
         model.addAttribute("toolId", toolId);
         model.addAttribute("issueType", issueType);
         model.addAttribute("toolIdWithIssueType", toolId + " (" + issueType + ")");
@@ -99,10 +95,8 @@ public class IssueController {
             @PathVariable("buildNumber") Integer buildNumber,
             @PathVariable("toolId") String toolId) {
         logger.info("getIssuesDataForToolWithTotalSize is called");
-        Job job = jobService.findJobByName(jobName);
-        Build build = buildService.getBuildWithBuildNumberFromJob(job, buildNumber);
 
-        return resultService.getOutstandingAndNewIssuesForTool(build, toolId);
+        return uiService.getIssuesDataForToolWithTotalSize(jobName, buildNumber, toolId);
     }
 
     /**
@@ -122,9 +116,7 @@ public class IssueController {
             @PathVariable("toolId") String toolId,
             @PathVariable("issueType") String issueType) {
         logger.info("getIssuesDataForToolWithIssueType is called");
-        Job job = jobService.findJobByName(jobName);
-        Build build = buildService.getBuildWithBuildNumberFromJob(job, buildNumber);
 
-        return resultService.getIssuesByToolIdAndIssueType(build, toolId, issueType);
+        return uiService.getIssuesDataForToolWithIssueType(jobName, buildNumber, toolId, issueType);
     }
 }

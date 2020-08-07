@@ -1,8 +1,6 @@
 package edu.hm.hafner.warningsngui.ui.controller;
 
-import edu.hm.hafner.warningsngui.service.JobService;
-import edu.hm.hafner.warningsngui.ui.table.job.JobRepositoryStatistics;
-import edu.hm.hafner.warningsngui.ui.table.job.JobViewTable;
+import edu.hm.hafner.warningsngui.service.UiService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +19,19 @@ import java.util.List;
  */
 @Controller
 public class JobController {
-
-    @Autowired
-    JobService jobService;
+    private final UiService uiService;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    /**
+     * Creates a new instance of {@link JobController}.
+     *
+     * @param uiService the service for interactions with the ui
+     */
+    @Autowired
+    public JobController(UiService uiService) {
+        this.uiService = uiService;
+    }
 
     /**
      * Loads the header of the jobs for the table at the main page.
@@ -36,8 +42,7 @@ public class JobController {
     @RequestMapping(path = {"/"}, method = RequestMethod.GET)
     public String getJobHeaders(final Model model) {
         logger.info("getJobHeaders is called");
-        JobViewTable jobViewTable = new JobViewTable(new JobRepositoryStatistics());
-        model.addAttribute("jobViewTable", jobViewTable);
+        model.addAttribute("jobViewTable", uiService.createJobViewTable());
 
         return "home";
     }
@@ -61,6 +66,6 @@ public class JobController {
     @ResponseBody
     public List<Object> getRowsForJobViewTable() {
         logger.info("getRowsForJobViewTable is called");
-        return jobService.prepareRowsForJobViewTable();
+        return uiService.prepareRowsForJobViewTable();
     }
 }

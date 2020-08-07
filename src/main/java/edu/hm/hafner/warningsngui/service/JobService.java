@@ -15,7 +15,7 @@ import java.util.List;
  * Service to handle {@link Job}s between the ui and database.
  */
 @Service
-public class JobService {
+class JobService {
     JobEntityService jobEntityService;
 
     /**
@@ -84,5 +84,14 @@ public class JobService {
         JobViewTable jobViewTable = new JobViewTable(jobRepositoryStatistics);
 
         return jobViewTable.getTableRows("jobs");
+    }
+
+    /**
+     * Creates a new {@link JobViewTable}.
+     *
+     * @return the JobViewTable
+     */
+    public JobViewTable createJobViewTable() {
+        return new JobViewTable(new JobRepositoryStatistics());
     }
 }
