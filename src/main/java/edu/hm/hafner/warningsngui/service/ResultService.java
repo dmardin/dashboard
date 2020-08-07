@@ -32,7 +32,7 @@ class ResultService {
     /**
      * Returns the info messages for a {@link Result} by given {@link Build} and tool id.
      *
-     * @param build the {@link Build}
+     * @param build  the {@link Build}
      * @param toolId the tool id
      * @return the list of info messages
      */
@@ -43,7 +43,7 @@ class ResultService {
     /**
      * Returns the error messages for a {@link Result} by given {@link Build} and tool id.
      *
-     * @param build the {@link Build}
+     * @param build  the {@link Build}
      * @param toolId the tool id
      * @return the list of error messages
      */
@@ -54,7 +54,7 @@ class ResultService {
     /**
      * Determines the {@link Result} by given {@link Build} and tool id.
      *
-     * @param build the {@link Build}
+     * @param build  the {@link Build}
      * @param toolId the tool id
      * @return the {@link Result}
      */
@@ -62,14 +62,17 @@ class ResultService {
         return build.getResults().stream()
                 .filter(r -> r.getWarningId().equals(toolId))
                 .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("Tool id "+ toolId + " for the Build "+ build.getNumber() + " from the job" + build.getJob().getName() + " not found" ));
+                .orElseThrow(() ->
+                        new NoSuchElementException("Tool id " + toolId + " for the Build " + build.getNumber()
+                                + " from the job " + build.getJob().getName() + " not found"
+                        ));
     }
 
     /**
      * Determines the outstanding and new issues in a {@link Report} for a given {@link Build} and tool id.
      * The {@link Report} will be converted to the needed format of table rows.
      *
-     * @param build the {@link Build}
+     * @param build  the {@link Build}
      * @param toolId the tool id
      * @return prepared table rows
      */
@@ -86,8 +89,8 @@ class ResultService {
      * Determines the {@link Report} by given issue type (e.g. new, fixed or outstanding) and tool id.
      * The {@link Report} will be converted to the needed format of table rows.
      *
-     * @param build the {@link Build}
-     * @param toolId the tool id
+     * @param build     the {@link Build}
+     * @param toolId    the tool id
      * @param issueType the issue type (e.g. new, fixed, outstanding)
      * @return prepared table rows
      */
@@ -112,7 +115,7 @@ class ResultService {
     /**
      * Determines the {@link Result} by a given {@link Build} and tool id.
      *
-     * @param build the {@link Build}
+     * @param build  the {@link Build}
      * @param toolId the tool id
      * @return the {@link Result}
      */
@@ -120,8 +123,12 @@ class ResultService {
         return build.getResults().stream()
                 .filter(r -> r.getWarningId().equals(toolId))
                 .findFirst()
-                .orElseThrow(() -> new NoSuchElementException(
-                        "Result for the Job "+ build.getJob().getName() + " with the build number"+ build.getJob() + " and the tool id "+ toolId +"not found" ));
+                .orElseThrow(() ->
+                        new NoSuchElementException(
+                                "Result for the Job " + build.getJob().getName()
+                                        + " with the build number" + build.getNumber()
+                                        + " and the tool id " + toolId + " not found"
+                        ));
     }
 
     /**

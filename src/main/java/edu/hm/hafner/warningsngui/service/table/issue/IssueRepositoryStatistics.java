@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * @author Deniz Mardin
  */
 public class IssueRepositoryStatistics {
-    private final Map<UUID, Issue> statisticsPerIssue = new HashMap<>();
+    private final Map<UUID, Issue> statisticsPerIssue = new LinkedHashMap<>();
 
     /**
      * Checks if the repository is empty.

@@ -8,7 +8,6 @@ import edu.hm.hafner.warningsngui.db.model.WarningTypeEntity;
 import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Job;
 import edu.hm.hafner.warningsngui.service.dto.Result;
-import edu.hm.hafner.warningsngui.service.table.build.BuildTableModel;
 import edu.hm.hafner.warningsngui.service.table.build.BuildViewTable;
 import io.jenkins.plugins.datatables.api.TableColumn;
 import io.jenkins.plugins.datatables.api.TableModel;
@@ -68,45 +67,23 @@ class BuildServiceTest {
         });
     }
 
-    @Test
-    void shouldGetBuildWithBuildNumberFromJob() {
-        BuildEntityService buildEntityService = mock(BuildEntityService.class);
-        BuildService buildService = new BuildService(buildEntityService);
-
-        SoftAssertions.assertSoftly((softly) -> {
-            Job jobWithoutBuilds = createJob(3);
-            softly.assertThatThrownBy(() -> buildService.getBuildWithBuildNumberFromJob(jobWithoutBuilds, 3))
-                    .isInstanceOf(NoSuchElementException.class)
-                    .hasMessage("Build number " + 3 + " for the Job " + getJobNameForNumber(3) + " not found");
-
-            Job job = createJobWithBuilds();
-            Build filteredBuild = buildService.getBuildWithBuildNumberFromJob(job, 3);
-            Build build = createBuild(3);
-            softly.assertThat(filteredBuild).isEqualTo(build);
-
-            softly.assertThatThrownBy(() -> buildService.getBuildWithBuildNumberFromJob(job, 10))
-                    .isInstanceOf(NoSuchElementException.class)
-                    .hasMessage("Build number " + 10 + " for the Job " + getJobNameForNumber(1) + " not found");
-        });
-    }
-
-    @Test
-    void shouldCreateBuildResult() {
-        BuildEntityService buildEntityService = mock(BuildEntityService.class);
-        BuildService buildService = new BuildService(buildEntityService);
-
-        SoftAssertions.assertSoftly((softly) -> {
-            Job job = createJobWithBuildsAndResults();
-            List<BuildResult<Build>> buildResults = buildService.createBuildResults(job);
-            for (int i = 0; i < buildResults.size(); i++) {
-                BuildResult<Build> buildBuildResult = buildResults.get(i);
-                softly.assertThat(buildBuildResult.getBuild().getDisplayName()).isEqualTo("#" + i);
-                softly.assertThat(buildBuildResult.getBuild().getNumber()).isEqualTo(i);
-                softly.assertThat(buildBuildResult.getBuild().getBuildTime()).isEqualTo(0); //TODO BuildTime
-                softly.assertThat(buildBuildResult.getResult()).isEqualTo(createBuildWithResults(i, i, JOB_NAME, NUMBER_OF_RESULTS));
-            }
-        });
-    }
+//    @Test
+//    void shouldCreateBuildResult() {
+//        BuildEntityService buildEntityService = mock(BuildEntityService.class);
+//        BuildService buildService = new BuildService(buildEntityService);
+//
+//        SoftAssertions.assertSoftly((softly) -> {
+//            Job job = createJobWithBuildsAndResults();
+//            List<BuildResult<Build>> buildResults = buildService.createBuildResults(job);
+//            for (int i = 0; i < buildResults.size(); i++) {
+//                BuildResult<Build> buildBuildResult = buildResults.get(i);
+//                softly.assertThat(buildBuildResult.getBuild().getDisplayName()).isEqualTo("#" + i);
+//                softly.assertThat(buildBuildResult.getBuild().getNumber()).isEqualTo(i);
+//                softly.assertThat(buildBuildResult.getBuild().getBuildTime()).isEqualTo(0); //TODO BuildTime
+//                softly.assertThat(buildBuildResult.getResult()).isEqualTo(createBuildWithResults(i, i, JOB_NAME, NUMBER_OF_RESULTS));
+//            }
+//        });
+//    }
 
 
     @Test
@@ -135,22 +112,6 @@ class BuildServiceTest {
     }
 
     @Test
-    void shouldConvertRowsForTheBuildViewTable() {
-        BuildEntityService buildEntityService = mock(BuildEntityService.class);
-        BuildService buildService = new BuildService(buildEntityService);
-
-        SoftAssertions.assertSoftly((softly) -> {
-            List<Build> builds = createBuilds();
-            List<Object> objects = buildService.prepareRowsForBuildViewTable(builds);
-            for (int i = 0; i < objects.size(); i++) {
-                BuildTableModel.BuildsRow buildsRow = (BuildTableModel.BuildsRow) objects.get(i);
-                softly.assertThat(buildsRow.getBuildNumber()).isEqualTo(i);
-                softly.assertThat(buildsRow.getBuildUrl()).isEqualTo(getUrlForBuildWithBuildNumber(i));
-            }
-        });
-    }
-
-    @Test
     void shouldCreateBuildViewTable() {
         BuildEntityService buildEntityService = mock(BuildEntityService.class);
         BuildService buildService = new BuildService(buildEntityService);
@@ -164,11 +125,12 @@ class BuildServiceTest {
             softly.assertThat(buildViewTable.getTableRows("builds")).isEmpty();
 
             List<TableColumn> tc = tableModel.getColumns();
+            softly.assertThat(tc.size()).isEqualTo(2);
             softly.assertThat(tc.get(0).getHeaderLabel()).isEqualTo("Build Number");
             softly.assertThat(tc.get(0).getDefinition()).isEqualTo("{\"data\": \"buildNumber\"}");
             softly.assertThat(tc.get(0).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(0).getWidth()).isEqualTo(1);
-            
+
             softly.assertThat(tc.get(1).getHeaderLabel()).isEqualTo("Url");
             softly.assertThat(tc.get(1).getDefinition()).isEqualTo("{\"data\": \"buildUrl\"}");
             softly.assertThat(tc.get(1).getHeaderClass()).isEqualTo("");

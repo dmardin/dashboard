@@ -53,6 +53,13 @@ public class AppStartupService {
         return buildService.getLatestBuild(job).getNumber();
     }
 
+    /**
+     * Saves a given list of {@link Build} by adding it to an existing {@link Job}..
+     *
+     * @param fetchedJob the fetched Job
+     * @param builds     the builds to add
+     * @return the saved builds
+     */
     public List<Build> saveNewBuildsFromJob(Job fetchedJob, List<Build> builds) {
         return buildService.saveAll(fetchedJob, builds);
     }

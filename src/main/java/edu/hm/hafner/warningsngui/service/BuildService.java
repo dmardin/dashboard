@@ -123,22 +123,12 @@ class BuildService {
     }
 
     /**
-     * Fetches all build from database and converts it to the needed format of table rows.
-     *
-     * @return prepared table rows
-     * @param builds the builds
-     */
-    public List<Object> prepareRowsForBuildViewTable(List<Build> builds) {
-        return convertRowsForTheBuildViewTable(builds);
-    }
-
-    /**
      * Method to convert a list of builds to the needed format of table rows.
      *
-     * @param builds the jobs to convert
-     * @return converted table rows
+     * @param builds the builds
+     * @return prepared table rows
      */
-    private List<Object> convertRowsForTheBuildViewTable(List<Build> builds) {
+    public List<Object> prepareRowsForBuildViewTable(List<Build> builds) {
         BuildRepositoryStatistics buildRepositoryStatistics = new BuildRepositoryStatistics();
         buildRepositoryStatistics.addAll(builds);
         BuildViewTable buildViewTable = new BuildViewTable(buildRepositoryStatistics);

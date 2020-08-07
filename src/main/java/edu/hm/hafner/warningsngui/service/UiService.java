@@ -59,7 +59,7 @@ public class UiService {
      * @return prepared table rows
      */
     public List<Object> prepareRowsForJobViewTable() {
-        return jobService.prepareRowsForJobViewTable();
+        return jobService.convertRowsForTheJobViewTable(jobService.getAllJobs());
     }
 
     /**

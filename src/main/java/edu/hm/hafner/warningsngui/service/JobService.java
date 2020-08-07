@@ -43,22 +43,22 @@ class JobService {
      * @param name the job name
      * @return the job
      */
-    public Job findJobByName(String name){
+    public Job findJobByName(String name) {
         JobEntity jobEntity = jobEntityService.findJobByName(name);
-        if(jobEntity != null) {
+        if (jobEntity != null) {
             return Mapper.map(jobEntity);
         }
         return null;
     }
 
-    /**
-     * Fetches all jobs from database and converts it to the needed format of table rows.
-     *
-     * @return prepared table rows
-     */
-    public List<Object> prepareRowsForJobViewTable(){
-        return convertRowsForTheJobViewTable(getAllJobs());
-    }
+//    /**
+//     * Fetches all jobs from database and converts it to the needed format of table rows.
+//     *
+//     * @return prepared table rows
+//     */
+//    public List<Object> prepareRowsForJobViewTable(){
+//        return convertRowsForTheJobViewTable(getAllJobs());
+//    }
 
     /**
      * Saves a given list of {@link Job}.
@@ -78,7 +78,7 @@ class JobService {
      * @param jobs the jobs to convert
      * @return converted table rows
      */
-    private List<Object> convertRowsForTheJobViewTable(List<Job> jobs) {
+    public List<Object> convertRowsForTheJobViewTable(List<Job> jobs) {
         JobRepositoryStatistics jobRepositoryStatistics = new JobRepositoryStatistics();
         jobRepositoryStatistics.addAll(jobs);
         JobViewTable jobViewTable = new JobViewTable(jobRepositoryStatistics);

@@ -8,6 +8,7 @@ import edu.hm.hafner.warningsngui.db.model.*;
 import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Job;
 import edu.hm.hafner.warningsngui.service.dto.Result;
+import edu.hm.hafner.warningsngui.service.rest.response.IssuesResponse;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
@@ -587,13 +588,23 @@ class MapperTest {
 
             result = createResult(1, 1, JOB_NAME,0,5,5,10,10,15);
             resultEntity = Mapper.mapToEntity(result);
-            expectedResultEntity = createResultEntity(1, 1, JOB_NAME, 1,6,6,11,11,16);
+            expectedResultEntity = createResultEntity(1, 1, JOB_NAME, 1, 6, 6, 11, 11, 16);
             softly.assertThat(resultEntity).isNotEqualTo(expectedResultEntity);
 
-            result = createResult(1, 1, JOB_NAME,0,5,5,10,10,15);
+            result = createResult(1, 1, JOB_NAME, 0, 5, 5, 10, 10, 15);
             resultEntity = Mapper.mapToEntity(result);
-            expectedResultEntity = createResultEntity(1, 1, JOB_NAME, 1,2,2,3,3,4);
+            expectedResultEntity = createResultEntity(1, 1, JOB_NAME, 1, 2, 2, 3, 3, 4);
             softly.assertThat(resultEntity).isNotEqualTo(expectedResultEntity);
+        });
+    }
+
+    @Test
+    void shouldMapIssueResponseFromJenkinsApiToIssue() {
+        SoftAssertions.assertSoftly((softly) -> {
+            IssuesResponse.Issue issueFromIssuesResponse = createIssueFromIssuesResponse(1);
+            Issue issue = Mapper.map(issueFromIssuesResponse);
+            softly.assertThat(issue).isEqualTo(createIssue(1));
+
         });
     }
 
@@ -754,27 +765,49 @@ class MapperTest {
         IssueBuilder issueBuilder = new IssueBuilder();
         return issueBuilder
                 .setId(getUUID(i))
-                .setCategory("category"+i)
-                .setColumnEnd(i+2)
-                .setColumnStart(i+1)
-                .setDescription("description"+i)
-                .setFileName("filename"+i)
-                .setFingerprint("fingerprint"+i)
-                .setLineEnd(i+4)
-                .setLineStart(i+3)
-                .setMessage("message"+i)
-                .setModuleName("moduleName"+i)
-                .setOrigin("origin"+i)
-                .setPackageName("packageName"+i)
-                .setReference("reference"+i)
-                .setSeverity(Severity.valueOf("ERROR"+i))
-                .setType("type"+i)
+                .setCategory("category" + i)
+                .setColumnEnd(i + 2)
+                .setColumnStart(i + 1)
+                .setDescription("description" + i)
+                .setFileName("filename" + i)
+                .setFingerprint("fingerprint" + i)
+                .setLineEnd(i + 4)
+                .setLineStart(i + 3)
+                .setMessage("message" + i)
+                .setModuleName("moduleName" + i)
+                .setOrigin("origin" + i)
+                .setPackageName("packageName" + i)
+                .setReference("reference" + i)
+                .setSeverity(Severity.valueOf("ERROR" + i))
+                .setType("type" + i)
                 .build();
+    }
+
+    private IssuesResponse.Issue createIssueFromIssuesResponse(int i) {
+        IssuesResponse.Issue issue = new IssuesResponse.Issue();
+        issue.setCategory("category" + i);
+        issue.setColumnEnd(i + 2);
+        issue.setColumnStart(i + 1);
+        issue.setDescription("description" + i);
+        issue.setFileName("filename" + i);
+        issue.setFingerprint("fingerprint" + i);
+        issue.setId(getUUID(i));
+        issue.setLineEnd(i + 4);
+        issue.setLineStart(i + 3);
+        issue.setMessage("message" + i);
+        issue.setModuleName("moduleName" + i);
+        issue.setOrigin("origin" + i);
+        issue.setPackageName("packageName" + i);
+        issue.setReference("reference" + i);
+        issue.setSeverity(Severity.valueOf("ERROR" + i).toString());
+        issue.setType("type" + i);
+
+        return issue;
     }
 
     private ReportEntity createReportEntity(WarningTypeEntity warningTypeEntity, int issueNumberStart, int issueNumberEnd) {
         ReportEntity reportEntity = new ReportEntity(warningTypeEntity);
-        for(int i = issueNumberStart; i < issueNumberEnd; i++) {
+        for (int i = issueNumberStart; i < issueNumberEnd; i++) {
             reportEntity.addIssueEntity(createIssueEntity(i));
         }
 
