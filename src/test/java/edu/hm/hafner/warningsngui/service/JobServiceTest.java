@@ -5,6 +5,9 @@ import edu.hm.hafner.warningsngui.db.model.JobEntity;
 import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Job;
 import edu.hm.hafner.warningsngui.service.table.job.JobTableModel;
+import edu.hm.hafner.warningsngui.service.table.job.JobViewTable;
+import io.jenkins.plugins.datatables.api.TableColumn;
+import io.jenkins.plugins.datatables.api.TableModel;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
@@ -110,6 +113,36 @@ class JobServiceTest {
             List<Job> jobsToSave = createJobs();
             jobs = jobService.saveAll(jobsToSave);
             softly.assertThat(jobs).isEqualTo(jobsToSave);
+        });
+    }
+
+    @Test
+    void shouldCreateJobViewTable() {
+        JobEntityService jobEntityService = mock(JobEntityService.class);
+        JobService jobService = new JobService(jobEntityService);
+        SoftAssertions.assertSoftly((softly) -> {
+            JobViewTable jobViewTable = jobService.createJobViewTable();
+            TableModel tableModel = jobViewTable.getTableModel("jobs");
+            softly.assertThat(tableModel.getId()).isEqualTo("jobs");
+            softly.assertThat(tableModel.getColumnsDefinition()).isEqualTo("[{\"data\": \"jobName\"},{\"data\": \"jobStatus\"},{\"data\": \"jobUrl\"}]");
+            softly.assertThat(tableModel.getRows()).isEmpty();
+            softly.assertThat(jobViewTable.getTableRows("jobs")).isEmpty();
+
+            List<TableColumn> tc = tableModel.getColumns();
+            softly.assertThat(tc.get(0).getHeaderLabel()).isEqualTo("Job Name");
+            softly.assertThat(tc.get(0).getDefinition()).isEqualTo("{\"data\": \"jobName\"}");
+            softly.assertThat(tc.get(0).getHeaderClass()).isEqualTo("");
+            softly.assertThat(tc.get(0).getWidth()).isEqualTo(1);
+
+            softly.assertThat(tc.get(1).getHeaderLabel()).isEqualTo("Status");
+            softly.assertThat(tc.get(1).getDefinition()).isEqualTo("{\"data\": \"jobStatus\"}");
+            softly.assertThat(tc.get(1).getHeaderClass()).isEqualTo("");
+            softly.assertThat(tc.get(1).getWidth()).isEqualTo(1);
+
+            softly.assertThat(tc.get(2).getHeaderLabel()).isEqualTo("Url");
+            softly.assertThat(tc.get(2).getDefinition()).isEqualTo("{\"data\": \"jobUrl\"}");
+            softly.assertThat(tc.get(2).getHeaderClass()).isEqualTo("");
+            softly.assertThat(tc.get(2).getWidth()).isEqualTo(1);
         });
     }
 

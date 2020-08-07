@@ -9,6 +9,9 @@ import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Job;
 import edu.hm.hafner.warningsngui.service.dto.Result;
 import edu.hm.hafner.warningsngui.service.table.build.BuildTableModel;
+import edu.hm.hafner.warningsngui.service.table.build.BuildViewTable;
+import io.jenkins.plugins.datatables.api.TableColumn;
+import io.jenkins.plugins.datatables.api.TableModel;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 
@@ -144,6 +147,32 @@ class BuildServiceTest {
                 softly.assertThat(buildsRow.getBuildNumber()).isEqualTo(i);
                 softly.assertThat(buildsRow.getBuildUrl()).isEqualTo(getUrlForBuildWithBuildNumber(i));
             }
+        });
+    }
+
+    @Test
+    void shouldCreateBuildViewTable() {
+        BuildEntityService buildEntityService = mock(BuildEntityService.class);
+        BuildService buildService = new BuildService(buildEntityService);
+
+        SoftAssertions.assertSoftly((softly) -> {
+            BuildViewTable buildViewTable = buildService.createBuildViewTable();
+            TableModel tableModel = buildViewTable.getTableModel("builds");
+            softly.assertThat(tableModel.getId()).isEqualTo("builds");
+            softly.assertThat(tableModel.getColumnsDefinition()).isEqualTo("[{\"data\": \"buildNumber\"},{\"data\": \"buildUrl\"}]");
+            softly.assertThat(tableModel.getRows()).isEmpty();
+            softly.assertThat(buildViewTable.getTableRows("builds")).isEmpty();
+
+            List<TableColumn> tc = tableModel.getColumns();
+            softly.assertThat(tc.get(0).getHeaderLabel()).isEqualTo("Build Number");
+            softly.assertThat(tc.get(0).getDefinition()).isEqualTo("{\"data\": \"buildNumber\"}");
+            softly.assertThat(tc.get(0).getHeaderClass()).isEqualTo("");
+            softly.assertThat(tc.get(0).getWidth()).isEqualTo(1);
+            
+            softly.assertThat(tc.get(1).getHeaderLabel()).isEqualTo("Url");
+            softly.assertThat(tc.get(1).getDefinition()).isEqualTo("{\"data\": \"buildUrl\"}");
+            softly.assertThat(tc.get(1).getHeaderClass()).isEqualTo("");
+            softly.assertThat(tc.get(1).getWidth()).isEqualTo(1);
         });
     }
 
