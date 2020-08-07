@@ -13,7 +13,7 @@
     <div class="container-fluid">
         <h1>Jobs</h1>
 
-        <!--/*@thymesVar id="jobViewTable" type="edu.hm.hafner.warningsngui.ui.table.job.JobViewTable"*/-->
+        <!--/*@thymesVar id="jobViewTable" type="edu.hm.hafner.warningsngui.service.table.job.JobViewTable"*/-->
         <div th:object="${jobViewTable}" class="table-responsive">
             <table class="table table-hover table-striped data-table"
                    th:data-columns-definition="${jobViewTable.getTableModel('jobs').columnsDefinition}" th:id="${jobViewTable.getTableModel('jobs').id}">

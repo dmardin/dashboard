@@ -4,7 +4,7 @@ import edu.hm.hafner.warningsngui.db.JobEntityService;
 import edu.hm.hafner.warningsngui.db.model.JobEntity;
 import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Job;
-import edu.hm.hafner.warningsngui.ui.table.job.JobTableModel;
+import edu.hm.hafner.warningsngui.service.table.job.JobTableModel;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 

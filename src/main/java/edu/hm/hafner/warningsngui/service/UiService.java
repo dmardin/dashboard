@@ -6,10 +6,14 @@ import edu.hm.hafner.echarts.LinesChartModel;
 import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Job;
 import edu.hm.hafner.warningsngui.service.dto.Result;
-import edu.hm.hafner.warningsngui.ui.echart.*;
-import edu.hm.hafner.warningsngui.ui.table.build.BuildViewTable;
-import edu.hm.hafner.warningsngui.ui.table.issue.IssueViewTable;
-import edu.hm.hafner.warningsngui.ui.table.job.JobViewTable;
+import edu.hm.hafner.warningsngui.service.echart.newvsfixedchart.NewVersusFixedAggregatedTrendChart;
+import edu.hm.hafner.warningsngui.service.echart.newvsfixedchart.NewVersusFixedTrendChart;
+import edu.hm.hafner.warningsngui.service.echart.resultchart.BarChartModel;
+import edu.hm.hafner.warningsngui.service.echart.resultchart.ResultChart;
+import edu.hm.hafner.warningsngui.service.echart.tooltrendchart.ToolTrendChart;
+import edu.hm.hafner.warningsngui.service.table.build.BuildViewTable;
+import edu.hm.hafner.warningsngui.service.table.issue.IssueViewTable;
+import edu.hm.hafner.warningsngui.service.table.job.JobViewTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,11 +1,11 @@
 package edu.hm.hafner.warningsngui.service;
 
 import edu.hm.hafner.warningsngui.db.JobEntityService;
-import edu.hm.hafner.warningsngui.db.mapper.Mapper;
 import edu.hm.hafner.warningsngui.db.model.JobEntity;
 import edu.hm.hafner.warningsngui.service.dto.Job;
-import edu.hm.hafner.warningsngui.ui.table.job.JobRepositoryStatistics;
-import edu.hm.hafner.warningsngui.ui.table.job.JobViewTable;
+import edu.hm.hafner.warningsngui.service.mapper.Mapper;
+import edu.hm.hafner.warningsngui.service.table.job.JobRepositoryStatistics;
+import edu.hm.hafner.warningsngui.service.table.job.JobViewTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

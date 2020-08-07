@@ -2,7 +2,6 @@ package edu.hm.hafner.warningsngui.service;
 
 import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Job;
-import edu.hm.hafner.warningsngui.service.schedule.AppStartupRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

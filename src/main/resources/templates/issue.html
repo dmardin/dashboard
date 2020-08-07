@@ -16,7 +16,7 @@
     <div class="container-fluid">
         <h1>Issues</h1>
 
-        <!--/*@thymesVar id="issueViewTable" type="edu.hm.hafner.warningsngui.ui.table.issue.IssueViewTable"*/-->
+        <!--/*@thymesVar id="issueViewTable" type="edu.hm.hafner.warningsngui.service.table.issue.IssueViewTable"*/-->
         <div th:object="${issueViewTable}" class="table-responsive">
             <table class="table table-hover table-striped data-table"
                    th:data-columns-definition="${issueViewTable.getTableModel('issues').columnsDefinition}" th:id="${issueViewTable.getTableModel('issues').id}">
