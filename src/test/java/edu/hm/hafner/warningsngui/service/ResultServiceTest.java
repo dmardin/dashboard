@@ -9,8 +9,8 @@ import edu.hm.hafner.warningsngui.service.dto.Build;
 import edu.hm.hafner.warningsngui.service.dto.Job;
 import edu.hm.hafner.warningsngui.service.dto.Result;
 import edu.hm.hafner.warningsngui.service.table.issue.IssueViewTable;
-import io.jenkins.plugins.datatables.api.TableColumn;
-import io.jenkins.plugins.datatables.api.TableModel;
+import io.jenkins.plugins.datatables.TableColumn;
+import io.jenkins.plugins.datatables.TableModel;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.Test;
 

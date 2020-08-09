@@ -1,8 +1,8 @@
 package edu.hm.hafner.warningsngui.service.table.job;
 
 import edu.hm.hafner.warningsngui.service.dto.Job;
-import io.jenkins.plugins.datatables.api.TableColumn;
-import io.jenkins.plugins.datatables.api.TableModel;
+import io.jenkins.plugins.datatables.TableColumn;
+import io.jenkins.plugins.datatables.TableModel;
 
 import java.util.ArrayList;
 import java.util.List;
