@@ -51,15 +51,6 @@ class JobService {
         return null;
     }
 
-//    /**
-//     * Fetches all jobs from database and converts it to the needed format of table rows.
-//     *
-//     * @return prepared table rows
-//     */
-//    public List<Object> prepareRowsForJobViewTable(){
-//        return convertRowsForTheJobViewTable(getAllJobs());
-//    }
-
     /**
      * Saves a given list of {@link Job}.
      *
