@@ -45,19 +45,6 @@
 	</properties>
 
 	<dependencies>
-		<!-- Analysis Model -->
-		<dependency>
-			<groupId>io.jenkins.plugins</groupId>
-			<artifactId>analysis-model-api</artifactId>
-			<version>${analysis-model.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-nop</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
 		<!-- Webjars & Model for ECharts and DataTables -->
 		<dependency>
 			<groupId>org.webjars</groupId>
@@ -152,6 +139,19 @@
 			<artifactId>assertj-core</artifactId>
 			<version>${assertj-core.version}</version>
 			<scope>test</scope>
+		</dependency>
+
+		<!-- Analysis Model -->
+		<dependency>
+			<groupId>io.jenkins.plugins</groupId>
+			<artifactId>analysis-model-api</artifactId>
+			<version>${analysis-model.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-nop</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 	</dependencies>
 
