@@ -9,14 +9,14 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>edu.hm.hafner</groupId>
-	<artifactId>warnings-ng-ui</artifactId>
+	<artifactId>dashboard</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>warnings-ng-ui</name>
+	<name>dashboard</name>
 	<description>
 		This project is depending on the Jenkins Warnings Next Generation Plugin and
 		is used to display the results of static analysis tools.
 	</description>
-	<url>https://github.com/dmardin/warnings-ng-ui</url>
+	<url>https://github.com/dmardin/dashboard</url>
 
 	<properties>
 		<java.version>1.8</java.version>
