@@ -1,4 +1,4 @@
-# Warnings Next Generation UI
+# Dashboard for the Warnings Next Generation Plugin
 This project is depending on the [Jenkins Warnings Next Generation Plugin](https://github.com/jenkinsci/warnings-ng-plugin) and is used to display the results of static analysis tools.
 
 ## Preparation
@@ -11,7 +11,7 @@ This project is depending on the [Jenkins Warnings Next Generation Plugin](https
   ```
 - Setup database
   - Setup MySQL database with Docker
-    - navigate to [resources](https://github.com/dmardin/warnings-ng-ui/tree/master/src/main/resources) with a terminal
+    - navigate to [resources](https://github.com/dmardin/dashboard/tree/master/src/main/resources) with a terminal
     - start docker by running the following command
     ```
     docker-compose -f docker-compose-mysql.yml up -d
@@ -27,5 +27,5 @@ This project is depending on the [Jenkins Warnings Next Generation Plugin](https
   
     
 ## Run the Application
-- Select the [WarningsNgUiApplication.java](https://github.com/dmardin/warnings-ng-ui/blob/master/src/main/java/edu/hm/hafner/warningsngui/WarningsNgUiApplication.java) in IntelliJ and execute the command ```Run WarningsNgUiApplication```
+- Select the [DashboardApplication.java](https://github.com/dmardin/dashboard/blob/master/src/main/java/edu/hm/hafner/dashboard/DashboardApplication.java) in IntelliJ and execute the command ```Run WarningsNgUiApplication```
 - When the info messages **Requested data saved to database** appears, open the url http://localhost:8181 in the Browser
