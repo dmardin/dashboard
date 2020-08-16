@@ -67,25 +67,6 @@ class BuildServiceTest {
         });
     }
 
-//    @Test
-//    void shouldCreateBuildResult() {
-//        BuildEntityService buildEntityService = mock(BuildEntityService.class);
-//        BuildService buildService = new BuildService(buildEntityService);
-//
-//        SoftAssertions.assertSoftly((softly) -> {
-//            Job job = createJobWithBuildsAndResults();
-//            List<BuildResult<Build>> buildResults = buildService.createBuildResults(job);
-//            for (int i = 0; i < buildResults.size(); i++) {
-//                BuildResult<Build> buildBuildResult = buildResults.get(i);
-//                softly.assertThat(buildBuildResult.getBuild().getDisplayName()).isEqualTo("#" + i);
-//                softly.assertThat(buildBuildResult.getBuild().getNumber()).isEqualTo(i);
-//                softly.assertThat(buildBuildResult.getBuild().getBuildTime()).isEqualTo(0); //TODO BuildTime
-//                softly.assertThat(buildBuildResult.getResult()).isEqualTo(createBuildWithResults(i, i, JOB_NAME, NUMBER_OF_RESULTS));
-//            }
-//        });
-//    }
-
-
     @Test
     void shouldCreateBuildResultForTool() {
         BuildEntityService buildEntityService = mock(BuildEntityService.class);
@@ -120,19 +101,19 @@ class BuildServiceTest {
             BuildViewTable buildViewTable = buildService.createBuildViewTable();
             TableModel tableModel = buildViewTable.getTableModel("builds");
             softly.assertThat(tableModel.getId()).isEqualTo("builds");
-            softly.assertThat(tableModel.getColumnsDefinition()).isEqualTo("[{\"data\": \"buildNumber\"},{\"data\": \"buildUrl\"}]");
+            softly.assertThat(tableModel.getColumnsDefinition()).isEqualTo("[{  \"data\": \"buildNumber\",  \"defaultContent\": \"\"},{  \"data\": \"buildUrl\",  \"defaultContent\": \"\"}]");
             softly.assertThat(tableModel.getRows()).isEmpty();
             softly.assertThat(buildViewTable.getTableRows("builds")).isEmpty();
 
             List<TableColumn> tc = tableModel.getColumns();
             softly.assertThat(tc.size()).isEqualTo(2);
             softly.assertThat(tc.get(0).getHeaderLabel()).isEqualTo("Build Number");
-            softly.assertThat(tc.get(0).getDefinition()).isEqualTo("{\"data\": \"buildNumber\"}");
+            softly.assertThat(tc.get(0).getDefinition()).isEqualTo("{  \"data\": \"buildNumber\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(0).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(0).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(1).getHeaderLabel()).isEqualTo("Url");
-            softly.assertThat(tc.get(1).getDefinition()).isEqualTo("{\"data\": \"buildUrl\"}");
+            softly.assertThat(tc.get(1).getDefinition()).isEqualTo("{  \"data\": \"buildUrl\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(1).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(1).getWidth()).isEqualTo(1);
         });

@@ -604,7 +604,6 @@ class MapperTest {
             IssuesResponse.Issue issueFromIssuesResponse = createIssueFromIssuesResponse(1);
             Issue issue = Mapper.map(issueFromIssuesResponse);
             softly.assertThat(issue).isEqualTo(createIssue(1));
-
         });
     }
 

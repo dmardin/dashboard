@@ -71,7 +71,6 @@ class AppStartupServiceTest {
             Job job = createJobWithBuilds();
             when(buildService.getLatestBuild(job)).thenReturn(createBuild(NUMBER_OF_BUILDS));
             softly.assertThat(appStartupService.getLatestBuildNumberFromJob(job)).isEqualTo(NUMBER_OF_BUILDS);
-
         });
     }
 

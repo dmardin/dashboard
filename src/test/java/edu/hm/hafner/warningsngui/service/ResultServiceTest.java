@@ -153,54 +153,54 @@ class ResultServiceTest {
             IssueViewTable issueViewTable = resultService.createIssueViewTable();
             TableModel tableModel = issueViewTable.getTableModel("issues");
             softly.assertThat(tableModel.getId()).isEqualTo("issues");
-            softly.assertThat(tableModel.getColumnsDefinition()).isEqualTo("[{\"data\": \"category\"},{\"data\": \"moduleName\"},{\"data\": \"package\"},{\"data\": \"fileName\"},{\"data\": \"type\"},{\"data\": \"severity\"},{\"data\": \"reference\"},{\"data\": \"line\"},{\"data\": \"column\"}]");
+            softly.assertThat(tableModel.getColumnsDefinition()).isEqualTo("[{  \"data\": \"category\",  \"defaultContent\": \"\"},{  \"data\": \"moduleName\",  \"defaultContent\": \"\"},{  \"data\": \"package\",  \"defaultContent\": \"\"},{  \"data\": \"fileName\",  \"defaultContent\": \"\"},{  \"data\": \"type\",  \"defaultContent\": \"\"},{  \"data\": \"severity\",  \"defaultContent\": \"\"},{  \"data\": \"reference\",  \"defaultContent\": \"\"},{  \"data\": \"line\",  \"defaultContent\": \"\"},{  \"data\": \"column\",  \"defaultContent\": \"\"}]");
             softly.assertThat(tableModel.getRows()).isEmpty();
             softly.assertThat(issueViewTable.getTableRows("issues")).isEmpty();
 
             List<TableColumn> tc = tableModel.getColumns();
             softly.assertThat(tc.size()).isEqualTo(9);
             softly.assertThat(tc.get(0).getHeaderLabel()).isEqualTo("Category");
-            softly.assertThat(tc.get(0).getDefinition()).isEqualTo("{\"data\": \"category\"}");
+            softly.assertThat(tc.get(0).getDefinition()).isEqualTo("{  \"data\": \"category\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(0).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(0).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(1).getHeaderLabel()).isEqualTo("ModuleName");
-            softly.assertThat(tc.get(1).getDefinition()).isEqualTo("{\"data\": \"moduleName\"}");
+            softly.assertThat(tc.get(1).getDefinition()).isEqualTo("{  \"data\": \"moduleName\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(1).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(1).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(2).getHeaderLabel()).isEqualTo("Package");
-            softly.assertThat(tc.get(2).getDefinition()).isEqualTo("{\"data\": \"package\"}");
+            softly.assertThat(tc.get(2).getDefinition()).isEqualTo("{  \"data\": \"package\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(2).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(2).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(3).getHeaderLabel()).isEqualTo("File");
-            softly.assertThat(tc.get(3).getDefinition()).isEqualTo("{\"data\": \"fileName\"}");
+            softly.assertThat(tc.get(3).getDefinition()).isEqualTo("{  \"data\": \"fileName\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(3).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(3).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(4).getHeaderLabel()).isEqualTo("Type");
-            softly.assertThat(tc.get(4).getDefinition()).isEqualTo("{\"data\": \"type\"}");
+            softly.assertThat(tc.get(4).getDefinition()).isEqualTo("{  \"data\": \"type\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(4).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(4).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(5).getHeaderLabel()).isEqualTo("Severity");
-            softly.assertThat(tc.get(5).getDefinition()).isEqualTo("{\"data\": \"severity\"}");
+            softly.assertThat(tc.get(5).getDefinition()).isEqualTo("{  \"data\": \"severity\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(5).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(5).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(6).getHeaderLabel()).isEqualTo("Reference");
-            softly.assertThat(tc.get(6).getDefinition()).isEqualTo("{\"data\": \"reference\"}");
+            softly.assertThat(tc.get(6).getDefinition()).isEqualTo("{  \"data\": \"reference\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(6).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(6).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(7).getHeaderLabel()).isEqualTo("Line");
-            softly.assertThat(tc.get(7).getDefinition()).isEqualTo("{\"data\": \"line\"}");
+            softly.assertThat(tc.get(7).getDefinition()).isEqualTo("{  \"data\": \"line\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(7).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(7).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(8).getHeaderLabel()).isEqualTo("Column");
-            softly.assertThat(tc.get(8).getDefinition()).isEqualTo("{\"data\": \"column\"}");
+            softly.assertThat(tc.get(8).getDefinition()).isEqualTo("{  \"data\": \"column\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(8).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(8).getWidth()).isEqualTo(1);
         });

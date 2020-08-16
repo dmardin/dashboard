@@ -77,28 +77,6 @@ class JobServiceTest {
     }
 
     @Test
-    void shouldPrepareRowsForJobViewTable() {
-//        JobEntityService jobEntityService = mock(JobEntityService.class);
-//        JobService jobService = new JobService(jobEntityService);
-//        SoftAssertions.assertSoftly((softly) -> {
-//            when(jobEntityService.findAll()).thenReturn(new ArrayList<>());
-//            List<Object> objects = jobService.prepareRowsForJobViewTable();
-//            softly.assertThat(objects).isEmpty();
-//
-//            when(jobEntityService.findAll()).thenReturn(createJobEntities());
-//            objects = jobService.prepareRowsForJobViewTable();
-//            softly.assertThat(objects).hasSize(NUMBER_OF_JOBS);
-//            softly.assertThat(objects).isInstanceOf(List.class);
-//            for (int i = 0; i < NUMBER_OF_JOBS; i++) {
-//                JobTableModel.JobsRow jobsRow = (JobTableModel.JobsRow) objects.get(i);
-//                softly.assertThat(jobsRow.getJobName()).isEqualTo(getJobNameForNumber(i));
-//                softly.assertThat(jobsRow.getJobUrl()).isEqualTo(getUrlForNumber(i));
-//                softly.assertThat(jobsRow.getJobStatus()).isEqualTo(SUCCESS);
-//            }
-//        });
-    }
-
-    @Test
     void shouldSaveAllJobs() {
         JobEntityService jobEntityService = mock(JobEntityService.class);
         JobService jobService = new JobService(jobEntityService);
@@ -123,24 +101,24 @@ class JobServiceTest {
             JobViewTable jobViewTable = jobService.createJobViewTable();
             TableModel tableModel = jobViewTable.getTableModel("jobs");
             softly.assertThat(tableModel.getId()).isEqualTo("jobs");
-            softly.assertThat(tableModel.getColumnsDefinition()).isEqualTo("[{\"data\": \"jobName\"},{\"data\": \"jobStatus\"},{\"data\": \"jobUrl\"}]");
+            softly.assertThat(tableModel.getColumnsDefinition()).isEqualTo("[{  \"data\": \"jobName\",  \"defaultContent\": \"\"},{  \"data\": \"jobStatus\",  \"defaultContent\": \"\"},{  \"data\": \"jobUrl\",  \"defaultContent\": \"\"}]");
             softly.assertThat(tableModel.getRows()).isEmpty();
             softly.assertThat(jobViewTable.getTableRows("jobs")).isEmpty();
 
             List<TableColumn> tc = tableModel.getColumns();
             softly.assertThat(tc.size()).isEqualTo(3);
             softly.assertThat(tc.get(0).getHeaderLabel()).isEqualTo("Job Name");
-            softly.assertThat(tc.get(0).getDefinition()).isEqualTo("{\"data\": \"jobName\"}");
+            softly.assertThat(tc.get(0).getDefinition()).isEqualTo("{  \"data\": \"jobName\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(0).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(0).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(1).getHeaderLabel()).isEqualTo("Status");
-            softly.assertThat(tc.get(1).getDefinition()).isEqualTo("{\"data\": \"jobStatus\"}");
+            softly.assertThat(tc.get(1).getDefinition()).isEqualTo("{  \"data\": \"jobStatus\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(1).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(1).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(2).getHeaderLabel()).isEqualTo("Url");
-            softly.assertThat(tc.get(2).getDefinition()).isEqualTo("{\"data\": \"jobUrl\"}");
+            softly.assertThat(tc.get(2).getDefinition()).isEqualTo("{  \"data\": \"jobUrl\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(2).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(2).getWidth()).isEqualTo(1);
         });

@@ -58,24 +58,24 @@ class UiServiceTest {
 
             TableModel tableModel = jobViewTable.getTableModel("jobs");
             softly.assertThat(tableModel.getId()).isEqualTo("jobs");
-            softly.assertThat(tableModel.getColumnsDefinition()).isEqualTo("[{\"data\": \"jobName\"},{\"data\": \"jobStatus\"},{\"data\": \"jobUrl\"}]");
+            softly.assertThat(tableModel.getColumnsDefinition()).isEqualTo("[{  \"data\": \"jobName\",  \"defaultContent\": \"\"},{  \"data\": \"jobStatus\",  \"defaultContent\": \"\"},{  \"data\": \"jobUrl\",  \"defaultContent\": \"\"}]");
             softly.assertThat(tableModel.getRows()).isEmpty();
             softly.assertThat(jobViewTable.getTableRows("jobs")).isEmpty();
 
             List<TableColumn> tc = tableModel.getColumns();
             softly.assertThat(tc.size()).isEqualTo(3);
             softly.assertThat(tc.get(0).getHeaderLabel()).isEqualTo("Job Name");
-            softly.assertThat(tc.get(0).getDefinition()).isEqualTo("{\"data\": \"jobName\"}");
+            softly.assertThat(tc.get(0).getDefinition()).isEqualTo("{  \"data\": \"jobName\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(0).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(0).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(1).getHeaderLabel()).isEqualTo("Status");
-            softly.assertThat(tc.get(1).getDefinition()).isEqualTo("{\"data\": \"jobStatus\"}");
+            softly.assertThat(tc.get(1).getDefinition()).isEqualTo("{  \"data\": \"jobStatus\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(1).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(1).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(2).getHeaderLabel()).isEqualTo("Url");
-            softly.assertThat(tc.get(2).getDefinition()).isEqualTo("{\"data\": \"jobUrl\"}");
+            softly.assertThat(tc.get(2).getDefinition()).isEqualTo("{  \"data\": \"jobUrl\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(2).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(2).getWidth()).isEqualTo(1);
         });
@@ -94,19 +94,19 @@ class UiServiceTest {
 
             TableModel tableModel = buildViewTable.getTableModel("builds");
             softly.assertThat(tableModel.getId()).isEqualTo("builds");
-            softly.assertThat(tableModel.getColumnsDefinition()).isEqualTo("[{\"data\": \"buildNumber\"},{\"data\": \"buildUrl\"}]");
+            softly.assertThat(tableModel.getColumnsDefinition()).isEqualTo("[{  \"data\": \"buildNumber\",  \"defaultContent\": \"\"},{  \"data\": \"buildUrl\",  \"defaultContent\": \"\"}]");
             softly.assertThat(tableModel.getRows()).isEmpty();
             softly.assertThat(buildViewTable.getTableRows("builds")).isEmpty();
 
             List<TableColumn> tc = tableModel.getColumns();
             softly.assertThat(tc.size()).isEqualTo(2);
             softly.assertThat(tc.get(0).getHeaderLabel()).isEqualTo("Build Number");
-            softly.assertThat(tc.get(0).getDefinition()).isEqualTo("{\"data\": \"buildNumber\"}");
+            softly.assertThat(tc.get(0).getDefinition()).isEqualTo("{  \"data\": \"buildNumber\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(0).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(0).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(1).getHeaderLabel()).isEqualTo("Url");
-            softly.assertThat(tc.get(1).getDefinition()).isEqualTo("{\"data\": \"buildUrl\"}");
+            softly.assertThat(tc.get(1).getDefinition()).isEqualTo("{  \"data\": \"buildUrl\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(1).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(1).getWidth()).isEqualTo(1);
         });
@@ -125,61 +125,61 @@ class UiServiceTest {
 
             TableModel tableModel = issueViewTable.getTableModel("issues");
             softly.assertThat(tableModel.getId()).isEqualTo("issues");
-            softly.assertThat(tableModel.getColumnsDefinition()).isEqualTo("[{\"data\": \"category\"},{\"data\": \"moduleName\"},{\"data\": \"package\"},{\"data\": \"fileName\"},{\"data\": \"type\"},{\"data\": \"severity\"},{\"data\": \"reference\"},{\"data\": \"line\"},{\"data\": \"column\"}]");
+            softly.assertThat(tableModel.getColumnsDefinition()).isEqualTo("[{  \"data\": \"category\",  \"defaultContent\": \"\"},{  \"data\": \"moduleName\",  \"defaultContent\": \"\"},{  \"data\": \"package\",  \"defaultContent\": \"\"},{  \"data\": \"fileName\",  \"defaultContent\": \"\"},{  \"data\": \"type\",  \"defaultContent\": \"\"},{  \"data\": \"severity\",  \"defaultContent\": \"\"},{  \"data\": \"reference\",  \"defaultContent\": \"\"},{  \"data\": \"line\",  \"defaultContent\": \"\"},{  \"data\": \"column\",  \"defaultContent\": \"\"}]");
             softly.assertThat(tableModel.getRows()).isEmpty();
             softly.assertThat(issueViewTable.getTableRows("issues")).isEmpty();
 
             List<TableColumn> tc = tableModel.getColumns();
             softly.assertThat(tc.size()).isEqualTo(9);
             softly.assertThat(tc.get(0).getHeaderLabel()).isEqualTo("Category");
-            softly.assertThat(tc.get(0).getDefinition()).isEqualTo("{\"data\": \"category\"}");
+            softly.assertThat(tc.get(0).getDefinition()).isEqualTo("{  \"data\": \"category\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(0).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(0).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(1).getHeaderLabel()).isEqualTo("ModuleName");
-            softly.assertThat(tc.get(1).getDefinition()).isEqualTo("{\"data\": \"moduleName\"}");
+            softly.assertThat(tc.get(1).getDefinition()).isEqualTo("{  \"data\": \"moduleName\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(1).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(1).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(2).getHeaderLabel()).isEqualTo("Package");
-            softly.assertThat(tc.get(2).getDefinition()).isEqualTo("{\"data\": \"package\"}");
+            softly.assertThat(tc.get(2).getDefinition()).isEqualTo("{  \"data\": \"package\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(2).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(2).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(3).getHeaderLabel()).isEqualTo("File");
-            softly.assertThat(tc.get(3).getDefinition()).isEqualTo("{\"data\": \"fileName\"}");
+            softly.assertThat(tc.get(3).getDefinition()).isEqualTo("{  \"data\": \"fileName\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(3).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(3).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(4).getHeaderLabel()).isEqualTo("Type");
-            softly.assertThat(tc.get(4).getDefinition()).isEqualTo("{\"data\": \"type\"}");
+            softly.assertThat(tc.get(4).getDefinition()).isEqualTo("{  \"data\": \"type\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(4).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(4).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(5).getHeaderLabel()).isEqualTo("Severity");
-            softly.assertThat(tc.get(5).getDefinition()).isEqualTo("{\"data\": \"severity\"}");
+            softly.assertThat(tc.get(5).getDefinition()).isEqualTo("{  \"data\": \"severity\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(5).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(5).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(6).getHeaderLabel()).isEqualTo("Reference");
-            softly.assertThat(tc.get(6).getDefinition()).isEqualTo("{\"data\": \"reference\"}");
+            softly.assertThat(tc.get(6).getDefinition()).isEqualTo("{  \"data\": \"reference\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(6).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(6).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(7).getHeaderLabel()).isEqualTo("Line");
-            softly.assertThat(tc.get(7).getDefinition()).isEqualTo("{\"data\": \"line\"}");
+            softly.assertThat(tc.get(7).getDefinition()).isEqualTo("{  \"data\": \"line\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(7).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(7).getWidth()).isEqualTo(1);
 
             softly.assertThat(tc.get(8).getHeaderLabel()).isEqualTo("Column");
-            softly.assertThat(tc.get(8).getDefinition()).isEqualTo("{\"data\": \"column\"}");
+            softly.assertThat(tc.get(8).getDefinition()).isEqualTo("{  \"data\": \"column\",  \"defaultContent\": \"\"}");
             softly.assertThat(tc.get(8).getHeaderClass()).isEqualTo("");
             softly.assertThat(tc.get(8).getWidth()).isEqualTo(1);
         });
     }
 
     @Test
-    void prepareRowsForJobViewTable() {
+    void shouldPrepareRowsForJobViewTable() {
         JobEntityService jobEntityService = mock(JobEntityService.class);
         JobService jobService = new JobService(jobEntityService);
         BuildService buildService = mock(BuildService.class);
@@ -206,7 +206,7 @@ class UiServiceTest {
     }
 
     @Test
-    void getUsedToolsFromLastBuild() {
+    void shouldGetUsedToolsFromLastBuild() {
         JobService jobService = mock(JobService.class);
         BuildEntityService buildEntityService = mock(BuildEntityService.class);
         BuildService buildService = new BuildService(buildEntityService);
@@ -270,7 +270,7 @@ class UiServiceTest {
     }
 
     @Test
-    void getTrendChartForTool() {
+    void shouldGetTrendChartForTool() {
         BuildEntityService buildEntityService = mock(BuildEntityService.class);
         BuildService buildService = new BuildService(buildEntityService);
         JobService jobService = mock(JobService.class);
@@ -306,7 +306,7 @@ class UiServiceTest {
     }
 
     @Test
-    void getNewVersusFixedTrendChartForTool() {
+    void shouldGetNewVersusFixedTrendChartForTool() {
         BuildEntityService buildEntityService = mock(BuildEntityService.class);
         BuildService buildService = new BuildService(buildEntityService);
         JobService jobService = mock(JobService.class);
@@ -350,7 +350,7 @@ class UiServiceTest {
     }
 
     @Test
-    void getResultSummarize() {
+    void shouldGetResultSummarize() {
         BuildEntityService buildEntityService = mock(BuildEntityService.class);
         BuildService buildService = new BuildService(buildEntityService);
         JobService jobService = mock(JobService.class);
@@ -361,7 +361,6 @@ class UiServiceTest {
         when(jobService.findJobByName(job.getName())).thenReturn(job);
         SoftAssertions.assertSoftly((softly) -> {
             BarChartModel barChartModel = uiService.getResultSummarize(job.getName(), 1, "toolId" + 1);
-            //softly.assertThat(barChartModel.getDomainAxisLabels()).isEqualTo(Arrays.asList("#0", "#1", "#2","#3","#4"));
             softly.assertThat(barChartModel.getSeries().get(0).getData()).isEqualTo(Collections.singletonList(13));
             softly.assertThat(barChartModel.getSeries().get(0).getName()).isEqualTo("Old Total Size");
             softly.assertThat(barChartModel.getSeries().get(1).getData()).isEqualTo(Collections.singletonList(10));
@@ -378,7 +377,7 @@ class UiServiceTest {
     }
 
     @Test
-    void getIssuesDataForToolWithTotalSize() {
+    void shouldGetIssuesDataForToolWithTotalSize() {
         BuildEntityService buildEntityService = mock(BuildEntityService.class);
         BuildService buildService = new BuildService(buildEntityService);
         JobService jobService = mock(JobService.class);
@@ -400,7 +399,7 @@ class UiServiceTest {
     }
 
     @Test
-    void getIssuesDataForToolWithIssueType() {
+    void shouldGetIssuesDataForToolWithIssueType() {
         BuildEntityService buildEntityService = mock(BuildEntityService.class);
         BuildService buildService = new BuildService(buildEntityService);
         JobService jobService = mock(JobService.class);
@@ -433,7 +432,7 @@ class UiServiceTest {
     }
 
     @Test
-    void getInfoMessagesAndErrorMessagesFromResultWithToolId() {
+    void shouldGetInfoMessagesAndErrorMessagesFromResultWithToolId() {
         JobService jobService = mock(JobService.class);
         BuildService buildService = mock(BuildService.class);
         ResultService resultService = mock(ResultService.class);
@@ -642,5 +641,4 @@ class UiServiceTest {
                 .setType("type" + issueCounter)
                 .build();
     }
-
 }
