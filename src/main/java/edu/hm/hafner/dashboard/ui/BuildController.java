@@ -7,10 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,8 +39,12 @@ public class BuildController {
      * @return the build page
      */
     @RequestMapping(path={"/job/{jobName}/build"}, method= RequestMethod.GET)
-    public String getBuilds(@PathVariable("jobName") String jobName, final Model model) {
+    public String getBuilds(@PathVariable("jobName") String jobName, final Model model, @RequestParam(required = false) boolean fetchData) {
         logger.info("getBuilds is called");
+        if(fetchData){
+            logger.info("fetching new data..");
+            uiService.fetchData();
+        }
         model.addAttribute("usedTools", uiService.getUsedToolsFromLastBuild(jobName));
         model.addAttribute("buildViewTable", uiService.createBuildViewTable());
 

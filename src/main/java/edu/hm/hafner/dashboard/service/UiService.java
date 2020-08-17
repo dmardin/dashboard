@@ -15,6 +15,7 @@ import edu.hm.hafner.echarts.BuildResult;
 import edu.hm.hafner.echarts.ChartModelConfiguration;
 import edu.hm.hafner.echarts.LinesChartModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.DefaultApplicationArguments;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class UiService {
     private final JobService jobService;
     private final BuildService buildService;
     private final ResultService resultService;
+    private final AppStartupRunner appStartupRunner;
 
     /**
      * Creates a new instance of {@link UiService}.
@@ -38,10 +40,11 @@ public class UiService {
      * @param resultService the service for the results
      */
     @Autowired
-    public UiService(JobService jobService, BuildService buildService, ResultService resultService) {
+    public UiService(JobService jobService, BuildService buildService, ResultService resultService, AppStartupRunner appStartupRunner) {
         this.jobService = jobService;
         this.buildService = buildService;
         this.resultService = resultService;
+        this.appStartupRunner = appStartupRunner;
     }
 
     /**
@@ -244,5 +247,9 @@ public class UiService {
      */
     public List<String> getErrorMessagesFromResultWithToolId(Build build, String toolId) {
         return resultService.getErrorMessagesFromResultWithToolId(build, toolId);
+    }
+
+    public void fetchData() {
+        appStartupRunner.run(new DefaultApplicationArguments());
     }
 }

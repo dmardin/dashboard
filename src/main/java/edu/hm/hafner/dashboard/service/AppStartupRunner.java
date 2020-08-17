@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 /**
@@ -59,12 +60,16 @@ public class AppStartupRunner implements ApplicationRunner {
                 BuildsResponse buildsResponse = restService.getBuilds(job.getUrl() + API_JSON);
                 Job fetchedJob = appStartupService.findJobByName(job.getName());
                 if (fetchedJob != null) {
-                    int buildNumberFromDatabaseJob = appStartupService.getLatestBuildNumberFromJob(fetchedJob);
-                    List<Build> newBuilds = Arrays.stream(buildsResponse.getBuilds()).filter(build -> build.getNumber() > buildNumberFromDatabaseJob).collect(Collectors.toList());
-                    if (!newBuilds.isEmpty()) {
-                        fetchedJob.setLastBuildStatus(getBuildStatusFromColor(job.getColor()));
-                        addBuildsToJob(fetchedJob, newBuilds);
-                        appStartupService.saveNewBuildsFromJob(fetchedJob, newBuilds);
+                    try{
+                        int buildNumberFromDatabaseJob = appStartupService.getLatestBuildNumberFromJob(fetchedJob);
+                        List<Build> newBuilds = Arrays.stream(buildsResponse.getBuilds()).filter(build -> build.getNumber() > buildNumberFromDatabaseJob).collect(Collectors.toList());
+                        if (!newBuilds.isEmpty()) {
+                            fetchedJob.setLastBuildStatus(getBuildStatusFromColor(job.getColor()));
+                            addBuildsToJob(fetchedJob, newBuilds);
+                            appStartupService.saveNewBuildsFromJob(fetchedJob, newBuilds);
+                        }
+                    } catch (NoSuchElementException noSuchElementException) {
+                        logger.warn("There are no Builds for: " + fetchedJob.getName());
                     }
                 } else {
                     job.setLastBuildStatus(getBuildStatusFromColor(job.getColor()));
@@ -77,7 +82,7 @@ public class AppStartupRunner implements ApplicationRunner {
             }
             logger.info("Requested data saved to database");
         } else {
-            logger.warn("Application starting without fetching any data..");
+            logger.warn("Application can not fetching any data..");
         }
     }
 

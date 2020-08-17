@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * Provides the Controller to display the error and info messages.
@@ -45,8 +46,13 @@ public class MessageController {
             @PathVariable("jobName") String jobName,
             @PathVariable("buildNumber") Integer buildNumber,
             @PathVariable("toolId") String toolId,
-            final Model model) {
+            final Model model,
+            @RequestParam(required = false) boolean fetchData) {
         logger.info("getInfoAndErrorMessages is called");
+        if(fetchData){
+            logger.info("fetching new data..");
+            uiService.fetchData();
+        }
         Build build = uiService.getBuildWithBuildNumberFromJob(jobName, buildNumber);
         model.addAttribute("infoMessages", uiService.getInfoMessagesFromResultWithToolId(build, toolId));
         model.addAttribute("errorMessages", uiService.getErrorMessagesFromResultWithToolId(build, toolId));

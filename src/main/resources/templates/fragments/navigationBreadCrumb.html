@@ -5,7 +5,10 @@
     <title></title>
 </head>
 <body>
-<nav th:fragment="nav(breadcrumb)" aria-label="breadcrumb">
+<nav class="nav-container" th:fragment="nav(breadcrumb)" aria-label="breadcrumb">
+    <form action="">
+        <button class="btn btn-sm btn-outline-primary" name="fetchData" value="true"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+    </form>
     <ol class="breadcrumb" th:replace="${breadcrumb}">
         <li class="breadcrumb-item"><a href="/" th:text="#{jenkins}"></a></li>
     </ol>

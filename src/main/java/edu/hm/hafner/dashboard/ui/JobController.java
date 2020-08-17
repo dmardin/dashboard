@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -40,8 +41,12 @@ public class JobController {
      * @return the home page
      */
     @RequestMapping(path = {"/"}, method = RequestMethod.GET)
-    public String getJobHeaders(final Model model) {
+    public String getJobHeaders(final Model model, @RequestParam(required = false) boolean fetchData) {
         logger.info("getJobHeaders is called");
+        if(fetchData){
+            logger.info("fetching new data..");
+            uiService.fetchData();
+        }
         model.addAttribute("jobViewTable", uiService.createJobViewTable());
 
         return "home";

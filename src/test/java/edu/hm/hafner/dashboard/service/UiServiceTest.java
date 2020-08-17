@@ -50,8 +50,9 @@ class UiServiceTest {
         JobService jobService = mock(JobService.class);
         BuildService buildService = mock(BuildService.class);
         ResultService resultService = mock(ResultService.class);
+        AppStartupRunner appStartupRunner = mock(AppStartupRunner.class);
 
-        UiService uiService = new UiService(jobService, buildService, resultService);
+        UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         SoftAssertions.assertSoftly((softly) -> {
             when(jobService.createJobViewTable()).thenReturn(new JobViewTable(new JobRepositoryStatistics()));
             JobViewTable jobViewTable = uiService.createJobViewTable();
@@ -86,8 +87,9 @@ class UiServiceTest {
         JobService jobService = mock(JobService.class);
         BuildService buildService = mock(BuildService.class);
         ResultService resultService = mock(ResultService.class);
+        AppStartupRunner appStartupRunner = mock(AppStartupRunner.class);
 
-        UiService uiService = new UiService(jobService, buildService, resultService);
+        UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         SoftAssertions.assertSoftly((softly) -> {
             when(buildService.createBuildViewTable()).thenReturn(new BuildViewTable(new BuildRepositoryStatistics()));
             BuildViewTable buildViewTable = uiService.createBuildViewTable();
@@ -117,8 +119,9 @@ class UiServiceTest {
         JobService jobService = mock(JobService.class);
         BuildService buildService = mock(BuildService.class);
         ResultService resultService = mock(ResultService.class);
+        AppStartupRunner appStartupRunner = mock(AppStartupRunner.class);
 
-        UiService uiService = new UiService(jobService, buildService, resultService);
+        UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         SoftAssertions.assertSoftly((softly) -> {
             when(resultService.createIssueViewTable()).thenReturn(new IssueViewTable(new IssueRepositoryStatistics()));
             IssueViewTable issueViewTable = uiService.createIssueViewTable();
@@ -184,8 +187,9 @@ class UiServiceTest {
         JobService jobService = new JobService(jobEntityService);
         BuildService buildService = mock(BuildService.class);
         ResultService resultService = mock(ResultService.class);
+        AppStartupRunner appStartupRunner = mock(AppStartupRunner.class);
 
-        UiService uiService = new UiService(jobService, buildService, resultService);
+        UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         SoftAssertions.assertSoftly((softly) -> {
             when(jobEntityService.findAll()).thenReturn(new ArrayList<>());
             List<Object> objects = uiService.prepareRowsForJobViewTable();
@@ -211,8 +215,9 @@ class UiServiceTest {
         BuildEntityService buildEntityService = mock(BuildEntityService.class);
         BuildService buildService = new BuildService(buildEntityService);
         ResultService resultService = new ResultService();
+        AppStartupRunner appStartupRunner = mock(AppStartupRunner.class);
 
-        UiService uiService = new UiService(jobService, buildService, resultService);
+        UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         List<Job> jobs = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
             jobs.add(createJobWithBuildsAndResults(i));
@@ -235,8 +240,9 @@ class UiServiceTest {
         JobService jobService = mock(JobService.class);
         ResultService resultService = new ResultService();
         Job job = createJobWithBuildsAndResults(1);
+        AppStartupRunner appStartupRunner = mock(AppStartupRunner.class);
 
-        UiService uiService = new UiService(jobService, buildService, resultService);
+        UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         when(jobService.findJobByName(job.getName())).thenReturn(job);
         SoftAssertions.assertSoftly((softly) -> {
 
@@ -255,8 +261,9 @@ class UiServiceTest {
         BuildService buildService = new BuildService(buildEntityService);
         JobService jobService = mock(JobService.class);
         ResultService resultService = new ResultService();
+        AppStartupRunner appStartupRunner = mock(AppStartupRunner.class);
 
-        UiService uiService = new UiService(jobService, buildService, resultService);
+        UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         Job job = createJobWithBuildsAndResults(1);
         when(jobService.findJobByName(job.getName())).thenReturn(job);
         SoftAssertions.assertSoftly((softly) -> {
@@ -275,8 +282,9 @@ class UiServiceTest {
         BuildService buildService = new BuildService(buildEntityService);
         JobService jobService = mock(JobService.class);
         ResultService resultService = new ResultService();
+        AppStartupRunner appStartupRunner = mock(AppStartupRunner.class);
 
-        UiService uiService = new UiService(jobService, buildService, resultService);
+        UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         Job job = createJobWithBuildsAndResults(1);
         when(jobService.findJobByName(job.getName())).thenReturn(job);
         SoftAssertions.assertSoftly((softly) -> {
@@ -293,8 +301,9 @@ class UiServiceTest {
         BuildService buildService = new BuildService(buildEntityService);
         JobService jobService = mock(JobService.class);
         ResultService resultService = new ResultService();
+        AppStartupRunner appStartupRunner = mock(AppStartupRunner.class);
 
-        UiService uiService = new UiService(jobService, buildService, resultService);
+        UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         Job job = createJobWithBuildsAndResults(1);
         when(jobService.findJobByName(job.getName())).thenReturn(job);
         SoftAssertions.assertSoftly((softly) -> {
@@ -311,8 +320,9 @@ class UiServiceTest {
         BuildService buildService = new BuildService(buildEntityService);
         JobService jobService = mock(JobService.class);
         ResultService resultService = new ResultService();
+        AppStartupRunner appStartupRunner = mock(AppStartupRunner.class);
 
-        UiService uiService = new UiService(jobService, buildService, resultService);
+        UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         Job job = createJobWithBuildsAndResults(1);
         when(jobService.findJobByName(job.getName())).thenReturn(job);
         SoftAssertions.assertSoftly((softly) -> {
@@ -328,8 +338,9 @@ class UiServiceTest {
         BuildService buildService = new BuildService(buildEntityService);
         JobService jobService = mock(JobService.class);
         ResultService resultService = new ResultService();
+        AppStartupRunner appStartupRunner = mock(AppStartupRunner.class);
 
-        UiService uiService = new UiService(jobService, buildService, resultService);
+        UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         SoftAssertions.assertSoftly((softly) -> {
             Job jobWithoutBuilds = createJob(3);
             when(jobService.findJobByName(jobWithoutBuilds.getName())).thenThrow(new NoSuchElementException("Build number " + 3 + " for the Job " + getJobNameForNumber(3) + " not found"));
@@ -355,8 +366,9 @@ class UiServiceTest {
         BuildService buildService = new BuildService(buildEntityService);
         JobService jobService = mock(JobService.class);
         ResultService resultService = new ResultService();
+        AppStartupRunner appStartupRunner = mock(AppStartupRunner.class);
 
-        UiService uiService = new UiService(jobService, buildService, resultService);
+        UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         Job job = createJobWithBuildsAndResults(1);
         when(jobService.findJobByName(job.getName())).thenReturn(job);
         SoftAssertions.assertSoftly((softly) -> {
@@ -383,9 +395,10 @@ class UiServiceTest {
         JobService jobService = mock(JobService.class);
         ResultService resultService = new ResultService();
         Job job = createJobWithBuildsAndResults(1);
+        AppStartupRunner appStartupRunner = mock(AppStartupRunner.class);
 
+        UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         int buildNumber = 0;
-        UiService uiService = new UiService(jobService, buildService, resultService);
         when(jobService.findJobByName(job.getName())).thenReturn(job);
         SoftAssertions.assertSoftly((softly) -> {
             List<Object> report = uiService.getIssuesDataForToolWithTotalSize(job.getName(), buildNumber, "toolId" + buildNumber);
@@ -405,9 +418,10 @@ class UiServiceTest {
         JobService jobService = mock(JobService.class);
         ResultService resultService = new ResultService();
         Job job = createJobWithBuildsAndResults(1);
+        AppStartupRunner appStartupRunner = mock(AppStartupRunner.class);
+        UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
 
         int buildNumber = 0;
-        UiService uiService = new UiService(jobService, buildService, resultService);
         when(jobService.findJobByName(job.getName())).thenReturn(job);
         SoftAssertions.assertSoftly((softly) -> {
             for (WarningTypeEntity warningTypeEntity : WarningTypeEntity.values()) {
@@ -436,8 +450,9 @@ class UiServiceTest {
         JobService jobService = mock(JobService.class);
         BuildService buildService = mock(BuildService.class);
         ResultService resultService = mock(ResultService.class);
+        AppStartupRunner appStartupRunner = mock(AppStartupRunner.class);
 
-        UiService uiService = new UiService(jobService, buildService, resultService);
+        UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         Build build = createBuildWithResults(BUILD_NUMBER, BUILD_NUMBER, JOB_NAME, NUMBER_OF_RESULTS);
 
         SoftAssertions.assertSoftly((softly) -> {
@@ -458,8 +473,9 @@ class UiServiceTest {
         JobService jobService = mock(JobService.class);
         BuildService buildService = mock(BuildService.class);
         ResultService resultService = mock(ResultService.class);
+        AppStartupRunner appStartupRunner = mock(AppStartupRunner.class);
 
-        UiService uiService = new UiService(jobService, buildService, resultService);
+        UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         Job job = new Job(1, JOB_NAME, "http://localhost:8080/jenkins/job/" + JOB_NAME + "/", SUCCESS);
         Build build = createBuildWithResults(BUILD_NUMBER, BUILD_NUMBER, JOB_NAME, NUMBER_OF_RESULTS);
         job.addBuild(build);

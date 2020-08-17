@@ -6,10 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,7 +44,12 @@ public class IssueController {
             @PathVariable("jobName") String jobName,
             @PathVariable("buildNumber") Integer buildNumber,
             @PathVariable("toolId") String toolId,
-            final Model model) {
+            final Model model,
+            @RequestParam(required = false) boolean fetchData) {
+        if(fetchData){
+            logger.info("fetching new data..");
+            uiService.fetchData();
+        }
         model.addAttribute("issueViewTable", uiService.createIssueViewTable());
         model.addAttribute("toolId", toolId);
         model.addAttribute("toolIdWithIssueType", toolId);
