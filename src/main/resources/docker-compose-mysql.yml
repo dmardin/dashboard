@@ -3,16 +3,16 @@ version: '3'
 services:
     mysql:
         image: mysql
-        container_name: warnings_ng_data
+        container_name: dashboard_data
         environment: 
           MYSQL_ROOT_PASSWORD: password
-          MYSQL_DATABASE: warnings_ng_data
+          MYSQL_DATABASE: dashboard_data
           MYSQL_USER: user
           MYSQL_PASSWORD: password
         ports: 
           - 3306:3306
         volumes: 
-          - spring_boot_mysql_data:/var/lib/mysql
+          - dashboard_mysql_data:/var/lib/mysql
 
 volumes: 
-  spring_boot_mysql_data:
+  dashboard_mysql_data:
