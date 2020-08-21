@@ -71,10 +71,10 @@ class ResultServiceTest {
                 String notExistingToolId = "notExistingToolId" + i;
                 softly.assertThatThrownBy(() -> resultService.getInfoMessagesFromResultWithToolId(build, notExistingToolId))
                         .isInstanceOf(NoSuchElementException.class)
-                        .hasMessage("Result for the Job jobName with the build number1 and the tool id " + notExistingToolId + " not found");
+                        .hasMessage("Tool id "+ notExistingToolId + " for the Build "+build.getId()+" from the job "+ job.getName() + " not found");
                 softly.assertThatThrownBy(() -> resultService.getErrorMessagesFromResultWithToolId(build, notExistingToolId))
                         .isInstanceOf(NoSuchElementException.class)
-                        .hasMessage("Result for the Job jobName with the build number1 and the tool id " + notExistingToolId + " not found");
+                        .hasMessage("Tool id "+ notExistingToolId + " for the Build "+build.getId() + " from the job "+ job.getName() + " not found");
             }
         });
     }

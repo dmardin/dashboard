@@ -37,7 +37,7 @@ class ResultService {
      * @return the list of info messages
      */
     public List<String> getInfoMessagesFromResultWithToolId(Build build, String toolId) {
-        return getResultFromBuildWithToolId(build, toolId).getInfoMessages();
+        return getResultByToolId(build, toolId).getInfoMessages();
     }
 
     /**
@@ -48,7 +48,7 @@ class ResultService {
      * @return the list of error messages
      */
     public List<String> getErrorMessagesFromResultWithToolId(Build build, String toolId) {
-        return getResultFromBuildWithToolId(build, toolId).getErrorMessages();
+        return getResultByToolId(build, toolId).getErrorMessages();
     }
 
     /**
@@ -110,25 +110,6 @@ class ResultService {
         }
 
         return convertRowsForTheIssueViewTable(report);
-    }
-
-    /**
-     * Determines the {@link Result} by a given {@link Build} and tool id.
-     *
-     * @param build  the {@link Build}
-     * @param toolId the tool id
-     * @return the {@link Result}
-     */
-    private Result getResultFromBuildWithToolId(Build build, String toolId) {
-        return build.getResults().stream()
-                .filter(r -> r.getWarningId().equals(toolId))
-                .findFirst()
-                .orElseThrow(() ->
-                        new NoSuchElementException(
-                                "Result for the Job " + build.getJob().getName()
-                                        + " with the build number" + build.getNumber()
-                                        + " and the tool id " + toolId + " not found"
-                        ));
     }
 
     /**
