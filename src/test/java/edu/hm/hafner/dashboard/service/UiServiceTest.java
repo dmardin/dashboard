@@ -307,7 +307,7 @@ class UiServiceTest {
         Job job = createJobWithBuildsAndResults(1);
         when(jobService.findJobByName(job.getName())).thenReturn(job);
         SoftAssertions.assertSoftly((softly) -> {
-            LinesChartModel linesChartModel = uiService.getNewVersusFixedTrendChart(job.getName());
+            LinesChartModel linesChartModel = uiService.getNewVersusFixedAggregatedTrendChart(job.getName());
             softly.assertThat(linesChartModel.getDomainAxisLabels()).isEqualTo(Arrays.asList("#0", "#1", "#2", "#3", "#4"));
             softly.assertThat(linesChartModel.getSeries().get(0).getData()).isEqualTo(Arrays.asList(30, 30, 30, 30, 30));
             softly.assertThat(linesChartModel.getSeries().get(1).getData()).isEqualTo(Arrays.asList(30, 30, 30, 30, 30));

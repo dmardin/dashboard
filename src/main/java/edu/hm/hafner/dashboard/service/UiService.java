@@ -134,7 +134,7 @@ public class UiService {
      * @param jobName the name of the project
      * @return the {@link LinesChartModel} model with the size of fixed and new issues for each build
      */
-    public LinesChartModel getNewVersusFixedTrendChart(String jobName) {
+    public LinesChartModel getNewVersusFixedAggregatedTrendChart(String jobName) {
         Job job = jobService.findJobByName(jobName);
         List<BuildResult<Build>> buildResults = buildService.createBuildResults(job);
         NewVersusFixedAggregatedTrendChart trendChart = new NewVersusFixedAggregatedTrendChart();

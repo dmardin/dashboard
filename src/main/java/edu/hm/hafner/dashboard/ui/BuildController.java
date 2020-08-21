@@ -105,7 +105,7 @@ public class BuildController {
     public LinesChartModel getNewVersusFixedTrendChart(@PathVariable("jobName") String jobName) {
         logger.info("getNewVersusFixedAggregatedTrendChart (ajax) is called");
 
-        return uiService.getNewVersusFixedTrendChart(jobName);
+        return uiService.getNewVersusFixedAggregatedTrendChart(jobName);
     }
 
     /**
