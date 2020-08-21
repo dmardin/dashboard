@@ -212,7 +212,7 @@ public class UiService {
     }
 
     /**
-     * Method to fetch the total size of issues (containing outstanding and new issues) and returns them.
+     * Method to fetch the size of issues by given IssueType (e.g outstanding, new or fixed) and returns them.
      *
      * @param jobName     the name of the job
      * @param buildNumber the build number
