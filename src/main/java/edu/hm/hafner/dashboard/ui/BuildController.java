@@ -122,4 +122,19 @@ public class BuildController {
 
         return uiService.getNewVersusFixedTrendChartForTool(jobName, toolName);
     }
+
+    /**
+     * Ajax call to get the severity Trend Chart for a given tool (e.g. checkstyle or pmd).
+     *
+     * @param jobName the name of the project
+     * @param toolName the used tool
+     * @return the {@link LinesChartModel} the trend chart for the severity
+     */
+    @RequestMapping(path={"/ajax/{jobName}/severityTrendChart/{toolName}"}, method=RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public LinesChartModel getSeverityTrendChartForTool(@PathVariable("jobName") String jobName, @PathVariable("toolName") String toolName) {
+        logger.info("getSeverityTrendChartForTool (ajax) is called");
+
+        return uiService.getSeverityTrendChartForTool(jobName, toolName);
+    }
 }

@@ -1,0 +1,22 @@
+.card-chart {
+    width: 90%;
+    min-height: 256px;
+    min-width: 256px;
+    display: block;
+    margin: 15px auto;
+}
+
+.col-6 {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.carousel-control-prev {
+    width: 20px;
+    left: 0;
+}
+
+.carousel-control-next {
+    width: 20px;
+    right: 0;
+}

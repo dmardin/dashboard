@@ -11,10 +11,10 @@
 
 
     <div class="container-fluid">
-        <h1>Builds</h1>
+        <h3>Builds</h3>
         <div class="row">
-            <div class="col-5">
-                <h2>Specific builds</h2>
+            <div class="col-4">
+                <h4>Specific builds</h4>
                 <div th:object="${buildViewTable}" class="table-responsive">
                     <table class="table table-hover table-striped data-table"
                            th:data-columns-definition="${buildViewTable.getTableModel('builds').columnsDefinition}" th:id="${buildViewTable.getTableModel('builds').id}">
@@ -29,39 +29,62 @@
                     </table>
                 </div>
             </div>
-            <div class="col-7">
-                <h2>History of the Builds</h2>
+            <div class="col-8">
+                <h4>History of the Builds</h4>
                 <div class="row">
-                    <div class="col-6">
-                        <div class="text-center">Aggregated Analysis Results</div>
-                        <div id="aggregated-analysis-results-history-chart" class="graph-cursor-pointer"
-                             style="width: 100%; min-height: 200px;"></div>
-                    </div>
-                    <div class="col-6">
-                        <div class="text-center">New vs. Fixed History</div>
-                        <div id="new-versus-fixed-history-chart" class="graph-cursor-pointer"
-                             style="width: 100%; min-height: 200px;"></div>
-                    </div>
-                    <!--<div th:each="tool : ${usedTools}" class="col-6">
-                        <div class="text-center" th:text="${tool} + ' Trend'"></div>
-                        <div th:id="${tool} + '-history-chart'" class="graph-cursor-pointer"
-                             style="width: 100%; min-height: 200px;"></div>
-                    </div>
-                    <div th:each="tool : ${usedTools}" class="col-6">
-                        <div class="text-center" th:text="${tool} + ' New vs. Fixed'"></div>
-                        <div th:id="${tool} + '-new-versus-fixed-history-chart'" class="graph-cursor-pointer"
-                             style="width: 100%; min-height: 200px;"></div>
-                    </div>-->
-                    <th:block th:each="tool : ${usedTools}">
-                        <div class="col-6">
-                            <div class="text-center " th:text="${tool} + ' Trend'"></div>
-                            <div th:id="${tool} + '-history-chart'" class="graph-cursor-pointer"
-                                 style="width: 100%; min-height: 200px;"></div>
+                    <div th:classappend="(${usedTools.size()} % 2 != 0) ? 'col-6' : 'col-12'">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Aggregated Results</h5>
+                            </div>
+                            <div id="trend-carousel" class="carousel slide" data-interval="false">
+                                <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                        <div th:id="aggregated-analysis-results-history-chart" class="graph-cursor-pointer card-chart"></div>
+                                    </div>
+                                    <div class="carousel-item">
+                                        <div th:id="new-versus-fixed-history-chart" class="graph-cursor-pointer card-chart"></div>
+                                    </div>
+                                    <a class="carousel-control-prev" data-target="#trend-carousel" role="button" data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(1);"></span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                    <a class="carousel-control-next" data-target="#trend-carousel" role="button" data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true" style="filter: invert(1);"></span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
+                    </div>
+                    <th:block th:each="tool,iter : ${usedTools}">
                         <div class="col-6">
-                            <div class="text-center" th:text="${tool} + ' New vs. Fixed'"></div>
-                            <div th:id="${tool} + '-new-versus-fixed-history-chart'" class="graph-cursor-pointer"
-                                 style="width: 100%; min-height: 200px;"></div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${tool}"></h5>
+                                </div>
+                                <div th:id="'trend-carousel'+${tool.replace(' ','')}" class="carousel slide" data-interval="false">
+                                    <div class="carousel-inner">
+                                        <div class="carousel-item active">
+                                            <div th:id="${tool} + '-history-chart'" class="graph-cursor-pointer card-chart"></div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <div th:id="${tool} + '-new-versus-fixed-history-chart'" class="graph-cursor-pointer card-chart"></div>
+                                        </div>
+                                        <div class="carousel-item">
+                                            <div th:id="${tool} + '-severity-chart'" class="graph-cursor-pointer card-chart"></div>
+                                        </div>
+                                        <a class="carousel-control-prev" th:attr="data-target='#'+'trend-carousel'+${tool.replace(' ','')}" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true" style="filter: invert(1);"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" th:attr="data-target='#'+'trend-carousel'+${tool.replace(' ','')}" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true" style="filter: invert(1);"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </th:block>
                 </div>
@@ -70,6 +93,7 @@
     </div>
 
     <script src="/js/table.js"></script>
+    <script src="/js/store-and-restore-carousel.js"></script>
     <script th:inline="javascript">
         /*<![CDATA[*/
         const usedTools = /*[[${usedTools}]]*/ 'default';
@@ -86,6 +110,16 @@
                     const id = tool + "-new-versus-fixed-history-chart";
                     renderTrendChart(id, builds, "");
                 });
+            $.get("/ajax/"+jobName+"/severityTrendChart/"+tool,
+                function (builds) {
+                    const id = tool + "-severity-chart";
+                    renderTrendChart(id, builds, "");
+                });
+        });
+
+        storeAndRestoreCarousel('trend-carousel');
+        usedTools.forEach(tool => {
+            storeAndRestoreCarousel('trend-carousel'+tool.replace(' ',''));
         });
         /*]]>*/
     </script>

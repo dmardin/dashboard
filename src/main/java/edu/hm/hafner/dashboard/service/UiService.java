@@ -7,6 +7,8 @@ import edu.hm.hafner.dashboard.service.echart.newvsfixedchart.NewVersusFixedAggr
 import edu.hm.hafner.dashboard.service.echart.newvsfixedchart.NewVersusFixedTrendChart;
 import edu.hm.hafner.dashboard.service.echart.resultchart.BarChartModel;
 import edu.hm.hafner.dashboard.service.echart.resultchart.ResultChart;
+import edu.hm.hafner.dashboard.service.echart.severitytrendchart.SeverityTrendChart;
+import edu.hm.hafner.dashboard.service.echart.tooltrendchart.AggregatedToolTrendChart;
 import edu.hm.hafner.dashboard.service.echart.tooltrendchart.ToolTrendChart;
 import edu.hm.hafner.dashboard.service.table.build.BuildViewTable;
 import edu.hm.hafner.dashboard.service.table.issue.IssueViewTable;
@@ -18,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.DefaultApplicationArguments;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -108,7 +111,7 @@ public class UiService {
     public LinesChartModel getAggregatedAnalysisResultsTrendCharts(String jobName) {
         Job job = jobService.findJobByName(jobName);
         List<BuildResult<Build>> buildResults = buildService.createBuildResults(job);
-        ToolTrendChart toolTrendChart = new ToolTrendChart();
+        AggregatedToolTrendChart toolTrendChart = new AggregatedToolTrendChart();
 
         return toolTrendChart.create(buildResults, new ChartModelConfiguration());
     }
@@ -249,7 +252,26 @@ public class UiService {
         return resultService.getErrorMessagesFromResultWithToolId(build, toolId);
     }
 
+    /**
+     * Method to fetch new Data from Jenkins.
+     */
     public void fetchData() {
         appStartupRunner.run(new DefaultApplicationArguments());
     }
+
+    /**
+     * Method to get {@link LinesChartModel} for the severity of a given tool.
+     *
+     * @param jobName  the name of the project
+     * @param toolName the used tool
+     * @return the {@link LinesChartModel} the LinesChartModel for the severity
+     */
+    public LinesChartModel getSeverityTrendChartForTool(String jobName, String toolName) {
+        Job job = jobService.findJobByName(jobName);
+        List<BuildResult<Build>> results = buildService.createBuildResultsForTool(job, toolName);
+        SeverityTrendChart severityTrendChart = new SeverityTrendChart();
+
+        return severityTrendChart.create(results, new ChartModelConfiguration());
+    }
+
 }
