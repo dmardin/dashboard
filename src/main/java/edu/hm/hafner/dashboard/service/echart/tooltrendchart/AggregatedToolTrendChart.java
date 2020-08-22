@@ -4,23 +4,23 @@ import edu.hm.hafner.dashboard.service.dto.Build;
 import edu.hm.hafner.echarts.*;
 
 /**
- * Builds the line model for a trend chart showing the total number of issues per tool for a given number of builds.
+ * Builds the line model for a trend chart showing aggregated number of issues per tool for a given number of builds.
  *
  * @author Deniz Mardin
  */
-public class ToolTrendChart {
+public class AggregatedToolTrendChart {
 
     /**
      * Creates the {@link LinesChartModel} for a given tool (e.g. checkstyle or pmd).
      *
-     * @param buildResults the build results to render
+     * @param buildResults  the build results to render
      * @param configuration the {@link ChartModelConfiguration}
      * @return the {@link LinesChartModel}
      */
     public LinesChartModel create(final Iterable<? extends BuildResult<Build>> buildResults,
                                   final ChartModelConfiguration configuration) {
 
-        AnalysisResultsSeriesBuilder builder = new AnalysisResultsSeriesBuilder();
+        AggregatedAnalysisResultsSeriesBuilder builder = new AggregatedAnalysisResultsSeriesBuilder();
         LinesDataSet dataSet = builder.createDataSet(configuration, buildResults);
 
         LinesChartModel model = new LinesChartModel();
@@ -30,7 +30,12 @@ public class ToolTrendChart {
         Palette[] colors = Palette.values();
         int index = 0;
         for (String name : dataSet.getDataSetIds()) {
-            LineSeries lineSeries = new LineSeries(name, colors[index++].getNormal(), LineSeries.StackedMode.SEPARATE_LINES, LineSeries.FilledMode.LINES);
+            LineSeries lineSeries;
+            if (dataSet.getDataSetIds().size() > 1) {
+                lineSeries = new LineSeries(name, colors[index++].getNormal(), LineSeries.StackedMode.SEPARATE_LINES, LineSeries.FilledMode.LINES);
+            } else {
+                lineSeries = new LineSeries(name, colors[index++].getNormal(), LineSeries.StackedMode.STACKED, LineSeries.FilledMode.FILLED);
+            }
 
             if (index == colors.length) {
                 index = 0;
