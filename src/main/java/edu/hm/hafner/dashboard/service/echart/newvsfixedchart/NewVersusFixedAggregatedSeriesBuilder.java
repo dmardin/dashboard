@@ -12,10 +12,7 @@ import java.util.Map;
  *
  * @author Deniz Mardin
  */
-public class NewVersusFixedAggregatedSeriesBuilder extends SeriesBuilder<Build> {
-
-    static final String NEW = "new";
-    static final String FIXED = "fixed";
+public class NewVersusFixedAggregatedSeriesBuilder extends NewVersusFixedAbstractSeriesBuilder {
 
     @Override
     protected Map<String, Integer> computeSeries(final Build current) {

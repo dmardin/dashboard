@@ -26,9 +26,9 @@ public abstract class NewVersusFixedAbstractTrendChart {
         model.setDomainAxisLabels(dataSet.getDomainAxisLabels());
 
         LineSeries newSeries = getSeries(dataSet, "New", Palette.RED,
-                NewVersusFixedSeriesBuilder.NEW);
+                NewVersusFixedAbstractSeriesBuilder.NEW);
         LineSeries fixedSeries = getSeries(dataSet, "Fixed", Palette.GREEN,
-                NewVersusFixedSeriesBuilder.FIXED);
+                NewVersusFixedAbstractSeriesBuilder.FIXED);
 
         model.addSeries(newSeries, fixedSeries);
 
