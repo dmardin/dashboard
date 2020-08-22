@@ -13,7 +13,7 @@
     <div class="container-fluid">
     <h3>Results</h3>
     <th:block th:each="result, resultStat: ${build.getResults()}">
-        <h2 th:text="${result.name}"></h2>
+        <h4 th:text="${result.name}"></h4>
 
         <div class="row">
             <div class="col-9">
