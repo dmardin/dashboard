@@ -3,7 +3,7 @@ package edu.hm.hafner.dashboard.service.echart.resultchart;
 /**
  * Defines the needed Bars for a {@link ResultChart}.
  */
-public enum ResultToolElement {
+public enum BarType {
     OLD_TOTAL_SIZE("Old Total Size"),
     FIXED("Fixed"),
     OUTSTANDING("Outstanding"),
@@ -14,18 +14,18 @@ public enum ResultToolElement {
     private final String name;
 
     /**
-     * Creates a new instance of the {@link ResultToolElement}.
+     * Creates a new instance of the {@link BarType}.
      *
-     * @param name the name of the {@link ResultToolElement}
+     * @param name the name of the {@link BarType}
      */
-    ResultToolElement(String name) {
+    BarType(String name) {
         this.name = name;
     }
 
     /**
-     * Returns the name of the {@link ResultToolElement}.
+     * Returns the name of the {@link BarType}.
      *
-     * @return the name of the {@link ResultToolElement}
+     * @return the name of the {@link BarType}
      */
     public String getName() {
         return name;

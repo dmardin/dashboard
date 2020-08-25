@@ -23,37 +23,37 @@ public class ResultChart {
         int outstandingSize = result.getOutstandingIssues().getSize();
         Palette[] colors = Palette.values();
         int index = 0;
-        for (ResultToolElement resultToolElement : ResultToolElement.values()) {
+        for (BarType barType : BarType.values()) {
             BarSeries series = null;
-            switch(resultToolElement){
+            switch (barType) {
                 case OLD_TOTAL_SIZE:
-                    series = new BarSeries(resultToolElement.getName(), BarSeries.NONE_STACK, colors[index++].getNormal());
-                    series.add(result.getFixedSize() +  outstandingSize);
+                    series = new BarSeries(barType.getName(), BarSeries.NONE_STACK, colors[index++].getNormal());
+                    series.add(result.getFixedSize() + outstandingSize);
                     break;
                 case FIXED:
-                    series = new BarSeries(resultToolElement.getName(), "centerStack", colors[index++].getNormal());
+                    series = new BarSeries(barType.getName(), "centerStack", colors[index++].getNormal());
                     series.add(result.getFixedSize());
                     break;
                 case OUTSTANDING:
-                    series = new BarSeries(resultToolElement.getName(), "centerStack", colors[index++].getNormal());
+                    series = new BarSeries(barType.getName(), "centerStack", colors[index++].getNormal());
                     series.add(outstandingSize);
                     break;
                 case NEW:
-                    series = new BarSeries(resultToolElement.getName(), "centerStack", colors[index++].getNormal());
+                    series = new BarSeries(barType.getName(), "centerStack", colors[index++].getNormal());
                     series.add(result.getNewSize());
                     break;
                 case OFFSET_TO_NEW_TOTAL_SIZE:
-                    series = new BarSeries(resultToolElement.getName(), "bottomStack", ItemStyle.TRANSPARENT);
+                    series = new BarSeries(barType.getName(), "bottomStack", ItemStyle.TRANSPARENT);
                     series.add(result.getFixedSize());
                     break;
                 case NEW_TOTAL_SIZE:
-                    series = new BarSeries(resultToolElement.getName(), "bottomStack", colors[index++].getNormal());
+                    series = new BarSeries(barType.getName(), "bottomStack", colors[index++].getNormal());
                     series.add(result.getTotalSize());
                     break;
             }
             model.addSeries(series);
         }
-        List<String> resultToolValues = Arrays.stream(ResultToolElement.values()).filter(element -> !element.getName().isEmpty()).map(ResultToolElement::getName).collect(Collectors.toList());
+        List<String> resultToolValues = Arrays.stream(BarType.values()).filter(element -> !element.getName().isEmpty()).map(BarType::getName).collect(Collectors.toList());
         model.addLegend(resultToolValues);
 
         return model;
