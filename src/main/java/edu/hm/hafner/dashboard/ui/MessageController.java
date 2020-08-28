@@ -39,6 +39,7 @@ public class MessageController {
      * @param buildNumber the build number
      * @param toolId      the used tool id (e.g checkstyle)
      * @param model       the model with the messages
+     * @param fetchData   boolean to decide if new data should be fetched
      * @return the message page
      */
     @RequestMapping(path={"/job/{jobName}/build/{buildNumber}/{toolId}/messages"}, method= RequestMethod.GET)

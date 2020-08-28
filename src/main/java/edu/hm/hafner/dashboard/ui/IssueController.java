@@ -37,6 +37,7 @@ public class IssueController {
      * @param buildNumber the build number
      * @param toolId      the tool id (e.g. checkstyle)
      * @param model       the configured model with the headers of the issue
+     * @param fetchData   boolean to decide if new data should be fetched
      * @return the issue page
      */
     @RequestMapping(path={"/job/{jobName}/build/{buildNumber}/{toolId}"}, method= RequestMethod.GET)

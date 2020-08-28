@@ -29,6 +29,12 @@ import java.util.stream.Collectors;
 public class Mapper {
 
     /**
+     * Constructor should not be accessible.
+     */
+    private Mapper() {
+    }
+
+    /**
      * Converts a {@link JobEntity} to a {@link Job}.
      *
      * @param jobEntity the {@link JobEntity}

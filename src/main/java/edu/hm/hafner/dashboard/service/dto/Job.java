@@ -101,7 +101,7 @@ public class Job {
     }
 
     /**
-     * Setter to set the {@link Build}s of the {@link Job}
+     * Setter to set the {@link Build}s of the {@link Job}.
      *
      * @param builds the {@link Build}s
      */

@@ -34,8 +34,9 @@ public class BuildController {
     /**
      * Loads the header of the builds.
      *
-     * @param jobName the name of the job
-     * @param model the model with the headers of the builds and used tools e.g. checkstyle etc.
+     * @param jobName   the name of the job
+     * @param model     the model with the headers of the builds and used tools e.g. checkstyle etc.
+     * @param fetchData boolean to decide if new data should be fetched
      * @return the build page
      */
     @RequestMapping(path={"/job/{jobName}/build"}, method= RequestMethod.GET)

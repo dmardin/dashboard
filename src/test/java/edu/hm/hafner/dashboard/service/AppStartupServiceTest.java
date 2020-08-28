@@ -13,6 +13,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
+ * Test the Class {@link AppStartupService}.
+ *
  * @author Deniz Mardin
  */
 class AppStartupServiceTest {

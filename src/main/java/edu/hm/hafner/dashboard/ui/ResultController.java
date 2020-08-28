@@ -33,6 +33,7 @@ public class ResultController {
      * @param jobName     the name of the job
      * @param buildNumber the build number
      * @param model       the model with the needed build information
+     * @param fetchData   boolean to decide if new data should be fetched
      * @return the result page
      */
     @RequestMapping(path = {"/job/{jobName}/build/{buildNumber}"}, method = RequestMethod.GET)

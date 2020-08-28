@@ -22,6 +22,7 @@ public class JobTableModel extends TableModel {
      * @param jobRepositoryStatistics the repository with the job statistics
      */
     public JobTableModel(JobRepositoryStatistics jobRepositoryStatistics) {
+        super();
         this.jobRepositoryStatistics = jobRepositoryStatistics;
     }
 
@@ -68,7 +69,7 @@ public class JobTableModel extends TableModel {
         private final Job jobStatistics;
 
         /**
-         * Creates a new instance of a {@link JobsRow}
+         * Creates a new instance of a {@link JobsRow}.
          *
          * @param jobStatistics the job statistic for one line
          */

@@ -38,9 +38,10 @@ public class UiService {
     /**
      * Creates a new instance of {@link UiService}.
      *
-     * @param jobService    the service for the jobs
-     * @param buildService  the service for the builds
-     * @param resultService the service for the results
+     * @param jobService       the service for the jobs
+     * @param buildService     the service for the builds
+     * @param resultService    the service for the results
+     * @param appStartupRunner the AppStartupRunner
      */
     @Autowired
     public UiService(JobService jobService, BuildService buildService, ResultService resultService, AppStartupRunner appStartupRunner) {

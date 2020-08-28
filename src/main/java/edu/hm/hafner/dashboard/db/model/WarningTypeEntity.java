@@ -26,7 +26,8 @@ public enum WarningTypeEntity {
     }
 
     /**
-     * Setter to set the list of {@link ReportEntity}s of the {@link WarningTypeEntity}
+     * Setter to set the list of {@link ReportEntity}s of the {@link WarningTypeEntity}.
+     *
      * @param issues the list of{@link ReportEntity}s
      */
     public void setIssues(List<ReportEntity> issues) {

@@ -35,6 +35,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
+ * Test the Class {@link UiService}.
+ *
  * @author Deniz Mardin
  */
 class UiServiceTest {
@@ -116,12 +118,9 @@ class UiServiceTest {
 
     @Test
     void shouldCreateIssueViewTable() {
-        JobService jobService = mock(JobService.class);
-        BuildService buildService = mock(BuildService.class);
         ResultService resultService = mock(ResultService.class);
-        AppStartupRunner appStartupRunner = mock(AppStartupRunner.class);
+        UiService uiService = new UiService(mock(JobService.class), mock(BuildService.class), resultService, mock(AppStartupRunner.class));
 
-        UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         SoftAssertions.assertSoftly((softly) -> {
             when(resultService.createIssueViewTable()).thenReturn(new IssueViewTable(new IssueRepositoryStatistics()));
             IssueViewTable issueViewTable = uiService.createIssueViewTable();
@@ -513,9 +512,8 @@ class UiServiceTest {
         softly.assertThat(issuesRow.getReference()).isEqualTo("reference" + i);
         softly.assertThat(issuesRow.getSeverity()).isEqualTo(Severity.valueOf("severity" + i).toString());
         softly.assertThat(issuesRow.getType()).isEqualTo("type" + i);
-        issueRowIndex++;
 
-        return issueRowIndex;
+        return issueRowIndex + 1;
     }
 
     private Job createJobWithBuilds() {

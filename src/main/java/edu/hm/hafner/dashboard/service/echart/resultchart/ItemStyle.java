@@ -4,7 +4,7 @@ package edu.hm.hafner.dashboard.service.echart.resultchart;
  * Model to define the item style in the ui.
  */
 public class ItemStyle {
-    public static String TRANSPARENT = "transparent";
+    public static final String TRANSPARENT = "transparent";
     private final String barBorderColor;
     private final String color;
 

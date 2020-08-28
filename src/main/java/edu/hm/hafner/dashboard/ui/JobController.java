@@ -37,7 +37,8 @@ public class JobController {
     /**
      * Loads the header of the jobs for the table at the main page.
      *
-     * @param model the model with the headers of the jobs
+     * @param model     the model with the headers of the jobs
+     * @param fetchData boolean to decide if new data should be fetched
      * @return the home page
      */
     @RequestMapping(path = {"/"}, method = RequestMethod.GET)
