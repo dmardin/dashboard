@@ -404,7 +404,7 @@ class UiServiceTest {
             List<Object> report = uiService.getIssuesDataForToolWithTotalSize(job.getName(), buildNumber, "toolId" + buildNumber);
             softly.assertThat(report.size()).isEqualTo(6);
             int issueRowIndex = 0;
-            for (int i = report.size() - 1; i >= 0; i--) {
+            for (int i = 0; i < report.size(); i++) {
                 issueRowIndex = assertIssueRowAndReturnNextIndex(softly, report, issueRowIndex, i);
             }
         });
@@ -428,15 +428,15 @@ class UiServiceTest {
                 List<Object> report = uiService.getIssuesDataForToolWithIssueType(job.getName(), buildNumber, "toolId" + buildNumber, warningTypeEntity.toString().toLowerCase());
                 int issueRowIndex = 0;
                 if (warningTypeEntity.toString().equals("FIXED")) {
-                    for (int i = 8; i >= 6; i--) {
+                    for (int i = 6; i < 9; i++) {
                         issueRowIndex = assertIssueRowAndReturnNextIndex(softly, report, issueRowIndex, i);
                     }
                 } else if (warningTypeEntity.toString().equals("OUTSTANDING")) {
-                    for (int i = 2; i >= 0; i--) {
+                    for (int i = 0; i < 3; i++) {
                         issueRowIndex = assertIssueRowAndReturnNextIndex(softly, report, issueRowIndex, i);
                     }
                 } else {
-                    for (int i = 5; i >= 3; i--) {
+                    for (int i = 3; i < 6; i++) {
                         issueRowIndex = assertIssueRowAndReturnNextIndex(softly, report, issueRowIndex, i);
                     }
                 }

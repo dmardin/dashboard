@@ -122,7 +122,7 @@ class ResultService {
         ArrayList<Issue> issueStatisticsList = new ArrayList<>();
         report.stream().forEach(issueStatisticsList::add);
         IssueRepositoryStatistics repositoryStatistics = new IssueRepositoryStatistics();
-        repositoryStatistics.addAll(issueStatisticsList);
+        issueStatisticsList.forEach(repositoryStatistics::add);
         IssueViewTable issueViewTable = new IssueViewTable(repositoryStatistics);
 
         return issueViewTable.getTableRows("issues");
