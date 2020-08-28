@@ -44,7 +44,7 @@ public class JobController {
     @RequestMapping(path = {"/"}, method = RequestMethod.GET)
     public String getJobHeaders(final Model model, @RequestParam(required = false) boolean fetchData) {
         logger.info("getJobHeaders is called");
-        if(fetchData){
+        if (fetchData) {
             logger.info("fetching new data..");
             uiService.fetchData();
         }

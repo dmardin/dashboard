@@ -8,7 +8,7 @@ import java.util.List;
  * POJO to store a {@link ReportEntity} to the database.
  */
 @Entity
-@Table(name="report")
+@Table(name = "report")
 public class ReportEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -127,13 +127,21 @@ public class ReportEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         ReportEntity that = (ReportEntity) o;
 
-        if (id != that.id) return false;
-        if (!issues.equals(that.issues)) return false;
+        if (id != that.id) {
+            return false;
+        }
+        if (!issues.equals(that.issues)) {
+            return false;
+        }
         return warningTypeEntity == that.warningTypeEntity;
     }
 

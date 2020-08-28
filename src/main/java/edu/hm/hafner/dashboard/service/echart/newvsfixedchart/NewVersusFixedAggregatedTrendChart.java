@@ -10,12 +10,12 @@ import edu.hm.hafner.echarts.LinesChartModel;
  *
  * @author Deniz Mardin
  */
-public class NewVersusFixedAggregatedTrendChart extends NewVersusFixedAbstractTrendChart{
+public class NewVersusFixedAggregatedTrendChart extends NewVersusFixedAbstractTrendChart {
 
     /**
      * Creates the line chart model for new vs fixed issues in sum for each build.
      *
-     * @param buildResults the build results
+     * @param buildResults  the build results
      * @param configuration the configuration
      * @return the lines chart model
      */

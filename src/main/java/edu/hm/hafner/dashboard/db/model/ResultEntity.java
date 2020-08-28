@@ -8,7 +8,7 @@ import java.util.List;
  * POJO to store a {@link ResultEntity} to the database.
  */
 @Entity
-@Table(name="result")
+@Table(name = "result")
 public class ResultEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -53,6 +53,7 @@ public class ResultEntity {
      * @param totalSize the total size of the {@link ResultEntity}
      * @param qualityGateStatus the quality gate status of the {@link ResultEntity}
      */
+    @SuppressWarnings("checkstyle:ParameterNumber")
     public ResultEntity(int id, String warningId, String latestUrl, String name, int fixedSize, int newSize, int totalSize, String qualityGateStatus) {
         this.id = id;
         this.warningId = warningId;
@@ -299,21 +300,45 @@ public class ResultEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         ResultEntity that = (ResultEntity) o;
 
-        if (id != that.id) return false;
-        if (fixedSize != that.fixedSize) return false;
-        if (newSize != that.newSize) return false;
-        if (totalSize != that.totalSize) return false;
-        if (!latestUrl.equals(that.latestUrl)) return false;
-        if (!warningId.equals(that.warningId)) return false;
-        if (!name.equals(that.name)) return false;
-        if (!qualityGateStatus.equals(that.qualityGateStatus)) return false;
-        if (!errorMessages.equals(that.errorMessages)) return false;
-        if (!infoMessages.equals(that.infoMessages)) return false;
+        if (id != that.id) {
+            return false;
+        }
+        if (fixedSize != that.fixedSize) {
+            return false;
+        }
+        if (newSize != that.newSize) {
+            return false;
+        }
+        if (totalSize != that.totalSize) {
+            return false;
+        }
+        if (!latestUrl.equals(that.latestUrl)) {
+            return false;
+        }
+        if (!warningId.equals(that.warningId)) {
+            return false;
+        }
+        if (!name.equals(that.name)) {
+            return false;
+        }
+        if (!qualityGateStatus.equals(that.qualityGateStatus)) {
+            return false;
+        }
+        if (!errorMessages.equals(that.errorMessages)) {
+            return false;
+        }
+        if (!infoMessages.equals(that.infoMessages)) {
+            return false;
+        }
         return reports.equals(that.reports);
     }
 

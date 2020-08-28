@@ -40,14 +40,14 @@ public class IssueController {
      * @param fetchData   boolean to decide if new data should be fetched
      * @return the issue page
      */
-    @RequestMapping(path={"/job/{jobName}/build/{buildNumber}/{toolId}"}, method= RequestMethod.GET)
+    @RequestMapping(path = {"/job/{jobName}/build/{buildNumber}/{toolId}"}, method = RequestMethod.GET)
     public String getIssueHeadersForTool(
             @PathVariable("jobName") String jobName,
             @PathVariable("buildNumber") Integer buildNumber,
             @PathVariable("toolId") String toolId,
             final Model model,
             @RequestParam(required = false) boolean fetchData) {
-        if(fetchData){
+        if (fetchData) {
             logger.info("fetching new data..");
             uiService.fetchData();
         }
@@ -68,7 +68,7 @@ public class IssueController {
      * @param model the configured model with the headers of the issue
      * @return the issue page
      */
-    @RequestMapping(path={"/job/{jobName}/build/{buildNumber}/{toolId}/{issueType}"}, method=RequestMethod.GET)
+    @RequestMapping(path = {"/job/{jobName}/build/{buildNumber}/{toolId}/{issueType}"}, method = RequestMethod.GET)
     public String getIssueHeaders(
             @PathVariable("jobName") String jobName,
             @PathVariable("buildNumber") Integer buildNumber,
@@ -91,7 +91,7 @@ public class IssueController {
      * @param toolId the tool id (e.g. checkstyle)
      * @return rows of the table
      */
-    @RequestMapping(path={"/ajax/job/{jobName}/build/{buildNumber}/{toolId}"}, method=RequestMethod.GET, produces = "application/json")
+    @RequestMapping(path = {"/ajax/job/{jobName}/build/{buildNumber}/{toolId}"}, method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public List<Object> getIssuesDataForToolWithTotalSize(
             @PathVariable("jobName") String jobName,
@@ -111,7 +111,7 @@ public class IssueController {
      * @param issueType the issue type (e.g. fixed, outstanding or new)
      * @return rows of the table
      */
-    @RequestMapping(path={"/ajax/job/{jobName}/build/{buildNumber}/{toolId}/{issueType}"}, method=RequestMethod.GET, produces = "application/json")
+    @RequestMapping(path = {"/ajax/job/{jobName}/build/{buildNumber}/{toolId}/{issueType}"}, method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public List<Object> getIssuesDataForToolWithIssueType(
             @PathVariable("jobName") String jobName,

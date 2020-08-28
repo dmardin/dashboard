@@ -29,10 +29,9 @@ public class IssueViewTable {
      */
     public TableModel getTableModel(String id) {
         IssueTableModel issueTableModel = new IssueTableModel(issueRepositoryStatistics);
-        if(issueTableModel.getId().equals(id)){
+        if (issueTableModel.getId().equals(id)) {
             return issueTableModel;
-        }
-        else {
+        } else {
             throw new IllegalArgumentException(String.format("Needed id for this IssueTableModel is issues but currently used %s", id));
         }
     }

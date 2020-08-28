@@ -15,8 +15,15 @@ import java.util.List;
  */
 public class SeverityTrendChart {
 
+    /**
+     * Method to create a LinesChartModel for a {@link SeverityTrendChart}.
+     *
+     * @param buildResults  the build results
+     * @param configuration the configuration
+     * @return a {@link LinesChartModel}
+     */
     public LinesChartModel create(final Iterable<? extends BuildResult<Build>> buildResults,
-            final ChartModelConfiguration configuration) {
+                                  final ChartModelConfiguration configuration) {
         SeveritySeriesBuilder builder = new SeveritySeriesBuilder();
         LinesDataSet dataSet = builder.createDataSet(configuration, buildResults);
 

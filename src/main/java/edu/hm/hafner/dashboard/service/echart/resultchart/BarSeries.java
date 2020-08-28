@@ -12,6 +12,9 @@ import java.util.Optional;
  * @author Deniz Mardin
  */
 public class BarSeries {
+    /**
+     * Used for {@link BarSeries} without a stack.
+     */
     public final static String NONE_STACK = "";
     private final String name;
     @SuppressFBWarnings("SS_SHOULD_BE_STATIC")

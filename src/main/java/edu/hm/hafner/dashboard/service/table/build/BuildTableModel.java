@@ -44,8 +44,8 @@ public class BuildTableModel extends TableModel {
     @Override
     public List<TableColumn> getColumns() {
         List<TableColumn> columns = new ArrayList<>();
-        columns.add(new TableColumn("Build Number","buildNumber"));
-        columns.add(new TableColumn("Url","buildUrl"));
+        columns.add(new TableColumn("Build Number", "buildNumber"));
+        columns.add(new TableColumn("Url", "buildUrl"));
 
         return columns;
     }
@@ -71,7 +71,7 @@ public class BuildTableModel extends TableModel {
          *
          * @param buildStatistics the build statistic for one line
          */
-        BuildsRow(final Build buildStatistics){
+        BuildsRow(final Build buildStatistics) {
             this.buildStatistics = buildStatistics;
         }
 

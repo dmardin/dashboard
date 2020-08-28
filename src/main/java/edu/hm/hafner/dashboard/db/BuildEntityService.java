@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Service
 public class BuildEntityService {
-    BuildRepository buildRepository;
+    private BuildRepository buildRepository;
 
     /**
      * Creates a new instance of {@link BuildEntityService}.

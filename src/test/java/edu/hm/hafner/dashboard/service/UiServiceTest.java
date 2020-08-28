@@ -121,7 +121,7 @@ class UiServiceTest {
         ResultService resultService = mock(ResultService.class);
         UiService uiService = new UiService(mock(JobService.class), mock(BuildService.class), resultService, mock(AppStartupRunner.class));
 
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             when(resultService.createIssueViewTable()).thenReturn(new IssueViewTable(new IssueRepositoryStatistics()));
             IssueViewTable issueViewTable = uiService.createIssueViewTable();
 

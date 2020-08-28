@@ -30,10 +30,9 @@ public class JobViewTable {
      */
     public TableModel getTableModel(String id) {
         JobTableModel jobTableModel = new JobTableModel(jobRepositoryStatistics);
-        if(jobTableModel.getId().equals(id)){
+        if (jobTableModel.getId().equals(id)) {
             return jobTableModel;
-        }
-        else {
+        } else {
             throw new IllegalArgumentException(String.format("Needed id for this JobTableModel is jobs but currently used %s", id));
         }
 
@@ -45,7 +44,7 @@ public class JobViewTable {
      * @param id the id of the {@link JobTableModel}
      * @return the rows of the {@link JobTableModel}
      */
-    public List<Object> getTableRows(final String id){
+    public List<Object> getTableRows(final String id) {
         return getTableModel(id).getRows();
     }
 }

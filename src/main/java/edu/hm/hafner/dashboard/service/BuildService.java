@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  */
 @Service
 class BuildService {
-    BuildEntityService buildEntityService;
+    private BuildEntityService buildEntityService;
 
     /**
      * Creates a new instance of {@link BuildService}.
@@ -112,11 +112,11 @@ class BuildService {
     /**
      * Determines the {@link Build} from a {@link Job} by given build number.
      *
-     * @param job the {@link Job}
+     * @param job         the {@link Job}
      * @param buildNumber the build number
      * @return the {@link Build}
      */
-    public Build getBuildWithBuildNumberFromJob(Job job, int buildNumber){
+    public Build getBuildWithBuildNumberFromJob(Job job, int buildNumber) {
         return job.getBuilds().stream().filter(b -> b.getNumber() == buildNumber)
                 .findFirst()
                 .orElseThrow(() -> new NoSuchElementException("Build number " + buildNumber + " for the Job " + job.getName() + " not found"));

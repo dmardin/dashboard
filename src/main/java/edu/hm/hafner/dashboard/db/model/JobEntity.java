@@ -11,7 +11,7 @@ import java.util.List;
  * @author Deniz Mardin
  */
 @Entity
-@Table(name="job")
+@Table(name = " job")
 public class JobEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,7 +19,7 @@ public class JobEntity {
     private String name;
     private String url;
     private String lastBuildStatus;
-    @OneToMany(fetch=FetchType.EAGER, mappedBy = "jobEntity", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "jobEntity", cascade = CascadeType.ALL)
     private List<BuildEntity> buildEntities;
 
     /**
@@ -32,12 +32,12 @@ public class JobEntity {
     /**
      * Creates a new instance of {@link JobEntity}.
      *
-     * @param id the id of the {@link JobEntity}
-     * @param name the name of the {@link JobEntity}
-     * @param url the url of the {@link JobEntity}
+     * @param id              the id of the {@link JobEntity}
+     * @param name            the name of the {@link JobEntity}
+     * @param url             the url of the {@link JobEntity}
      * @param lastBuildStatus the last build status of the {@link JobEntity}
      */
-    public JobEntity(int id, String name, String url, String lastBuildStatus){
+    public JobEntity(int id, String name, String url, String lastBuildStatus) {
         this.id = id;
         this.name = name;
         this.url = url;
@@ -141,7 +141,7 @@ public class JobEntity {
      * @param buildEntity the {@link BuildEntity}
      * @return the added {@link BuildEntity}
      */
-    public BuildEntity addBuildEntity(BuildEntity buildEntity){
+    public BuildEntity addBuildEntity(BuildEntity buildEntity) {
         getBuildEntities().add(buildEntity);
         buildEntity.setJobEntity(this);
 
@@ -150,15 +150,27 @@ public class JobEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         JobEntity jobEntity = (JobEntity) o;
 
-        if (id != jobEntity.id) return false;
-        if (!name.equals(jobEntity.name)) return false;
-        if (!url.equals(jobEntity.url)) return false;
-        if (!lastBuildStatus.equals(jobEntity.lastBuildStatus)) return false;
+        if (id != jobEntity.id) {
+            return false;
+        }
+        if (!name.equals(jobEntity.name)) {
+            return false;
+        }
+        if (!url.equals(jobEntity.url)) {
+            return false;
+        }
+        if (!lastBuildStatus.equals(jobEntity.lastBuildStatus)) {
+            return false;
+        }
         return buildEntities.equals(jobEntity.buildEntities);
     }
 

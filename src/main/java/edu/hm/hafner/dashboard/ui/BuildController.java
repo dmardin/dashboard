@@ -39,10 +39,10 @@ public class BuildController {
      * @param fetchData boolean to decide if new data should be fetched
      * @return the build page
      */
-    @RequestMapping(path={"/job/{jobName}/build"}, method= RequestMethod.GET)
+    @RequestMapping(path = {"/job/{jobName}/build"}, method = RequestMethod.GET)
     public String getBuilds(@PathVariable("jobName") String jobName, final Model model, @RequestParam(required = false) boolean fetchData) {
         logger.info("getBuilds is called");
-        if(fetchData){
+        if (fetchData) {
             logger.info("fetching new data..");
             uiService.fetchData();
         }
@@ -58,7 +58,7 @@ public class BuildController {
      * @param jobName the name of the job
      * @return rows of the table
      */
-    @RequestMapping(path={"/ajax/job/{jobName}/build"}, method=RequestMethod.GET, produces = "application/json")
+    @RequestMapping(path = {"/ajax/job/{jobName}/build"}, method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public List<Object> getRowsForBuildViewTable(@PathVariable("jobName") String jobName) {
         logger.info("getRowsForBuildViewTable is called");
@@ -72,7 +72,7 @@ public class BuildController {
      * @param jobName the name of the job
      * @return the {@link LinesChartModel}
      */
-    @RequestMapping(path={"/ajax/aggregatedAnalysisResults/{jobName}"}, method=RequestMethod.GET, produces = "application/json")
+    @RequestMapping(path = {"/ajax/aggregatedAnalysisResults/{jobName}"}, method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public LinesChartModel getAggregatedAnalysisResultsTrendCharts(@PathVariable("jobName") String jobName) {
         logger.info("getAggregatedAnalysisResultsTrendChartsExample (ajax) is called");
@@ -87,7 +87,7 @@ public class BuildController {
      * @param toolName the name of the used tool
      * @return the {@link LinesChartModel}
      */
-    @RequestMapping(path={"/ajax/{jobName}/tool/{toolName}"}, method=RequestMethod.GET, produces = "application/json")
+    @RequestMapping(path = {"/ajax/{jobName}/tool/{toolName}"}, method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public LinesChartModel getTrendChartForTool(@PathVariable("jobName") String jobName, @PathVariable("toolName") String toolName) {
         logger.info("getTrendChartForTool (ajax) is called");
@@ -101,7 +101,7 @@ public class BuildController {
      * @param jobName the name of the project
      * @return the {@link LinesChartModel} model with the size of fixed and new issues for each build
      */
-    @RequestMapping(path={"/ajax/{jobName}/newVersusFixedAggregatedTrendChart"}, method=RequestMethod.GET, produces = "application/json")
+    @RequestMapping(path = {"/ajax/{jobName}/newVersusFixedAggregatedTrendChart"}, method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public LinesChartModel getNewVersusFixedTrendChart(@PathVariable("jobName") String jobName) {
         logger.info("getNewVersusFixedAggregatedTrendChart (ajax) is called");
@@ -116,7 +116,7 @@ public class BuildController {
      * @param toolName the used tool
      * @return the {@link LinesChartModel} with the size of fixed and new issues for each build
      */
-    @RequestMapping(path={"/ajax/{jobName}/newVersusFixedTrendChart/{toolName}"}, method=RequestMethod.GET, produces = "application/json")
+    @RequestMapping(path = {"/ajax/{jobName}/newVersusFixedTrendChart/{toolName}"}, method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public LinesChartModel getNewVersusFixedTrendChartForTool(@PathVariable("jobName") String jobName, @PathVariable("toolName") String toolName) {
         logger.info("getNewVersusFixedTrendChartForTool (ajax) is called");
@@ -131,7 +131,7 @@ public class BuildController {
      * @param toolName the used tool
      * @return the {@link LinesChartModel} the trend chart for the severity
      */
-    @RequestMapping(path={"/ajax/{jobName}/severityTrendChart/{toolName}"}, method=RequestMethod.GET, produces = "application/json")
+    @RequestMapping(path = {"/ajax/{jobName}/severityTrendChart/{toolName}"}, method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public LinesChartModel getSeverityTrendChartForTool(@PathVariable("jobName") String jobName, @PathVariable("toolName") String toolName) {
         logger.info("getSeverityTrendChartForTool (ajax) is called");

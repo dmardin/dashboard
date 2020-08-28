@@ -27,7 +27,7 @@ public class SeveritySeriesBuilder extends SeriesBuilder<Build> {
 
     private int getTotalSizeOf(Build build, Severity severity) {
         int totalSize = 0;
-        for(Result result : build.getResults()){
+        for (Result result : build.getResults()) {
             Report report = new Report();
             report.addAll(result.getOutstandingIssues());
             report.addAll(result.getNewIssues());

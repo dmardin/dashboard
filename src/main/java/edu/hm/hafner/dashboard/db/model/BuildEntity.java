@@ -10,7 +10,7 @@ import java.util.List;
  * @author Deniz Mardin
  */
 @Entity
-@Table(name="build")
+@Table(name = "build")
 public class BuildEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -150,14 +150,24 @@ public class BuildEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         BuildEntity that = (BuildEntity) o;
 
-        if (id != that.id) return false;
-        if (number != that.number) return false;
-        if (!url.equals(that.url)) return false;
+        if (id != that.id) {
+            return false;
+        }
+        if (number != that.number) {
+            return false;
+        }
+        if (!url.equals(that.url)) {
+            return false;
+        }
         return resultEntities.equals(that.resultEntities);
     }
 

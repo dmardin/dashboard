@@ -44,9 +44,9 @@ public class JobTableModel extends TableModel {
     @Override
     public List<TableColumn> getColumns() {
         List<TableColumn> columns = new ArrayList<>();
-        columns.add(new TableColumn("Job Name","jobName"));
-        columns.add(new TableColumn("Status","jobStatus"));
-        columns.add(new TableColumn("Url","jobUrl"));
+        columns.add(new TableColumn("Job Name", "jobName"));
+        columns.add(new TableColumn("Status", "jobStatus"));
+        columns.add(new TableColumn("Url", "jobUrl"));
 
         return columns;
     }
@@ -73,7 +73,7 @@ public class JobTableModel extends TableModel {
          *
          * @param jobStatistics the job statistic for one line
          */
-        JobsRow(final Job jobStatistics){
+        JobsRow(final Job jobStatistics) {
             this.jobStatistics = jobStatistics;
         }
 

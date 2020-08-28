@@ -17,6 +17,12 @@ public class AppStartupService {
     private final JobService jobService;
     private final BuildService buildService;
 
+    /**
+     * Creates a new instance of {@link AppStartupService}.
+     *
+     * @param jobService   the needed jobService
+     * @param buildService the needed buildService
+     */
     @Autowired
     public AppStartupService(JobService jobService, BuildService buildService) {
         this.jobService = jobService;

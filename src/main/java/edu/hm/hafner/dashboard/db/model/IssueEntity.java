@@ -403,26 +403,60 @@ public class IssueEntity {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         IssueEntity that = (IssueEntity) o;
 
-        if (columnStart != that.columnStart) return false;
-        if (columnEnd != that.columnEnd) return false;
-        if (lineStart != that.lineStart) return false;
-        if (lineEnd != that.lineEnd) return false;
-        if (!id.equals(that.id)) return false;
-        if (!category.equals(that.category)) return false;
-        if (!description.equals(that.description)) return false;
-        if (!fileName.equals(that.fileName)) return false;
-        if (!fingerprint.equals(that.fingerprint)) return false;
-        if (!message.equals(that.message)) return false;
-        if (!moduleName.equals(that.moduleName)) return false;
-        if (!origin.equals(that.origin)) return false;
-        if (!packageName.equals(that.packageName)) return false;
-        if (!reference.equals(that.reference)) return false;
-        if (!severity.equals(that.severity)) return false;
+        if (columnStart != that.columnStart) {
+            return false;
+        }
+        if (columnEnd != that.columnEnd) {
+            return false;
+        }
+        if (lineStart != that.lineStart) {
+            return false;
+        }
+        if (lineEnd != that.lineEnd) {
+            return false;
+        }
+        if (!id.equals(that.id)) {
+            return false;
+        }
+        if (!category.equals(that.category)) {
+            return false;
+        }
+        if (!description.equals(that.description)) {
+            return false;
+        }
+        if (!fileName.equals(that.fileName)) {
+            return false;
+        }
+        if (!fingerprint.equals(that.fingerprint)) {
+            return false;
+        }
+        if (!message.equals(that.message)) {
+            return false;
+        }
+        if (!moduleName.equals(that.moduleName)) {
+            return false;
+        }
+        if (!origin.equals(that.origin)) {
+            return false;
+        }
+        if (!packageName.equals(that.packageName)) {
+            return false;
+        }
+        if (!reference.equals(that.reference)) {
+            return false;
+        }
+        if (!severity.equals(that.severity)) {
+            return false;
+        }
         return type.equals(that.type);
     }
 

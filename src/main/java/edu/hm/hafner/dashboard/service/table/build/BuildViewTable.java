@@ -29,10 +29,9 @@ public class BuildViewTable {
      */
     public TableModel getTableModel(String id) {
         BuildTableModel buildTableModel = new BuildTableModel(buildRepositoryStatistics);
-        if(buildTableModel.getId().equals(id)){
+        if (buildTableModel.getId().equals(id)) {
             return buildTableModel;
-        }
-        else {
+        } else {
             throw new IllegalArgumentException(String.format("Needed id for this BuildTableModel is builds but currently used %s", id));
         }
 
@@ -44,7 +43,7 @@ public class BuildViewTable {
      * @param id the id of the {@link BuildTableModel}
      * @return the rows of the {@link BuildTableModel}
      */
-    public List<Object> getTableRows(final String id){
+    public List<Object> getTableRows(final String id) {
         return getTableModel(id).getRows();
     }
 }

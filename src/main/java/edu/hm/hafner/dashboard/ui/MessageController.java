@@ -42,7 +42,7 @@ public class MessageController {
      * @param fetchData   boolean to decide if new data should be fetched
      * @return the message page
      */
-    @RequestMapping(path={"/job/{jobName}/build/{buildNumber}/{toolId}/messages"}, method= RequestMethod.GET)
+    @RequestMapping(path = {"/job/{jobName}/build/{buildNumber}/{toolId}/messages"}, method = RequestMethod.GET)
     public String getInfoAndErrorMessages(
             @PathVariable("jobName") String jobName,
             @PathVariable("buildNumber") Integer buildNumber,
@@ -50,7 +50,7 @@ public class MessageController {
             final Model model,
             @RequestParam(required = false) boolean fetchData) {
         logger.info("getInfoAndErrorMessages is called");
-        if(fetchData){
+        if (fetchData) {
             logger.info("fetching new data..");
             uiService.fetchData();
         }

@@ -50,6 +50,7 @@ public class Result {
      * @param totalSize the total size of the {@link Result}
      * @param qualityGateStatus the quality gate of the {@link Result}
      */
+    @SuppressWarnings("checkstyle:ParameterNumber")
     public Result(int id, String warningId, String latestUrl, String name, int fixedSize, int newSize, int totalSize, String qualityGateStatus) {
         this.id = id;
         this.warningId = warningId;
@@ -311,23 +312,51 @@ public class Result {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Result result = (Result) o;
 
-        if (id != result.id) return false;
-        if (fixedSize != result.fixedSize) return false;
-        if (newSize != result.newSize) return false;
-        if (totalSize != result.totalSize) return false;
-        if (!warningId.equals(result.warningId)) return false;
-        if (!latestUrl.equals(result.latestUrl)) return false;
-        if (!name.equals(result.name)) return false;
-        if (!qualityGateStatus.equals(result.qualityGateStatus)) return false;
-        if (!errorMessages.equals(result.errorMessages)) return false;
-        if (!infoMessages.equals(result.infoMessages)) return false;
-        if (!outstandingIssues.equals(result.outstandingIssues)) return false;
-        if (!newIssues.equals(result.newIssues)) return false;
+        if (id != result.id) {
+            return false;
+        }
+        if (fixedSize != result.fixedSize) {
+            return false;
+        }
+        if (newSize != result.newSize) {
+            return false;
+        }
+        if (totalSize != result.totalSize) {
+            return false;
+        }
+        if (!warningId.equals(result.warningId)) {
+            return false;
+        }
+        if (!latestUrl.equals(result.latestUrl)) {
+            return false;
+        }
+        if (!name.equals(result.name)) {
+            return false;
+        }
+        if (!qualityGateStatus.equals(result.qualityGateStatus)) {
+            return false;
+        }
+        if (!errorMessages.equals(result.errorMessages)) {
+            return false;
+        }
+        if (!infoMessages.equals(result.infoMessages)) {
+            return false;
+        }
+        if (!outstandingIssues.equals(result.outstandingIssues)) {
+            return false;
+        }
+        if (!newIssues.equals(result.newIssues)) {
+            return false;
+        }
         return fixedIssues.equals(result.fixedIssues);
     }
 

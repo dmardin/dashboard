@@ -19,7 +19,7 @@ public class Build {
     /**
      * Creates a new instance of a {@link Build}.
      */
-    public Build(){
+    public Build() {
         this.job = new Job();
         this.results = new ArrayList<>();
     }
@@ -144,14 +144,24 @@ public class Build {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Build build = (Build) o;
 
-        if (id != build.id) return false;
-        if (number != build.number) return false;
-        if (!url.equals(build.url)) return false;
+        if (id != build.id) {
+            return false;
+        }
+        if (number != build.number) {
+            return false;
+        }
+        if (!url.equals(build.url)) {
+            return false;
+        }
         return results.equals(build.results);
     }
 

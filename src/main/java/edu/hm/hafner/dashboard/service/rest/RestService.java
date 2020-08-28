@@ -68,11 +68,10 @@ public class RestService {
      */
     public ToolsResponse getTools(String url) {
         ToolsResponse toolsResponse = null;
-        try{
+        try {
             toolsResponse = restTemplate.getForObject(url, ToolsResponse.class);
-        }
-        catch (HttpClientErrorException ex){
-            logger.info("Tools not Found for url: "+ url);
+        } catch (HttpClientErrorException ex) {
+            logger.info("Tools not Found for url: " + url);
         }
         return toolsResponse;
     }
@@ -84,11 +83,11 @@ public class RestService {
      * @param url the url of the Endpoint
      * @return the {@link ResultResponse}
      */
-    public ResultResponse getToolsDetail(String url){
+    public ResultResponse getToolsDetail(String url) {
         ResultResponse resultResponse = null;
-        try{
+        try {
             resultResponse = restTemplate.getForObject(url, ResultResponse.class);
-        }catch (HttpClientErrorException ex) {
+        } catch (HttpClientErrorException ex) {
             logger.info("ToolsDetail not Found for url: " + url);
         }
         return resultResponse;
@@ -106,7 +105,7 @@ public class RestService {
             issuesResponse = restTemplate.getForObject(url, IssuesResponse.class);
         }
         catch (HttpClientErrorException ex) {
-            logger.info("Issues not Found for url: "+ url);
+            logger.info("Issues not Found for url: " + url);
         }
         return issuesResponse;
     }

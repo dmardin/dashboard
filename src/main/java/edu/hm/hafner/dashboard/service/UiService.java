@@ -44,7 +44,7 @@ public class UiService {
      * @param appStartupRunner the AppStartupRunner
      */
     @Autowired
-    public UiService(JobService jobService, BuildService buildService, ResultService resultService, AppStartupRunner appStartupRunner) {
+    public UiService(final JobService jobService, final BuildService buildService, final ResultService resultService, final AppStartupRunner appStartupRunner) {
         this.jobService = jobService;
         this.buildService = buildService;
         this.resultService = resultService;

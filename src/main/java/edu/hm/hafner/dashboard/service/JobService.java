@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Service
 class JobService {
-    JobEntityService jobEntityService;
+    private JobEntityService jobEntityService;
 
     /**
      * Creates a new instance of {@link JobService}.
@@ -33,7 +33,7 @@ class JobService {
      *
      * @return the jobs
      */
-    public List<Job> getAllJobs(){
+    public List<Job> getAllJobs() {
         return Mapper.map(jobEntityService.findAll());
     }
 

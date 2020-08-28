@@ -17,7 +17,7 @@ public class NewVersusFixedAggregatedSeriesBuilder extends NewVersusFixedAbstrac
     @Override
     protected Map<String, Integer> computeSeries(final Build current) {
         Map<String, Integer> series = new HashMap<>();
-        if(!current.getResults().isEmpty()) {
+        if (!current.getResults().isEmpty()) {
             int newWarnings = current.getResults().stream().mapToInt(Result::getNewSize).sum();
             int fixedWarnings = current.getResults().stream().mapToInt(Result::getFixedSize).sum();
             series.put(NEW, newWarnings);

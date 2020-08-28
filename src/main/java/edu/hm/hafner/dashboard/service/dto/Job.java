@@ -160,16 +160,30 @@ public class Job {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Job job = (Job) o;
 
-        if (id != job.id) return false;
-        if (!name.equals(job.name)) return false;
-        if (!url.equals(job.url)) return false;
-        if (color != null ? !color.equals(job.color) : job.color != null) return false;
-        if (!lastBuildStatus.equals(job.lastBuildStatus)) return false;
+        if (id != job.id) {
+            return false;
+        }
+        if (!name.equals(job.name)) {
+            return false;
+        }
+        if (!url.equals(job.url)) {
+            return false;
+        }
+        if (color != null ? !color.equals(job.color) : job.color != null) {
+            return false;
+        }
+        if (!lastBuildStatus.equals(job.lastBuildStatus)) {
+            return false;
+        }
         return builds.equals(job.builds);
     }
 

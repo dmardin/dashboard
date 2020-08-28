@@ -60,7 +60,7 @@ public class AppStartupRunner implements ApplicationRunner {
                 BuildsResponse buildsResponse = restService.getBuilds(job.getUrl() + API_JSON);
                 Job fetchedJob = appStartupService.findJobByName(job.getName());
                 if (fetchedJob != null) {
-                    try{
+                    try {
                         int buildNumberFromDatabaseJob = appStartupService.getLatestBuildNumberFromJob(fetchedJob);
                         List<Build> newBuilds = Arrays.stream(buildsResponse.getBuilds()).filter(build -> build.getNumber() > buildNumberFromDatabaseJob).collect(Collectors.toList());
                         if (!newBuilds.isEmpty()) {

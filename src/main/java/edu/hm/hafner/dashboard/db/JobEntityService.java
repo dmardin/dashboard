@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Service
 public class JobEntityService {
-    JobRepository jobRepository;
+    private JobRepository jobRepository;
 
     /**
      * Creates a new instance of {@link JobEntityService}.

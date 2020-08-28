@@ -13,5 +13,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface JobRepository extends JpaRepository<JobEntity, Integer> {
 
+    /**
+     * Searches for a {@link JobEntity} by name.
+     *
+     * @param name the name
+     * @return the {@link JobEntity}
+     */
     JobEntity findByName(String name);
 }

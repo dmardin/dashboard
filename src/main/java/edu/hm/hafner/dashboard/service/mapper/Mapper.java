@@ -328,6 +328,7 @@ public class Mapper {
         );
     }
 
+    @SuppressWarnings("checkstyle:ParameterNumber")
     private static Issue getIssue(UUID id, String category, int columnEnd, int columnStart, String description, String fileName, String fingerprint, int lineEnd, int lineStart, String message, String moduleName, String origin, String packageName, String reference, String severity, String type) {
         IssueBuilder issueBuilder = new IssueBuilder();
         if (id != null) {

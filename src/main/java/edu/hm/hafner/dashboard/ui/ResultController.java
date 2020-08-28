@@ -39,7 +39,7 @@ public class ResultController {
     @RequestMapping(path = {"/job/{jobName}/build/{buildNumber}"}, method = RequestMethod.GET)
     public String getResults(@PathVariable("jobName") String jobName, @PathVariable("buildNumber") Integer buildNumber, final Model model, @RequestParam(required = false) boolean fetchData) {
         logger.info("getResults was called");
-        if(fetchData){
+        if (fetchData) {
             logger.info("fetching new data..");
             uiService.fetchData();
         }
