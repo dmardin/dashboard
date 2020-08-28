@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -35,13 +35,22 @@
 		<webjars.bootstrap.version>4.3.1</webjars.bootstrap.version>
 		<webjars.jquery.version>3.4.1</webjars.jquery.version>
 		<webjars.luxon.version>1.21.2</webjars.luxon.version>
-		<webjars.font-awesome.version>4.7.0 </webjars.font-awesome.version>
+		<webjars.font-awesome.version>4.7.0</webjars.font-awesome.version>
 
 		<!-- Database -->
 		<mysql.conector.version>8.0.18</mysql.conector.version>
 
 		<!-- Test -->
 		<assertj-core.version>3.15.0</assertj-core.version>
+
+		<!-- Maven Plug-ins Configuration -->
+		<maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
+		<maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
+		<pmd.version>6.26.0</pmd.version>
+		<maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
+		<checkstyle.version>8.35</checkstyle.version>
+		<spotbugs-maven-plugin.version>4.0.4</spotbugs-maven-plugin.version>
+		<findsecbugs-plugin.version>1.10.1</findsecbugs-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -158,8 +167,103 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>${maven-pmd-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>run-pmd</id>
+						<goals>
+							<goal>pmd</goal>
+							<goal>cpd</goal>
+						</goals>
+						<phase>verify</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<linkXRef>false</linkXRef>
+					<failOnViolation>false</failOnViolation>
+					<rulesets>
+						<ruleset>etc/pmd-configuration.xml</ruleset>
+					</rulesets>
+					<targetJdk>${java.version}</targetJdk>
+					<includeTests>true</includeTests>
+					<minimumTokens>50</minimumTokens>
+					<excludeRoots>
+						<excludeRoot>target/generated-test-sources/assertj-assertions</excludeRoot>
+					</excludeRoots>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>net.sourceforge.pmd</groupId>
+						<artifactId>pmd-core</artifactId>
+						<version>${pmd.version}</version>
+					</dependency>
+					<dependency>
+						<groupId>net.sourceforge.pmd</groupId>
+						<artifactId>pmd-java</artifactId>
+						<version>${pmd.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${maven-checkstyle-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>run-checkstyle</id>
+						<goals>
+							<goal>checkstyle</goal>
+						</goals>
+						<phase>verify</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<linkXRef>false</linkXRef>
+					<excludes>**/*Assert*.java</excludes>
+					<failOnViolation>false</failOnViolation>
+					<configLocation>etc/checkstyle-configuration.xml</configLocation>
+					<includeTestSourceDirectory>true</includeTestSourceDirectory>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>${checkstyle.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>com.github.spotbugs</groupId>
+				<artifactId>spotbugs-maven-plugin</artifactId>
+				<version>${spotbugs-maven-plugin.version}</version>
+				<executions>
+					<execution>
+						<id>run-spotbugs</id>
+						<goals>
+							<goal>spotbugs</goal>
+						</goals>
+						<phase>verify</phase>
+					</execution>
+				</executions>
+				<configuration>
+					<failOnError>false</failOnError>
+					<xmlOutput>true</xmlOutput>
+					<threshold>Low</threshold>
+					<effort>Max</effort>
+					<relaxed>false</relaxed>
+					<fork>true</fork>
+					<excludeFilterFile>etc/spotbugs-exclusion-filter.xml</excludeFilterFile>
+					<includeTests>true</includeTests>
+					<plugins>
+						<plugin>
+							<groupId>com.h3xstream.findsecbugs</groupId>
+							<artifactId>findsecbugs-plugin</artifactId>
+							<version>${findsecbugs-plugin.version}</version>
+						</plugin>
+					</plugins>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
