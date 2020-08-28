@@ -104,8 +104,8 @@ class AppStartupServiceTest {
         return jobs;
     }
 
-    private Job createJob(final int Id) {
-        return new Job(Id, JOB_NAME + Id, "http://localhost:8080/jenkins/job/" + JOB_NAME + Id + "/", SUCCESS);
+    private Job createJob(final int id) {
+        return new Job(id, JOB_NAME + id, "http://localhost:8080/jenkins/job/" + JOB_NAME + id + "/", SUCCESS);
     }
 
     private List<Build> createBuilds() {

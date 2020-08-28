@@ -45,7 +45,7 @@ class BuildEntityServiceTest {
         return IntStream.range(0, NUMBER_OF_BUILDS).mapToObj(this::createBuildEntity).collect(Collectors.toList());
     }
 
-    private BuildEntity createBuildEntity(int numberOfBuild) {
+    private BuildEntity createBuildEntity(final int numberOfBuild) {
         return new BuildEntity(numberOfBuild, numberOfBuild, "http://localhost:8080/jenkins/job/" + JOB_NAME + "/" + numberOfBuild + "/");
     }
 }

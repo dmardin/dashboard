@@ -26,7 +26,7 @@ public class IssueController {
      * @param uiService the service for interactions with the ui
      */
     @Autowired
-    public IssueController(UiService uiService) {
+    public IssueController(final UiService uiService) {
         this.uiService = uiService;
     }
 

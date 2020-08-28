@@ -616,7 +616,7 @@ class MapperTest {
         return jobEntity;
     }
 
-    private Job createJobWithBuilds(int idNumber, String jobName, String lastBuildStatus, int numberOfBuilds) {
+    private Job createJobWithBuilds(final int idNumber, final String jobName, final String lastBuildStatus, final int numberOfBuilds) {
         Job job = new Job(idNumber, jobName, "http://localhost:8080/jenkins/job/" + jobName + "/", lastBuildStatus);
         for (int i = 0; i < numberOfBuilds; i++) {
             job.addBuild(new Build(i, i, "http://localhost:8080/jenkins/job/" + jobName + "/" + i + "/"));
@@ -625,7 +625,7 @@ class MapperTest {
         return job;
     }
 
-    private BuildEntity createBuildEntityWithResultEntities(int id, int buildNumber, String jobName, int numberOfResults) {
+    private BuildEntity createBuildEntityWithResultEntities(final int id, final int buildNumber, final String jobName, final int numberOfResults) {
         BuildEntity buildEntity = new BuildEntity(id, buildNumber, "http://localhost:8080/jenkins/job/" + jobName + "/" + buildNumber + "/");
         for (int i = 0; i < numberOfResults; i++) {
             ResultEntity resultEntity = new ResultEntity(
@@ -659,7 +659,7 @@ class MapperTest {
         return buildEntity;
     }
 
-    private Build createBuildWithResults(int id, int buildNumber, String jobName, int numberOfResults) {
+    private Build createBuildWithResults(final int id, final int buildNumber, final String jobName, final int numberOfResults) {
         Build build = new Build(id, buildNumber, "http://localhost:8080/jenkins/job/" + jobName + "/" + buildNumber + "/");
         for (int i = 0; i < numberOfResults; i++) {
             Result result = new Result(
@@ -693,7 +693,7 @@ class MapperTest {
         return build;
     }
 
-    private ResultEntity createResultEntity(int id, int buildNumber, String jobName, int outstandingStart, int outstandingEndExcluded, int newStart, int newEndExcluded, int fixedStart, int fixedEndExcluded) {
+    private ResultEntity createResultEntity(final int id, final int buildNumber, final String jobName, final int outstandingStart, final int outstandingEndExcluded, final int newStart, int newEndExcluded, int fixedStart, int fixedEndExcluded) {
         ResultEntity resultEntity = new ResultEntity(
                 id,
                 "toolId" + id,
@@ -722,7 +722,7 @@ class MapperTest {
         return resultEntity;
     }
 
-    private Result createResult(int id, int buildNumber, String jobName, int outstandingStart, int outstandingEndExcluded, int newStart, int newEndExcluded, int fixedStart, int fixedEndExcluded) {
+    private Result createResult(final int id, final int buildNumber, final String jobName, final int outstandingStart, final int outstandingEndExcluded, final int newStart, final int newEndExcluded, final int fixedStart, final int fixedEndExcluded) {
         Result result = new Result(
                 id,
                 "toolId" + id,
@@ -782,7 +782,7 @@ class MapperTest {
                 .build();
     }
 
-    private IssuesResponse.Issue createIssueFromIssuesResponse(int i) {
+    private IssuesResponse.Issue createIssueFromIssuesResponse(final int i) {
         IssuesResponse.Issue issue = new IssuesResponse.Issue();
         issue.setCategory("category" + i);
         issue.setColumnEnd(i + 2);
@@ -804,7 +804,7 @@ class MapperTest {
         return issue;
     }
 
-    private ReportEntity createReportEntity(WarningTypeEntity warningTypeEntity, int issueNumberStart, int issueNumberEnd) {
+    private ReportEntity createReportEntity(final WarningTypeEntity warningTypeEntity, final int issueNumberStart, final int issueNumberEnd) {
         ReportEntity reportEntity = new ReportEntity(warningTypeEntity);
         for (int i = issueNumberStart; i < issueNumberEnd; i++) {
             reportEntity.addIssueEntity(createIssueEntity(i));
@@ -813,7 +813,7 @@ class MapperTest {
         return reportEntity;
     }
 
-    private IssueEntity createIssueEntity(int i) {
+    private IssueEntity createIssueEntity(final int i) {
         return new IssueEntity(
                 getUUID(i),
                 i + 1,
@@ -834,15 +834,15 @@ class MapperTest {
         );
     }
 
-    private UUID getUUID(int i) {
+    private UUID getUUID(final int i) {
         return UUID.fromString(String.valueOf(UUID_LIST.get(i)));
     }
 
-    private List<String> createErrorMessage(int i) {
+    private List<String> createErrorMessage(final int i) {
         return Arrays.asList("Error", "Message", ": " + i);
     }
 
-    private List<String> createInfoMessage(int i) {
+    private List<String> createInfoMessage(final int i) {
         return Arrays.asList("Info", "Message", ": " + i);
     }
 }

@@ -206,7 +206,7 @@ class ResultServiceTest {
         });
     }
 
-    private Build createBuildWithResults(int id, final int buildNumber, final String jobName, final int numberOfResults) {
+    private Build createBuildWithResults(final int id, final int buildNumber, final String jobName, final int numberOfResults) {
         Build build = new Build(id, buildNumber, "http://localhost:8080/jenkins/job/" + jobName + "/" + buildNumber + "/");
         for (int i = 0; i < numberOfResults; i++) {
             Result result = new Result(

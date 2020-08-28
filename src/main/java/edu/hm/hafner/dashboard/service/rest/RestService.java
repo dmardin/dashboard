@@ -36,7 +36,7 @@ public class RestService {
      * @return the {@link JobsResponse}
      */
     public JobsResponse getProjects() {
-        JobsResponse jobsResponse = null;
+        JobsResponse jobsResponse;
         try {
             jobsResponse = restTemplate.getForObject(restApiProperties.getRestConfiguration().getEndPoint(), JobsResponse.class);
         }

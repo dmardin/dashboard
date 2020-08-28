@@ -238,7 +238,7 @@ public class UiService {
      * @param toolId the tool id
      * @return the list of information messages
      */
-    public List<String> getInfoMessagesFromResultWithToolId(Build build, String toolId) {
+    public List<String> getInfoMessagesFromResultWithToolId(final Build build, final String toolId) {
         return resultService.getInfoMessagesFromResultWithToolId(build, toolId);
     }
 
@@ -249,7 +249,7 @@ public class UiService {
      * @param toolId the tool id
      * @return the list of error messages
      */
-    public List<String> getErrorMessagesFromResultWithToolId(Build build, String toolId) {
+    public List<String> getErrorMessagesFromResultWithToolId(final Build build, final String toolId) {
         return resultService.getErrorMessagesFromResultWithToolId(build, toolId);
     }
 
@@ -267,7 +267,7 @@ public class UiService {
      * @param toolName the used tool
      * @return the {@link LinesChartModel} the LinesChartModel for the severity
      */
-    public LinesChartModel getSeverityTrendChartForTool(String jobName, String toolName) {
+    public LinesChartModel getSeverityTrendChartForTool(final String jobName, final String toolName) {
         Job job = jobService.findJobByName(jobName);
         List<BuildResult<Build>> results = buildService.createBuildResultsForTool(job, toolName);
         SeverityTrendChart severityTrendChart = new SeverityTrendChart();

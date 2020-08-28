@@ -426,11 +426,11 @@ class UiServiceTest {
             for (WarningTypeEntity warningTypeEntity : WarningTypeEntity.values()) {
                 List<Object> report = uiService.getIssuesDataForToolWithIssueType(job.getName(), buildNumber, "toolId" + buildNumber, warningTypeEntity.toString().toLowerCase());
                 int issueRowIndex = 0;
-                if (warningTypeEntity.toString().equals("FIXED")) {
+                if (warningTypeEntity.name().equals("FIXED")) {
                     for (int i = 6; i < 9; i++) {
                         issueRowIndex = assertIssueRowAndReturnNextIndex(softly, report, issueRowIndex, i);
                     }
-                } else if (warningTypeEntity.toString().equals("OUTSTANDING")) {
+                } else if (warningTypeEntity.name().equals("OUTSTANDING")) {
                     for (int i = 0; i < 3; i++) {
                         issueRowIndex = assertIssueRowAndReturnNextIndex(softly, report, issueRowIndex, i);
                     }
@@ -583,7 +583,7 @@ class UiServiceTest {
         return JOB_NAME + numberOfJob;
     }
 
-    private Build createBuildWithResults(int id, final int buildNumber, final String jobName, final int numberOfResults) {
+    private Build createBuildWithResults(final int id, final int buildNumber, final String jobName, final int numberOfResults) {
         Build build = new Build(id, buildNumber, "http://localhost:8080/jenkins/job/" + jobName + "/" + buildNumber + "/");
         for (int i = 0; i < numberOfResults; i++) {
             Result result = new Result(
