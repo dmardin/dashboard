@@ -23,9 +23,10 @@ public class ResultResponse {
 
     /**
      * Setter to set the error messages of the {@link ResultResponse}.
+     *
      * @param errorMessages the error messages
      */
-    public void setErrorMessages(String[] errorMessages) {
+    public void setErrorMessages(final String[] errorMessages) {
         this.errorMessages = errorMessages;
     }
 
@@ -43,7 +44,7 @@ public class ResultResponse {
      *
      * @param infoMessages the info messages
      */
-    public void setInfoMessages(String[] infoMessages) {
+    public void setInfoMessages(final String[] infoMessages) {
         this.infoMessages = infoMessages;
     }
 
@@ -61,7 +62,7 @@ public class ResultResponse {
      *
      * @param fixedSize the fixed size
      */
-    public void setFixedSize(int fixedSize) {
+    public void setFixedSize(final int fixedSize) {
         this.fixedSize = fixedSize;
     }
 
@@ -79,7 +80,7 @@ public class ResultResponse {
      *
      * @param newSize the new size
      */
-    public void setNewSize(int newSize) {
+    public void setNewSize(final int newSize) {
         this.newSize = newSize;
     }
 
@@ -97,7 +98,7 @@ public class ResultResponse {
      *
      * @param qualityGateStatus the quality gate status
      */
-    public void setQualityGateStatus(String qualityGateStatus) {
+    public void setQualityGateStatus(final String qualityGateStatus) {
         this.qualityGateStatus = qualityGateStatus;
     }
 
@@ -115,7 +116,7 @@ public class ResultResponse {
      *
      * @param totalSize the total size
      */
-    public void setTotalSize(int totalSize) {
+    public void setTotalSize(final int totalSize) {
         this.totalSize = totalSize;
     }
 }

@@ -43,7 +43,7 @@ class JobService {
      * @param name the job name
      * @return the job
      */
-    public Job findJobByName(String name) {
+    public Job findJobByName(final String name) {
         JobEntity jobEntity = jobEntityService.findJobByName(name);
         if (jobEntity != null) {
             return Mapper.map(jobEntity);
@@ -57,7 +57,7 @@ class JobService {
      * @param jobs the {@link Job}s to save
      * @return the saves jobs
      */
-    public List<Job> saveAll(List<Job> jobs) {
+    public List<Job> saveAll(final List<Job> jobs) {
         List<JobEntity> jobEntities = Mapper.mapToEntities(jobs);
         List<JobEntity> savedJobs = jobEntityService.saveAll(jobEntities);
         return Mapper.map(savedJobs);
@@ -69,7 +69,7 @@ class JobService {
      * @param jobs the jobs to convert
      * @return converted table rows
      */
-    public List<Object> convertRowsForTheJobViewTable(List<Job> jobs) {
+    public List<Object> convertRowsForTheJobViewTable(final List<Job> jobs) {
         JobRepositoryStatistics jobRepositoryStatistics = new JobRepositoryStatistics();
         jobRepositoryStatistics.addAll(jobs);
         JobViewTable jobViewTable = new JobViewTable(jobRepositoryStatistics);

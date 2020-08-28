@@ -21,7 +21,7 @@ public class IssueTableModel extends TableModel {
      *
      * @param statistics the repository with the issue statistics
      */
-    public IssueTableModel(IssueRepositoryStatistics statistics) {
+    public IssueTableModel(final IssueRepositoryStatistics statistics) {
         super();
         this.statistics = statistics;
     }

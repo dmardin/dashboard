@@ -21,7 +21,7 @@ public class BuildTableModel extends TableModel {
      *
      * @param buildRepositoryStatistics the repository with the build statistics
      */
-    public BuildTableModel(BuildRepositoryStatistics buildRepositoryStatistics) {
+    public BuildTableModel(final BuildRepositoryStatistics buildRepositoryStatistics) {
         super();
         this.buildRepositoryStatistics = buildRepositoryStatistics;
     }

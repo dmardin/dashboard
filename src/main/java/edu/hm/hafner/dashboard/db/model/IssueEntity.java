@@ -30,7 +30,7 @@ public class IssueEntity {
     private String severity;
     private String type;
     @ManyToOne
-    ReportEntity issues;
+    private ReportEntity issues;
 
     /**
      * Creates a new instance of {@link IssueEntity}.
@@ -59,23 +59,24 @@ public class IssueEntity {
      * @param severity the severity of the {@link IssueEntity}
      * @param type the type of the {@link IssueEntity}
      */
+    @SuppressWarnings("checkstyle:ParameterNumber")
     public IssueEntity(
-            UUID id,
-            int columnStart,
-            int columnEnd,
-            int lineStart,
-            int lineEnd,
-            String category,
-            String description,
-            String fileName,
-            String fingerprint,
-            String message,
-            String moduleName,
-            String origin,
-            String packageName,
-            String reference,
-            String severity,
-            String type) {
+            final UUID id,
+            final int columnStart,
+            final int columnEnd,
+            final int lineStart,
+            final int lineEnd,
+            final String category,
+            final String description,
+            final String fileName,
+            final String fingerprint,
+            final String message,
+            final String moduleName,
+            final String origin,
+            final String packageName,
+            final String reference,
+            final String severity,
+            final String type) {
         this.id = id;
         this.category = category;
         this.columnStart = columnStart;
@@ -109,7 +110,7 @@ public class IssueEntity {
      *
      * @param issues the {@link ReportEntity}
      */
-    public void setIssues(ReportEntity issues) {
+    public void setIssues(final ReportEntity issues) {
         this.issues = issues;
     }
 
@@ -127,7 +128,7 @@ public class IssueEntity {
      *
      * @param id the UUID
      */
-    public void setId(UUID id) {
+    public void setId(final UUID id) {
         this.id = id;
     }
 
@@ -145,7 +146,7 @@ public class IssueEntity {
      *
      * @param category the category
      */
-    public void setCategory(String category) {
+    public void setCategory(final String category) {
         this.category = category;
     }
 
@@ -163,7 +164,7 @@ public class IssueEntity {
      *
      * @param columnEnd the end of the column
      */
-    public void setColumnEnd(int columnEnd) {
+    public void setColumnEnd(final int columnEnd) {
         this.columnEnd = columnEnd;
     }
 
@@ -181,7 +182,7 @@ public class IssueEntity {
      *
      * @param columnStart the start of the column
      */
-    public void setColumnStart(int columnStart) {
+    public void setColumnStart(final int columnStart) {
         this.columnStart = columnStart;
     }
 
@@ -199,7 +200,7 @@ public class IssueEntity {
      *
      * @param description the description
      */
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
@@ -217,7 +218,7 @@ public class IssueEntity {
      *
      * @param fileName the file name
      */
-    public void setFileName(String fileName) {
+    public void setFileName(final String fileName) {
         this.fileName = fileName;
     }
 
@@ -235,7 +236,7 @@ public class IssueEntity {
      *
      * @param fingerprint the fingerprint
      */
-    public void setFingerprint(String fingerprint) {
+    public void setFingerprint(final String fingerprint) {
         this.fingerprint = fingerprint;
     }
 
@@ -253,7 +254,7 @@ public class IssueEntity {
      *
      * @param lineEnd the end of the line
      */
-    public void setLineEnd(int lineEnd) {
+    public void setLineEnd(final int lineEnd) {
         this.lineEnd = lineEnd;
     }
 
@@ -271,7 +272,7 @@ public class IssueEntity {
      *
      * @param lineStart the start of the line
      */
-    public void setLineStart(int lineStart) {
+    public void setLineStart(final int lineStart) {
         this.lineStart = lineStart;
     }
 
@@ -289,7 +290,7 @@ public class IssueEntity {
      *
      * @param message the message
      */
-    public void setMessage(String message) {
+    public void setMessage(final String message) {
         this.message = message;
     }
 
@@ -307,7 +308,7 @@ public class IssueEntity {
      *
      * @param moduleName the module name
      */
-    public void setModuleName(String moduleName) {
+    public void setModuleName(final String moduleName) {
         this.moduleName = moduleName;
     }
 
@@ -325,7 +326,7 @@ public class IssueEntity {
      *
      * @param origin the origin
      */
-    public void setOrigin(String origin) {
+    public void setOrigin(final String origin) {
         this.origin = origin;
     }
 
@@ -343,7 +344,7 @@ public class IssueEntity {
      *
      * @param packageName the package name
      */
-    public void setPackageName(String packageName) {
+    public void setPackageName(final String packageName) {
         this.packageName = packageName;
     }
 
@@ -361,7 +362,7 @@ public class IssueEntity {
      *
      * @param reference the reference
      */
-    public void setReference(String reference) {
+    public void setReference(final String reference) {
         this.reference = reference;
     }
 
@@ -379,7 +380,7 @@ public class IssueEntity {
      *
      * @param severity the severity
      */
-    public void setSeverity(String severity) {
+    public void setSeverity(final String severity) {
         this.severity = severity;
     }
 
@@ -397,12 +398,12 @@ public class IssueEntity {
      *
      * @param type the type
      */
-    public void setType(String type) {
+    public void setType(final String type) {
         this.type = type;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }

@@ -20,7 +20,7 @@ public class ToolsResponse {
      *
      * @param tools the {@link Tool}s
      */
-    public void setTools(Tool[] tools) {
+    public void setTools(final Tool[] tools) {
         this.tools = tools;
     }
 
@@ -46,7 +46,7 @@ public class ToolsResponse {
          *
          * @param id the id
          */
-        public void setId(String id) {
+        public void setId(final String id) {
             this.id = id;
         }
 
@@ -64,7 +64,7 @@ public class ToolsResponse {
          *
          * @param latestUrl the latest url
          */
-        public void setLatestUrl(String latestUrl) {
+        public void setLatestUrl(final String latestUrl) {
             this.latestUrl = latestUrl;
         }
 
@@ -82,7 +82,7 @@ public class ToolsResponse {
          *
          * @param name the name
          */
-        public void setName(String name) {
+        public void setName(final String name) {
             this.name = name;
         }
     }

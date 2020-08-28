@@ -43,7 +43,7 @@ public class AppStartupRunner implements ApplicationRunner {
      * @param appStartupService the needed app startup service
      */
     @Autowired
-    public AppStartupRunner(RestService restService, AppStartupService appStartupService) {
+    public AppStartupRunner(final RestService restService, final AppStartupService appStartupService) {
         this.restService = restService;
         this.appStartupService = appStartupService;
     }
@@ -90,10 +90,10 @@ public class AppStartupRunner implements ApplicationRunner {
      * Adds to a given {@link Job} the corresponding {@link Build}s, with the {@link Result}s to every {@link Build} and the {@link Report} of fixed,
      * outstanding and new {@link Issue}s.
      *
-     * @param job the {@link Job}
+     * @param job       the {@link Job}
      * @param buildList the {@link Build}s
      */
-    private void addBuildsToJob(Job job, List<Build> buildList) {
+    private void addBuildsToJob(final Job job, final List<Build> buildList) {
         for (Build build : buildList) {
             job.addBuild(build);
 
@@ -154,7 +154,7 @@ public class AppStartupRunner implements ApplicationRunner {
      * @param color the color
      * @return the build status
      */
-    private String getBuildStatusFromColor(String color) {
+    private String getBuildStatusFromColor(final String color) {
         switch (color) {
             case "blue":
                 return "Success";

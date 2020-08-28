@@ -27,7 +27,7 @@ public class BuildController {
      * @param uiService the service for interactions with the ui
      */
     @Autowired
-    public BuildController(UiService uiService) {
+    public BuildController(final UiService uiService) {
         this.uiService = uiService;
     }
 
@@ -40,7 +40,7 @@ public class BuildController {
      * @return the build page
      */
     @RequestMapping(path = {"/job/{jobName}/build"}, method = RequestMethod.GET)
-    public String getBuilds(@PathVariable("jobName") String jobName, final Model model, @RequestParam(required = false) boolean fetchData) {
+    public String getBuilds(final @PathVariable("jobName") String jobName, final Model model, final @RequestParam(required = false) boolean fetchData) {
         logger.info("getBuilds is called");
         if (fetchData) {
             logger.info("fetching new data..");
@@ -60,7 +60,7 @@ public class BuildController {
      */
     @RequestMapping(path = {"/ajax/job/{jobName}/build"}, method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public List<Object> getRowsForBuildViewTable(@PathVariable("jobName") String jobName) {
+    public List<Object> getRowsForBuildViewTable(final @PathVariable("jobName") String jobName) {
         logger.info("getRowsForBuildViewTable is called");
 
         return uiService.getRowsForBuildViewTable(jobName);
@@ -74,7 +74,7 @@ public class BuildController {
      */
     @RequestMapping(path = {"/ajax/aggregatedAnalysisResults/{jobName}"}, method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public LinesChartModel getAggregatedAnalysisResultsTrendCharts(@PathVariable("jobName") String jobName) {
+    public LinesChartModel getAggregatedAnalysisResultsTrendCharts(final @PathVariable("jobName") String jobName) {
         logger.info("getAggregatedAnalysisResultsTrendChartsExample (ajax) is called");
 
         return uiService.getAggregatedAnalysisResultsTrendCharts(jobName);
@@ -83,13 +83,13 @@ public class BuildController {
     /**
      * Ajax call that prepares a single tool like checkstyle, pmd or spotbugs as {@link LinesChartModel} to display an echart.
      *
-     * @param jobName the name of the job
+     * @param jobName  the name of the job
      * @param toolName the name of the used tool
      * @return the {@link LinesChartModel}
      */
     @RequestMapping(path = {"/ajax/{jobName}/tool/{toolName}"}, method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public LinesChartModel getTrendChartForTool(@PathVariable("jobName") String jobName, @PathVariable("toolName") String toolName) {
+    public LinesChartModel getTrendChartForTool(final @PathVariable("jobName") String jobName, final @PathVariable("toolName") String toolName) {
         logger.info("getTrendChartForTool (ajax) is called");
 
         return uiService.getTrendChartForTool(jobName, toolName);
@@ -103,7 +103,7 @@ public class BuildController {
      */
     @RequestMapping(path = {"/ajax/{jobName}/newVersusFixedAggregatedTrendChart"}, method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public LinesChartModel getNewVersusFixedTrendChart(@PathVariable("jobName") String jobName) {
+    public LinesChartModel getNewVersusFixedTrendChart(final @PathVariable("jobName") String jobName) {
         logger.info("getNewVersusFixedAggregatedTrendChart (ajax) is called");
 
         return uiService.getNewVersusFixedAggregatedTrendChart(jobName);
@@ -112,13 +112,13 @@ public class BuildController {
     /**
      * Ajax call to get the size of new vs fixed issues for a given tool (e.g. checkstyle or pmd).
      *
-     * @param jobName the name of the project
+     * @param jobName  the name of the project
      * @param toolName the used tool
      * @return the {@link LinesChartModel} with the size of fixed and new issues for each build
      */
     @RequestMapping(path = {"/ajax/{jobName}/newVersusFixedTrendChart/{toolName}"}, method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public LinesChartModel getNewVersusFixedTrendChartForTool(@PathVariable("jobName") String jobName, @PathVariable("toolName") String toolName) {
+    public LinesChartModel getNewVersusFixedTrendChartForTool(final @PathVariable("jobName") String jobName, final @PathVariable("toolName") String toolName) {
         logger.info("getNewVersusFixedTrendChartForTool (ajax) is called");
 
         return uiService.getNewVersusFixedTrendChartForTool(jobName, toolName);
@@ -127,13 +127,13 @@ public class BuildController {
     /**
      * Ajax call to get the severity Trend Chart for a given tool (e.g. checkstyle or pmd).
      *
-     * @param jobName the name of the project
+     * @param jobName  the name of the project
      * @param toolName the used tool
      * @return the {@link LinesChartModel} the trend chart for the severity
      */
     @RequestMapping(path = {"/ajax/{jobName}/severityTrendChart/{toolName}"}, method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public LinesChartModel getSeverityTrendChartForTool(@PathVariable("jobName") String jobName, @PathVariable("toolName") String toolName) {
+    public LinesChartModel getSeverityTrendChartForTool(final @PathVariable("jobName") String jobName, final @PathVariable("toolName") String toolName) {
         logger.info("getSeverityTrendChartForTool (ajax) is called");
 
         return uiService.getSeverityTrendChartForTool(jobName, toolName);

@@ -30,7 +30,7 @@ public class JobController {
      * @param uiService the service for interactions with the ui
      */
     @Autowired
-    public JobController(UiService uiService) {
+    public JobController(final UiService uiService) {
         this.uiService = uiService;
     }
 
@@ -42,7 +42,7 @@ public class JobController {
      * @return the home page
      */
     @RequestMapping(path = {"/"}, method = RequestMethod.GET)
-    public String getJobHeaders(final Model model, @RequestParam(required = false) boolean fetchData) {
+    public String getJobHeaders(final Model model, final @RequestParam(required = false) boolean fetchData) {
         logger.info("getJobHeaders is called");
         if (fetchData) {
             logger.info("fetching new data..");

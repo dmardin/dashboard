@@ -37,7 +37,7 @@ public class JobEntity {
      * @param url             the url of the {@link JobEntity}
      * @param lastBuildStatus the last build status of the {@link JobEntity}
      */
-    public JobEntity(int id, String name, String url, String lastBuildStatus) {
+    public JobEntity(final int id, final String name, final String url, final String lastBuildStatus) {
         this.id = id;
         this.name = name;
         this.url = url;
@@ -59,7 +59,7 @@ public class JobEntity {
      *
      * @param id the new id
      */
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -77,7 +77,7 @@ public class JobEntity {
      *
      * @param name the name
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -95,7 +95,7 @@ public class JobEntity {
      *
      * @param url the url
      */
-    public void setUrl(String url) {
+    public void setUrl(final String url) {
         this.url = url;
     }
 
@@ -113,7 +113,7 @@ public class JobEntity {
      *
      * @param lastBuildStatus the last build status
      */
-    public void setLastBuildStatus(String lastBuildStatus) {
+    public void setLastBuildStatus(final String lastBuildStatus) {
         this.lastBuildStatus = lastBuildStatus;
     }
 
@@ -131,7 +131,7 @@ public class JobEntity {
      *
      * @param buildEntities the build entities
      */
-    public void setBuildEntities(List<BuildEntity> buildEntities) {
+    public void setBuildEntities(final List<BuildEntity> buildEntities) {
         this.buildEntities = buildEntities;
     }
 
@@ -141,7 +141,7 @@ public class JobEntity {
      * @param buildEntity the {@link BuildEntity}
      * @return the added {@link BuildEntity}
      */
-    public BuildEntity addBuildEntity(BuildEntity buildEntity) {
+    public BuildEntity addBuildEntity(final BuildEntity buildEntity) {
         getBuildEntities().add(buildEntity);
         buildEntity.setJobEntity(this);
 
@@ -149,7 +149,7 @@ public class JobEntity {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }

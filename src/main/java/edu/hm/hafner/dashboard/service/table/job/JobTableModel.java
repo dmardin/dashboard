@@ -21,7 +21,7 @@ public class JobTableModel extends TableModel {
      *
      * @param jobRepositoryStatistics the repository with the job statistics
      */
-    public JobTableModel(JobRepositoryStatistics jobRepositoryStatistics) {
+    public JobTableModel(final JobRepositoryStatistics jobRepositoryStatistics) {
         super();
         this.jobRepositoryStatistics = jobRepositoryStatistics;
     }

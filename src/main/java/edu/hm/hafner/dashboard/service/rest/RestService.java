@@ -25,7 +25,7 @@ public class RestService {
      * @param restApiProperties the rest api properties
      */
     @Autowired
-    public RestService(RestApiProperties restApiProperties) {
+    public RestService(final RestApiProperties restApiProperties) {
         this.restApiProperties = restApiProperties;
         this.restTemplate = new RestTemplate();
     }
@@ -55,7 +55,7 @@ public class RestService {
      * @param url the url of the Endpoint
      * @return the {@link BuildsResponse}
      */
-    public BuildsResponse getBuilds(String url) {
+    public BuildsResponse getBuilds(final String url) {
         return restTemplate.getForObject(url, BuildsResponse.class);
     }
 
@@ -66,7 +66,7 @@ public class RestService {
      * @param url the url of the Endpoint
      * @return the {@link ToolsResponse}
      */
-    public ToolsResponse getTools(String url) {
+    public ToolsResponse getTools(final String url) {
         ToolsResponse toolsResponse = null;
         try {
             toolsResponse = restTemplate.getForObject(url, ToolsResponse.class);
@@ -83,7 +83,7 @@ public class RestService {
      * @param url the url of the Endpoint
      * @return the {@link ResultResponse}
      */
-    public ResultResponse getToolsDetail(String url) {
+    public ResultResponse getToolsDetail(final String url) {
         ResultResponse resultResponse = null;
         try {
             resultResponse = restTemplate.getForObject(url, ResultResponse.class);
@@ -99,12 +99,11 @@ public class RestService {
      * @param url the url of the Endpoint
      * @return the {@link IssuesResponse}
      */
-    public IssuesResponse getIssues(String url) {
+    public IssuesResponse getIssues(final String url) {
         IssuesResponse issuesResponse = null;
         try {
             issuesResponse = restTemplate.getForObject(url, IssuesResponse.class);
-        }
-        catch (HttpClientErrorException ex) {
+        } catch (HttpClientErrorException ex) {
             logger.info("Issues not Found for url: " + url);
         }
         return issuesResponse;

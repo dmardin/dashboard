@@ -24,12 +24,12 @@ public class Job {
     /**
      * Creates a new instance of a {@link Job}.
      *
-     * @param id the id of the {@link Job}
-     * @param name the name of the {@link Job}
-     * @param url the url of the {@link Job}
+     * @param id              the id of the {@link Job}
+     * @param name            the name of the {@link Job}
+     * @param url             the url of the {@link Job}
      * @param lastBuildStatus the last build status of the {@link Job}
      */
-    public Job(int id, String name, String url, String lastBuildStatus) {
+    public Job(final int id, final String name, final String url, final String lastBuildStatus) {
         this.id = id;
         this.name = name;
         this.url = url;
@@ -51,7 +51,7 @@ public class Job {
      *
      * @param name the name
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -69,7 +69,7 @@ public class Job {
      *
      * @param url the url
      */
-    public void setUrl(String url) {
+    public void setUrl(final String url) {
         this.url = url;
     }
 
@@ -87,7 +87,7 @@ public class Job {
      *
      * @param color the color
      */
-    public void setColor(String color) {
+    public void setColor(final String color) {
         this.color = color;
     }
 
@@ -105,7 +105,7 @@ public class Job {
      *
      * @param builds the {@link Build}s
      */
-    public void setBuilds(List<Build> builds) {
+    public void setBuilds(final List<Build> builds) {
         this.builds = builds;
     }
 
@@ -123,7 +123,7 @@ public class Job {
      *
      * @param lastBuildStatus the last build status
      */
-    public void setLastBuildStatus(String lastBuildStatus) {
+    public void setLastBuildStatus(final String lastBuildStatus) {
         this.lastBuildStatus = lastBuildStatus;
     }
 
@@ -141,7 +141,7 @@ public class Job {
      *
      * @param id the id
      */
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -151,7 +151,7 @@ public class Job {
      * @param build the {@link Build}
      * @return the added {@link Build}
      */
-    public Build addBuild(Build build) {
+    public Build addBuild(final Build build) {
         getBuilds().add(build);
         build.setJob(this);
 
@@ -159,7 +159,7 @@ public class Job {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }

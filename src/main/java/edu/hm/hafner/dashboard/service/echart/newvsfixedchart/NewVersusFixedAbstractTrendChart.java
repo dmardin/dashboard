@@ -13,13 +13,13 @@ public abstract class NewVersusFixedAbstractTrendChart {
     /**
      * Creates the lines charts model depending on the builder.
      *
-     * @param builder the builder
-     * @param buildResults the buildResult
+     * @param builder       the builder
+     * @param buildResults  the buildResult
      * @param configuration the configuration
      * @return the lines chart model
      */
-    protected LinesChartModel createLineChart(SeriesBuilder<Build> builder, final Iterable<? extends BuildResult<Build>> buildResults,
-                              final ChartModelConfiguration configuration) {
+    protected LinesChartModel createLineChart(final SeriesBuilder<Build> builder, final Iterable<? extends BuildResult<Build>> buildResults,
+                                              final ChartModelConfiguration configuration) {
         LinesDataSet dataSet = builder.createDataSet(configuration, buildResults);
 
         LinesChartModel model = new LinesChartModel();

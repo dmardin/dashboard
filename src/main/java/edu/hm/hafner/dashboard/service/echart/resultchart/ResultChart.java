@@ -18,7 +18,7 @@ public class ResultChart {
      * @param result the {@link Result}
      * @return the {@link BarChartModel}
      */
-    public BarChartModel create(Result result) {
+    public BarChartModel create(final Result result) {
         BarChartModel model = new BarChartModel();
         int outstandingSize = result.getOutstandingIssues().getSize();
         Palette[] colors = Palette.values();

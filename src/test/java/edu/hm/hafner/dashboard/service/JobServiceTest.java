@@ -32,7 +32,7 @@ class JobServiceTest {
     void shouldFindAllJobs() {
         JobEntityService jobEntityService = mock(JobEntityService.class);
         JobService jobService = new JobService(jobEntityService);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             List<JobEntity> allJobs = new ArrayList<>();
             when(jobEntityService.findAll()).thenReturn(allJobs);
             List<Job> jobs = jobService.getAllJobs();
@@ -58,7 +58,7 @@ class JobServiceTest {
     void shouldNotFindJobByName() {
         JobEntityService jobEntityService = mock(JobEntityService.class);
         JobService jobService = new JobService(jobEntityService);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             when(jobEntityService.findJobByName(JOB_NAME)).thenReturn(null);
             Job job = jobService.findJobByName(JOB_NAME);
             softly.assertThat(job).isNull();
@@ -69,7 +69,7 @@ class JobServiceTest {
     void shouldFindJobByName() {
         JobEntityService jobEntityService = mock(JobEntityService.class);
         JobService jobService = new JobService(jobEntityService);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             when(jobEntityService.findJobByName(JOB_NAME + 1)).thenReturn(createJobEntity(1));
             Job job = jobService.findJobByName(JOB_NAME + 1);
             softly.assertThat(job).isEqualTo(createJob(1));
@@ -80,7 +80,7 @@ class JobServiceTest {
     void shouldSaveAllJobs() {
         JobEntityService jobEntityService = mock(JobEntityService.class);
         JobService jobService = new JobService(jobEntityService);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             when(jobEntityService.saveAll(new ArrayList<>())).thenReturn(new ArrayList<>());
             List<Job> jobs = jobService.saveAll(new ArrayList<>());
             softly.assertThat(jobs).isEmpty();
@@ -97,7 +97,7 @@ class JobServiceTest {
     void shouldCreateJobViewTable() {
         JobEntityService jobEntityService = mock(JobEntityService.class);
         JobService jobService = new JobService(jobEntityService);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             JobViewTable jobViewTable = jobService.createJobViewTable();
             TableModel tableModel = jobViewTable.getTableModel("jobs");
             softly.assertThat(tableModel.getId()).isEqualTo("jobs");
@@ -128,7 +128,7 @@ class JobServiceTest {
         return IntStream.range(0, NUMBER_OF_JOBS).mapToObj(this::createJobEntity).collect(Collectors.toList());
     }
 
-    private JobEntity createJobEntity(int numberOfJob) {
+    private JobEntity createJobEntity(final int numberOfJob) {
         return new JobEntity(
                 numberOfJob,
                 getJobNameForNumber(numberOfJob),
@@ -136,7 +136,7 @@ class JobServiceTest {
                 SUCCESS);
     }
 
-    private Job createJob(int numberOfJob) {
+    private Job createJob(final int numberOfJob) {
         return new Job(
                 numberOfJob,
                 getJobNameForNumber(numberOfJob),
@@ -153,11 +153,11 @@ class JobServiceTest {
         return jobs;
     }
 
-    private String getUrlForNumber(int number) {
+    private String getUrlForNumber(final int number) {
         return "http://localhost:8080/jenkins/job/" + JOB_NAME + number + "/";
     }
 
-    private String getJobNameForNumber(int numberOfJob) {
+    private String getJobNameForNumber(final int numberOfJob) {
         return JOB_NAME + numberOfJob;
     }
 }

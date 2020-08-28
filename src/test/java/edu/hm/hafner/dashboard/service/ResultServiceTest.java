@@ -35,7 +35,7 @@ class ResultServiceTest {
         ResultService resultService = new ResultService();
         Build build = createBuildWithResults(BUILD_NUMBER, BUILD_NUMBER, JOB_NAME, NUMBER_OF_RESULTS);
 
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             List<String> usedTools = resultService.getUsedToolsFromBuild(build);
             for (int i = 0; i < usedTools.size(); i++) {
                 String usedTool = usedTools.get(i);
@@ -49,7 +49,7 @@ class ResultServiceTest {
         ResultService resultService = new ResultService();
         Build build = createBuildWithResults(BUILD_NUMBER, BUILD_NUMBER, JOB_NAME, NUMBER_OF_RESULTS);
 
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             for (int i = 0; i < NUMBER_OF_RESULTS; i++) {
                 List<String> infoMessages = resultService.getInfoMessagesFromResultWithToolId(build, "toolId" + i);
                 List<String> errorMessages = resultService.getErrorMessagesFromResultWithToolId(build, "toolId" + i);
@@ -66,15 +66,15 @@ class ResultServiceTest {
         Job job = new Job(1, JOB_NAME, "http://localhost:8080/jenkins/job/" + JOB_NAME + "/", SUCCESS);
         job.addBuild(build);
 
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             for (int i = 0; i < NUMBER_OF_RESULTS; i++) {
                 String notExistingToolId = "notExistingToolId" + i;
                 softly.assertThatThrownBy(() -> resultService.getInfoMessagesFromResultWithToolId(build, notExistingToolId))
                         .isInstanceOf(NoSuchElementException.class)
-                        .hasMessage("Tool id "+ notExistingToolId + " for the Build "+build.getId()+" from the job "+ job.getName() + " not found");
+                        .hasMessage("Tool id " + notExistingToolId + " for the Build " + build.getId() + " from the job " + job.getName() + " not found");
                 softly.assertThatThrownBy(() -> resultService.getErrorMessagesFromResultWithToolId(build, notExistingToolId))
                         .isInstanceOf(NoSuchElementException.class)
-                        .hasMessage("Tool id "+ notExistingToolId + " for the Build "+build.getId() + " from the job "+ job.getName() + " not found");
+                        .hasMessage("Tool id " + notExistingToolId + " for the Build " + build.getId() + " from the job " + job.getName() + " not found");
             }
         });
     }
@@ -84,7 +84,7 @@ class ResultServiceTest {
         ResultService resultService = new ResultService();
         Build build = createBuildWithResults(BUILD_NUMBER, BUILD_NUMBER, JOB_NAME, NUMBER_OF_RESULTS);
 
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             for (int i = 0; i < NUMBER_OF_RESULTS; i++) {
                 Result result = resultService.getResultByToolId(build, "toolId" + i);
                 Result expectedResult = new Result(
@@ -135,7 +135,7 @@ class ResultServiceTest {
         Job job = new Job(1, JOB_NAME, "http://localhost:8080/jenkins/job/" + JOB_NAME + "/", SUCCESS);
         job.addBuild(build);
 
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             for (int i = 0; i < NUMBER_OF_RESULTS; i++) {
                 String notExistingToolId = "notExistingToolId" + i;
                 softly.assertThatThrownBy(() -> resultService.getResultByToolId(build, notExistingToolId))
@@ -149,7 +149,7 @@ class ResultServiceTest {
     void createIssueViewTable() {
         ResultService resultService = new ResultService();
 
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             IssueViewTable issueViewTable = resultService.createIssueViewTable();
             TableModel tableModel = issueViewTable.getTableModel("issues");
             softly.assertThat(tableModel.getId()).isEqualTo("issues");
@@ -206,7 +206,7 @@ class ResultServiceTest {
         });
     }
 
-    private Build createBuildWithResults(int id, int buildNumber, String jobName, int numberOfResults) {
+    private Build createBuildWithResults(int id, final int buildNumber, final String jobName, final int numberOfResults) {
         Build build = new Build(id, buildNumber, "http://localhost:8080/jenkins/job/" + jobName + "/" + buildNumber + "/");
         for (int i = 0; i < numberOfResults; i++) {
             Result result = new Result(
@@ -250,7 +250,7 @@ class ResultServiceTest {
         return build;
     }
 
-    private Issue createIssue(int issueCounter) {
+    private Issue createIssue(final int issueCounter) {
         return new IssueBuilder()
                 .setId(UUID.fromString(issueCounter + "39c88cb-abb2-43c4-8374-735840acbee9"))
                 .setCategory("category" + issueCounter)
@@ -271,11 +271,11 @@ class ResultServiceTest {
                 .build();
     }
 
-    private List<String> createErrorMessage(int i) {
+    private List<String> createErrorMessage(final int i) {
         return Arrays.asList("Error", "Message", ": " + i);
     }
 
-    private List<String> createInfoMessage(int i) {
+    private List<String> createInfoMessage(final int i) {
         return Arrays.asList("Info", "Message", ": " + i);
     }
 }

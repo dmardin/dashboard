@@ -17,7 +17,7 @@ public class IssueViewTable {
      *
      * @param issueRepositoryStatistics the repository with the issue statistics for the table
      */
-    public IssueViewTable(IssueRepositoryStatistics issueRepositoryStatistics) {
+    public IssueViewTable(final IssueRepositoryStatistics issueRepositoryStatistics) {
         this.issueRepositoryStatistics = issueRepositoryStatistics;
     }
 
@@ -27,7 +27,7 @@ public class IssueViewTable {
      * @param id the id of the table
      * @return the {@link IssueTableModel}
      */
-    public TableModel getTableModel(String id) {
+    public TableModel getTableModel(final String id) {
         IssueTableModel issueTableModel = new IssueTableModel(issueRepositoryStatistics);
         if (issueTableModel.getId().equals(id)) {
             return issueTableModel;

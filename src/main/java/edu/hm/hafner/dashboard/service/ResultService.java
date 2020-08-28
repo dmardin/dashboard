@@ -25,7 +25,7 @@ class ResultService {
      * @param build the {@link Build}
      * @return the list of {@link String}s with the used tools
      */
-    public List<String> getUsedToolsFromBuild(Build build) {
+    public List<String> getUsedToolsFromBuild(final Build build) {
         return build.getResults().stream().map(Result::getName).collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -36,7 +36,7 @@ class ResultService {
      * @param toolId the tool id
      * @return the list of info messages
      */
-    public List<String> getInfoMessagesFromResultWithToolId(Build build, String toolId) {
+    public List<String> getInfoMessagesFromResultWithToolId(final Build build, final String toolId) {
         return getResultByToolId(build, toolId).getInfoMessages();
     }
 
@@ -47,7 +47,7 @@ class ResultService {
      * @param toolId the tool id
      * @return the list of error messages
      */
-    public List<String> getErrorMessagesFromResultWithToolId(Build build, String toolId) {
+    public List<String> getErrorMessagesFromResultWithToolId(final Build build, final String toolId) {
         return getResultByToolId(build, toolId).getErrorMessages();
     }
 
@@ -58,7 +58,7 @@ class ResultService {
      * @param toolId the tool id
      * @return the {@link Result}
      */
-    public Result getResultByToolId(Build build, String toolId) {
+    public Result getResultByToolId(final Build build, final String toolId) {
         return build.getResults().stream()
                 .filter(r -> r.getWarningId().equals(toolId))
                 .findFirst()
@@ -76,7 +76,7 @@ class ResultService {
      * @param toolId the tool id
      * @return prepared table rows
      */
-    public List<Object> getOutstandingAndNewIssuesForTool(Build build, String toolId) {
+    public List<Object> getOutstandingAndNewIssuesForTool(final Build build, final String toolId) {
         Result result = getResultByToolId(build, toolId);
         Report report = new Report();
         report.addAll(result.getOutstandingIssues());
@@ -94,7 +94,7 @@ class ResultService {
      * @param issueType the issue type (e.g. new, fixed, outstanding)
      * @return prepared table rows
      */
-    public List<Object> getIssuesByToolIdAndIssueType(Build build, String toolId, String issueType) {
+    public List<Object> getIssuesByToolIdAndIssueType(final Build build, final String toolId, final String issueType) {
         Report report = new Report();
         Result result = getResultByToolId(build, toolId);
         switch (issueType) {
@@ -118,7 +118,7 @@ class ResultService {
      * @param report the {@link Report}
      * @return converted table rows
      */
-    private List<Object> convertRowsForTheIssueViewTable(Report report) {
+    private List<Object> convertRowsForTheIssueViewTable(final Report report) {
         ArrayList<Issue> issueStatisticsList = new ArrayList<>();
         report.stream().forEach(issueStatisticsList::add);
         IssueRepositoryStatistics repositoryStatistics = new IssueRepositoryStatistics();

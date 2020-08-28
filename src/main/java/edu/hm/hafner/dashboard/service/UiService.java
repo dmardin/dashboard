@@ -75,7 +75,7 @@ public class UiService {
      * @param jobName the name of the Job
      * @return the list of {@link String}s with the used tools for the last Build
      */
-    public List<String> getUsedToolsFromLastBuild(String jobName) {
+    public List<String> getUsedToolsFromLastBuild(final String jobName) {
         Job job = jobService.findJobByName(jobName);
         Build build = buildService.getLatestBuild(job);
 
@@ -97,7 +97,7 @@ public class UiService {
      * @param jobName the name of the job
      * @return rows of the table
      */
-    public List<Object> getRowsForBuildViewTable(String jobName) {
+    public List<Object> getRowsForBuildViewTable(final String jobName) {
         Job job = jobService.findJobByName(jobName);
 
         return buildService.prepareRowsForBuildViewTable(job.getBuilds());
@@ -109,7 +109,7 @@ public class UiService {
      * @param jobName the name of the job
      * @return the {@link LinesChartModel}
      */
-    public LinesChartModel getAggregatedAnalysisResultsTrendCharts(String jobName) {
+    public LinesChartModel getAggregatedAnalysisResultsTrendCharts(final String jobName) {
         Job job = jobService.findJobByName(jobName);
         List<BuildResult<Build>> buildResults = buildService.createBuildResults(job);
         AggregatedToolTrendChart toolTrendChart = new AggregatedToolTrendChart();
@@ -124,7 +124,7 @@ public class UiService {
      * @param toolName the name of the used tool
      * @return the {@link LinesChartModel}
      */
-    public LinesChartModel getTrendChartForTool(String jobName, String toolName) {
+    public LinesChartModel getTrendChartForTool(final String jobName, final String toolName) {
         Job job = jobService.findJobByName(jobName);
         List<BuildResult<Build>> results = buildService.createBuildResultsForTool(job, toolName);
         ToolTrendChart toolTrendChart = new ToolTrendChart();
@@ -138,7 +138,7 @@ public class UiService {
      * @param jobName the name of the project
      * @return the {@link LinesChartModel} model with the size of fixed and new issues for each build
      */
-    public LinesChartModel getNewVersusFixedAggregatedTrendChart(String jobName) {
+    public LinesChartModel getNewVersusFixedAggregatedTrendChart(final String jobName) {
         Job job = jobService.findJobByName(jobName);
         List<BuildResult<Build>> buildResults = buildService.createBuildResults(job);
         NewVersusFixedAggregatedTrendChart trendChart = new NewVersusFixedAggregatedTrendChart();
@@ -153,7 +153,7 @@ public class UiService {
      * @param toolName the used tool
      * @return the {@link LinesChartModel} with the size of fixed and new issues for each build
      */
-    public LinesChartModel getNewVersusFixedTrendChartForTool(String jobName, String toolName) {
+    public LinesChartModel getNewVersusFixedTrendChartForTool(final String jobName, final String toolName) {
         Job job = jobService.findJobByName(jobName);
         List<BuildResult<Build>> buildResults = buildService.createBuildResultsForTool(job, toolName);
         NewVersusFixedTrendChart trendChart = new NewVersusFixedTrendChart();
@@ -168,7 +168,7 @@ public class UiService {
      * @param buildNumber the needed build number
      * @return the requested {@link Build}
      */
-    public Build getBuildWithBuildNumberFromJob(String jobName, Integer buildNumber) {
+    public Build getBuildWithBuildNumberFromJob(final String jobName, final Integer buildNumber) {
         Job job = jobService.findJobByName(jobName);
 
         return buildService.getBuildWithBuildNumberFromJob(job, buildNumber);
@@ -182,7 +182,7 @@ public class UiService {
      * @param toolName    the name of the used tool (e.g. checkstyle)
      * @return the {@link BarChartModel} with the summarize of a result
      */
-    public BarChartModel getResultSummarize(String jobName, Integer buildNumber, String toolName) {
+    public BarChartModel getResultSummarize(final String jobName, final Integer buildNumber, final String toolName) {
         Job job = jobService.findJobByName(jobName);
         Build build = buildService.getBuildWithBuildNumberFromJob(job, buildNumber);
         Result result = resultService.getResultByToolId(build, toolName);
@@ -208,7 +208,7 @@ public class UiService {
      * @param toolId      the tool id (e.g. checkstyle)
      * @return rows of the table
      */
-    public List<Object> getIssuesDataForToolWithTotalSize(String jobName, Integer buildNumber, String toolId) {
+    public List<Object> getIssuesDataForToolWithTotalSize(final String jobName, final Integer buildNumber, final String toolId) {
         Job job = jobService.findJobByName(jobName);
         Build build = buildService.getBuildWithBuildNumberFromJob(job, buildNumber);
 
@@ -224,7 +224,7 @@ public class UiService {
      * @param issueType   the issue type (e.g. fixed, outstanding or new)
      * @return rows of the table
      */
-    public List<Object> getIssuesDataForToolWithIssueType(String jobName, Integer buildNumber, String toolId, String issueType) {
+    public List<Object> getIssuesDataForToolWithIssueType(final String jobName, final Integer buildNumber, final String toolId, final String issueType) {
         Job job = jobService.findJobByName(jobName);
         Build build = buildService.getBuildWithBuildNumberFromJob(job, buildNumber);
 

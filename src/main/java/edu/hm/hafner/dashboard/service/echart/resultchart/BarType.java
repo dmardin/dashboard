@@ -18,7 +18,7 @@ public enum BarType {
      *
      * @param name the name of the {@link BarType}
      */
-    BarType(String name) {
+    BarType(final String name) {
         this.name = name;
     }
 

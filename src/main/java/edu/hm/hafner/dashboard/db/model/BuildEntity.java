@@ -33,11 +33,11 @@ public class BuildEntity {
     /**
      * Creates a new instance of {@link BuildEntity}.
      *
-     * @param id the id of the {@link BuildEntity}
+     * @param id     the id of the {@link BuildEntity}
      * @param number the build number of the {@link BuildEntity}
-     * @param url the url of the {@link BuildEntity}
+     * @param url    the url of the {@link BuildEntity}
      */
-    public BuildEntity(int id, int number, String url) {
+    public BuildEntity(final int id, final int number, final String url) {
         this.id = id;
         this.number = number;
         this.url = url;
@@ -59,7 +59,7 @@ public class BuildEntity {
      *
      * @param id the id
      */
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -77,7 +77,7 @@ public class BuildEntity {
      *
      * @param number the build number
      */
-    public void setNumber(int number) {
+    public void setNumber(final int number) {
         this.number = number;
     }
 
@@ -95,7 +95,7 @@ public class BuildEntity {
      *
      * @param url the url
      */
-    public void setUrl(String url) {
+    public void setUrl(final String url) {
         this.url = url;
     }
 
@@ -113,7 +113,7 @@ public class BuildEntity {
      *
      * @param jobEntity the {@link JobEntity}
      */
-    public void setJobEntity(JobEntity jobEntity) {
+    public void setJobEntity(final JobEntity jobEntity) {
         this.jobEntity = jobEntity;
     }
 
@@ -131,7 +131,7 @@ public class BuildEntity {
      *
      * @param resultEntities the {@link ResultEntity}s
      */
-    public void setResultEntities(List<ResultEntity> resultEntities) {
+    public void setResultEntities(final List<ResultEntity> resultEntities) {
         this.resultEntities = resultEntities;
     }
 
@@ -141,7 +141,7 @@ public class BuildEntity {
      * @param resultEntity the {@link ResultEntity}
      * @return the added {@link ResultEntity}
      */
-    public ResultEntity addResultEntity(ResultEntity resultEntity) {
+    public ResultEntity addResultEntity(final ResultEntity resultEntity) {
         getResultEntities().add(resultEntity);
         resultEntity.setBuildEntity(this);
 
@@ -149,7 +149,7 @@ public class BuildEntity {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }

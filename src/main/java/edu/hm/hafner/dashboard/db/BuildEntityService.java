@@ -22,7 +22,7 @@ public class BuildEntityService {
      * @param buildRepository the repository for builds
      */
     @Autowired
-    public BuildEntityService(BuildRepository buildRepository) {
+    public BuildEntityService(final BuildRepository buildRepository) {
         this.buildRepository = buildRepository;
     }
 
@@ -32,7 +32,7 @@ public class BuildEntityService {
      * @param buildEntities the {@link BuildEntity}s to save
      * @return the saved list of {@link BuildEntity}s
      */
-    public List<BuildEntity> saveAll(List<BuildEntity> buildEntities) {
+    public List<BuildEntity> saveAll(final List<BuildEntity> buildEntities) {
         return buildRepository.saveAll(buildEntities);
     }
 }

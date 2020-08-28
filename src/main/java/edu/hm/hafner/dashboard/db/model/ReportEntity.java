@@ -34,7 +34,7 @@ public class ReportEntity {
      *
      * @param warningTypeEntity the {@link WarningTypeEntity} of the {@link ReportEntity} e.g. NEW, OUTSTANDING or FIXED
      */
-    public ReportEntity(WarningTypeEntity warningTypeEntity) {
+    public ReportEntity(final WarningTypeEntity warningTypeEntity) {
         this.warningTypeEntity = warningTypeEntity;
         this.resultEntity = new ResultEntity();
         this.issues = new ArrayList<>();
@@ -54,7 +54,7 @@ public class ReportEntity {
      *
      * @param id the id
      */
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -72,7 +72,7 @@ public class ReportEntity {
      *
      * @param issues the issues
      */
-    public void setIssues(List<IssueEntity> issues) {
+    public void setIssues(final List<IssueEntity> issues) {
         this.issues = issues;
     }
 
@@ -90,7 +90,7 @@ public class ReportEntity {
      *
      * @param resultEntity the {@link ResultEntity}
      */
-    public void setResultEntity(ResultEntity resultEntity) {
+    public void setResultEntity(final ResultEntity resultEntity) {
         this.resultEntity = resultEntity;
     }
 
@@ -108,7 +108,7 @@ public class ReportEntity {
      *
      * @param warningTypeEntity the {@link WarningTypeEntity}
      */
-    public void setWarningTypeEntity(WarningTypeEntity warningTypeEntity) {
+    public void setWarningTypeEntity(final WarningTypeEntity warningTypeEntity) {
         this.warningTypeEntity = warningTypeEntity;
     }
 
@@ -118,7 +118,7 @@ public class ReportEntity {
      * @param issueEntity the {@link IssueEntity}
      * @return the added {@link IssueEntity}
      */
-    public IssueEntity addIssueEntity(IssueEntity issueEntity) {
+    public IssueEntity addIssueEntity(final IssueEntity issueEntity) {
         getIssues().add(issueEntity);
         issueEntity.setIssues(this);
 
@@ -126,7 +126,7 @@ public class ReportEntity {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }

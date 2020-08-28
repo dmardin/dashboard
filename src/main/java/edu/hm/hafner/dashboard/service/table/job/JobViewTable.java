@@ -18,7 +18,7 @@ public class JobViewTable {
      *
      * @param jobRepositoryStatistics the repository with the job statistics for the table
      */
-    public JobViewTable(JobRepositoryStatistics jobRepositoryStatistics) {
+    public JobViewTable(final JobRepositoryStatistics jobRepositoryStatistics) {
         this.jobRepositoryStatistics = jobRepositoryStatistics;
     }
 
@@ -28,7 +28,7 @@ public class JobViewTable {
      * @param id the id of the table
      * @return the {@link JobTableModel}
      */
-    public TableModel getTableModel(String id) {
+    public TableModel getTableModel(final String id) {
         JobTableModel jobTableModel = new JobTableModel(jobRepositoryStatistics);
         if (jobTableModel.getId().equals(id)) {
             return jobTableModel;

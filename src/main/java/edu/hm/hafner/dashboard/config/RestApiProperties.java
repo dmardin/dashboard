@@ -30,7 +30,7 @@ public class RestApiProperties {
      *
      * @param restConfiguration the new configuration for the REST Endpoint
      */
-    public void setRestConfiguration(RestConfiguration restConfiguration) {
+    public void setRestConfiguration(final RestConfiguration restConfiguration) {
         this.restConfiguration = restConfiguration;
     }
 
@@ -54,7 +54,7 @@ public class RestApiProperties {
          *
          * @param endPoint the new Endpoint
          */
-        public void setEndPoint(String endPoint) {
+        public void setEndPoint(final String endPoint) {
             this.endPoint = endPoint;
         }
     }

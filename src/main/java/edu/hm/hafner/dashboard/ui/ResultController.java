@@ -23,7 +23,7 @@ public class ResultController {
      *
      * @param uiService the service for interactions with the ui
      */
-    public ResultController(UiService uiService) {
+    public ResultController(final UiService uiService) {
         this.uiService = uiService;
     }
 
@@ -37,7 +37,7 @@ public class ResultController {
      * @return the result page
      */
     @RequestMapping(path = {"/job/{jobName}/build/{buildNumber}"}, method = RequestMethod.GET)
-    public String getResults(@PathVariable("jobName") String jobName, @PathVariable("buildNumber") Integer buildNumber, final Model model, @RequestParam(required = false) boolean fetchData) {
+    public String getResults(final @PathVariable("jobName") String jobName, final @PathVariable("buildNumber") Integer buildNumber, final Model model, final @RequestParam(required = false) boolean fetchData) {
         logger.info("getResults was called");
         if (fetchData) {
             logger.info("fetching new data..");
@@ -59,9 +59,9 @@ public class ResultController {
      */
     @RequestMapping(path = {"/ajax/job/{jobName}/build/{buildNumber}/{toolName}/result"}, method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public BarChartModel getResultSummarize(@PathVariable("jobName") String jobName,
-                                            @PathVariable("buildNumber") Integer buildNumber,
-                                            @PathVariable("toolName") String toolName) {
+    public BarChartModel getResultSummarize(final @PathVariable("jobName") String jobName,
+                                            final @PathVariable("buildNumber") Integer buildNumber,
+                                            final @PathVariable("toolName") String toolName) {
         logger.info("getResultSummarize was called");
 
         return uiService.getResultSummarize(jobName, buildNumber, toolName);

@@ -40,7 +40,7 @@ public class Mapper {
      * @param jobEntity the {@link JobEntity}
      * @return the converted {@link Job}
      */
-    public static Job map(JobEntity jobEntity) {
+    public static Job map(final JobEntity jobEntity) {
         Job job = new Job(
                 jobEntity.getId(),
                 jobEntity.getName(),
@@ -58,7 +58,7 @@ public class Mapper {
      * @param jobEntities the list of {@link JobEntity}s
      * @return the converted list of  {@link Job}s
      */
-    public static List<Job> map(List<JobEntity> jobEntities) {
+    public static List<Job> map(final List<JobEntity> jobEntities) {
         List<Job> list = new ArrayList<>();
         for (JobEntity jobEntity : jobEntities) {
             Job map = map(jobEntity);
@@ -73,7 +73,7 @@ public class Mapper {
      * @param job the {@link Job}
      * @return the converted {@link JobEntity}
      */
-    public static JobEntity mapToEntity(Job job) {
+    public static JobEntity mapToEntity(final Job job) {
         JobEntity jobEntity = new JobEntity(
                 job.getId(),
                 job.getName(),
@@ -94,7 +94,7 @@ public class Mapper {
      * @param jobs the {@link Job}s
      * @return the converted list of {@link JobEntity}s
      */
-    public static List<JobEntity> mapToEntities(List<Job> jobs) {
+    public static List<JobEntity> mapToEntities(final List<Job> jobs) {
         List<JobEntity> list = new ArrayList<>();
         for (Job job : jobs) {
             JobEntity jobEntity = mapToEntity(job);
@@ -109,7 +109,7 @@ public class Mapper {
      * @param buildEntity the {@link BuildEntity} to convert
      * @return the converted {@link Build}
      */
-    public static Build map(BuildEntity buildEntity) {
+    public static Build map(final BuildEntity buildEntity) {
         Build build = new Build(
                 buildEntity.getId(),
                 buildEntity.getNumber(),
@@ -129,7 +129,7 @@ public class Mapper {
      * @param build the {@link Build} to convert
      * @return the converted {@link BuildEntity}
      */
-    public static BuildEntity mapToEntity(Build build) {
+    public static BuildEntity mapToEntity(final Build build) {
         BuildEntity buildEntity = new BuildEntity(
                 build.getId(),
                 build.getNumber(),
@@ -149,7 +149,7 @@ public class Mapper {
      * @param resultEntity the {@link ResultEntity}
      * @return the converted {@link Result}
      */
-    public static Result map(ResultEntity resultEntity) {
+    public static Result map(final ResultEntity resultEntity) {
         Result result = new Result(
                 resultEntity.getId(),
                 resultEntity.getWarningId(),
@@ -186,7 +186,7 @@ public class Mapper {
      * @param result the {@link Result}
      * @return the converted {@link ResultEntity}
      */
-    public static ResultEntity mapToEntity(Result result) {
+    public static ResultEntity mapToEntity(final Result result) {
         ResultEntity resultEntity = new ResultEntity(
                 result.getId(),
                 result.getWarningId(),
@@ -222,7 +222,7 @@ public class Mapper {
      * @param reportEntity the {@link ReportEntity}
      * @return the converted {@link Report}
      */
-    public static Report map(ReportEntity reportEntity) {
+    public static Report map(final ReportEntity reportEntity) {
         List<Issue> issues = reportEntity.getIssues().stream()
                 .map(Mapper::map)
                 .collect(Collectors.toList());
@@ -237,7 +237,7 @@ public class Mapper {
      * @param warningTypeEntity the {@link WarningTypeEntity} in the database (e.g. FIXED, OUTSTANDING or NEW)
      * @return the converted {@link ReportEntity}
      */
-    public static ReportEntity mapToEntity(Report issueReport, WarningTypeEntity warningTypeEntity) {
+    public static ReportEntity mapToEntity(final Report issueReport, final WarningTypeEntity warningTypeEntity) {
         ReportEntity reportEntity = new ReportEntity(warningTypeEntity);
         issueReport.forEach(issue -> {
             IssueEntity issueEntity = mapToEntity(issue);
@@ -253,7 +253,7 @@ public class Mapper {
      * @param issue the {@link Issue}
      * @return the converted {@link IssueEntity}
      */
-    public static IssueEntity mapToEntity(Issue issue) {
+    public static IssueEntity mapToEntity(final Issue issue) {
         return new IssueEntity(
                 issue.getId(),
                 issue.getColumnStart(),
@@ -280,7 +280,7 @@ public class Mapper {
      * @param issueEntity the {@link IssueEntity}
      * @return the converted {@link Issue}
      */
-    public static Issue map(IssueEntity issueEntity) {
+    public static Issue map(final IssueEntity issueEntity) {
         return getIssue(
                 issueEntity.getId(),
                 issueEntity.getCategory(),
@@ -307,7 +307,7 @@ public class Mapper {
      * @param issue the {@link IssuesResponse.Issue}
      * @return the converted {@link Issue}
      */
-    public static Issue map(IssuesResponse.Issue issue) {
+    public static Issue map(final IssuesResponse.Issue issue) {
         return getIssue(
                 issue.getId(),
                 issue.getCategory(),
@@ -329,7 +329,7 @@ public class Mapper {
     }
 
     @SuppressWarnings("checkstyle:ParameterNumber")
-    private static Issue getIssue(UUID id, String category, int columnEnd, int columnStart, String description, String fileName, String fingerprint, int lineEnd, int lineStart, String message, String moduleName, String origin, String packageName, String reference, String severity, String type) {
+    private static Issue getIssue(final UUID id, final String category, final int columnEnd, final int columnStart, final String description, final String fileName, final String fingerprint, final int lineEnd, final int lineStart, final String message, final String moduleName, final String origin, final String packageName, final String reference, final String severity, String type) {
         IssueBuilder issueBuilder = new IssueBuilder();
         if (id != null) {
             issueBuilder.setId(id);

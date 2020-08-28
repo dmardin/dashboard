@@ -51,7 +51,7 @@ public class Result {
      * @param qualityGateStatus the quality gate of the {@link Result}
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
-    public Result(int id, String warningId, String latestUrl, String name, int fixedSize, int newSize, int totalSize, String qualityGateStatus) {
+    public Result(final int id, final String warningId, final String latestUrl, final String name, final int fixedSize, final int newSize, final int totalSize, final String qualityGateStatus) {
         this.id = id;
         this.warningId = warningId;
         this.latestUrl = latestUrl;
@@ -77,7 +77,7 @@ public class Result {
         return warningId;
     }
 
-    public void setWarningId(String warningId) {
+    public void setWarningId(final String warningId) {
         this.warningId = warningId;
     }
 
@@ -95,7 +95,7 @@ public class Result {
      *
      * @param latestUrl the url
      */
-    public void setLatestUrl(String latestUrl) {
+    public void setLatestUrl(final String latestUrl) {
         this.latestUrl = latestUrl;
     }
 
@@ -113,7 +113,7 @@ public class Result {
      *
      * @param outstandingIssues the {@link Report}
      */
-    public void setOutstandingIssues(Report outstandingIssues) {
+    public void setOutstandingIssues(final Report outstandingIssues) {
         this.outstandingIssues = outstandingIssues;
     }
 
@@ -131,7 +131,7 @@ public class Result {
      *
      * @param newIssues the {@link Report}
      */
-    public void setNewIssues(Report newIssues) {
+    public void setNewIssues(final Report newIssues) {
         this.newIssues = newIssues;
     }
 
@@ -149,7 +149,7 @@ public class Result {
      *
      * @param fixedIssues the {@link Report}
      */
-    public void setFixedIssues(Report fixedIssues) {
+    public void setFixedIssues(final Report fixedIssues) {
         this.fixedIssues = fixedIssues;
     }
 
@@ -162,7 +162,7 @@ public class Result {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -180,7 +180,7 @@ public class Result {
      *
      * @param fixedSize the fixed size
      */
-    public void setFixedSize(int fixedSize) {
+    public void setFixedSize(final int fixedSize) {
         this.fixedSize = fixedSize;
     }
 
@@ -198,7 +198,7 @@ public class Result {
      *
      * @param newSize the new size
      */
-    public void setNewSize(int newSize) {
+    public void setNewSize(final int newSize) {
         this.newSize = newSize;
     }
 
@@ -216,7 +216,7 @@ public class Result {
      *
      * @param qualityGateStatus the quality gate status
      */
-    public void setQualityGateStatus(String qualityGateStatus) {
+    public void setQualityGateStatus(final String qualityGateStatus) {
         this.qualityGateStatus = qualityGateStatus;
     }
 
@@ -234,7 +234,7 @@ public class Result {
      *
      * @param totalSize the total size
      */
-    public void setTotalSize(int totalSize) {
+    public void setTotalSize(final int totalSize) {
         this.totalSize = totalSize;
     }
 
@@ -252,7 +252,7 @@ public class Result {
      *
      * @param build the {@link Build}
      */
-    public void setBuild(Build build) {
+    public void setBuild(final Build build) {
         this.build = build;
     }
 
@@ -270,7 +270,7 @@ public class Result {
      *
      * @param errorMessages the error messages
      */
-    public void setErrorMessages(List<String> errorMessages) {
+    public void setErrorMessages(final List<String> errorMessages) {
         this.errorMessages = errorMessages;
     }
 
@@ -288,7 +288,7 @@ public class Result {
      *
      * @param infoMessages the info messages
      */
-    public void setInfoMessages(List<String> infoMessages) {
+    public void setInfoMessages(final List<String> infoMessages) {
         this.infoMessages = infoMessages;
     }
 
@@ -306,7 +306,7 @@ public class Result {
      *
      * @param id the id
      */
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 

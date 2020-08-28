@@ -36,7 +36,7 @@ class BuildServiceTest {
     void shouldSaveAllBuilds() {
         BuildEntityService buildEntityService = mock(BuildEntityService.class);
         BuildService buildService = new BuildService(buildEntityService);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             when(buildEntityService.saveAll(new ArrayList<>())).thenReturn(new ArrayList<>());
             List<Build> builds = buildService.saveAll(createJob(1), new ArrayList<>());
             softly.assertThat(builds).isEmpty();
@@ -54,7 +54,7 @@ class BuildServiceTest {
         BuildEntityService buildEntityService = mock(BuildEntityService.class);
         BuildService buildService = new BuildService(buildEntityService);
 
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             Job jobWithoutBuilds = createJob(1);
             softly.assertThatThrownBy(() -> buildService.getLatestBuild(jobWithoutBuilds))
                     .isInstanceOf(NoSuchElementException.class)
@@ -72,7 +72,7 @@ class BuildServiceTest {
         BuildEntityService buildEntityService = mock(BuildEntityService.class);
         BuildService buildService = new BuildService(buildEntityService);
 
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             Job job = createJobWithBuildsAndResults();
             List<BuildResult<Build>> buildResults = buildService.createBuildResultsForTool(job, "toolName0 Warnings");
             for (int i = 0; i < buildResults.size(); i++) {
@@ -97,7 +97,7 @@ class BuildServiceTest {
         BuildEntityService buildEntityService = mock(BuildEntityService.class);
         BuildService buildService = new BuildService(buildEntityService);
 
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             BuildViewTable buildViewTable = buildService.createBuildViewTable();
             TableModel tableModel = buildViewTable.getTableModel("builds");
             softly.assertThat(tableModel.getId()).isEqualTo("builds");
@@ -119,7 +119,7 @@ class BuildServiceTest {
         });
     }
 
-    private Job createJob(int numberOfJob) {
+    private Job createJob(final int numberOfJob) {
         return new Job(
                 numberOfJob,
                 getJobNameForNumber(numberOfJob),
@@ -127,11 +127,11 @@ class BuildServiceTest {
                 SUCCESS);
     }
 
-    private String getUrlForNumber(int number) {
+    private String getUrlForNumber(final int number) {
         return "http://localhost:8080/jenkins/job/" + JOB_NAME + number + "/";
     }
 
-    private String getJobNameForNumber(int numberOfJob) {
+    private String getJobNameForNumber(final int numberOfJob) {
         return JOB_NAME + numberOfJob;
     }
 
@@ -139,7 +139,7 @@ class BuildServiceTest {
         return IntStream.range(0, NUMBER_OF_BUILDS).mapToObj(this::createBuildEntity).collect(Collectors.toList());
     }
 
-    private BuildEntity createBuildEntity(int numberOfBuild) {
+    private BuildEntity createBuildEntity(final int numberOfBuild) {
         return new BuildEntity(
                 numberOfBuild,
                 numberOfBuild,
@@ -155,7 +155,7 @@ class BuildServiceTest {
         return builds;
     }
 
-    private Build createBuild(int numberOfBuild) {
+    private Build createBuild(final int numberOfBuild) {
         return new Build(
                 numberOfBuild,
                 numberOfBuild,
@@ -163,7 +163,7 @@ class BuildServiceTest {
         );
     }
 
-    private String getUrlForBuildWithBuildNumber(int number) {
+    private String getUrlForBuildWithBuildNumber(final int number) {
         return "http://localhost:8080/jenkins/job/" + JOB_NAME + "/" + number + "/";
     }
 
@@ -186,7 +186,7 @@ class BuildServiceTest {
         return job;
     }
 
-    private Build createBuildWithResults(int id, int buildNumber, String jobName, int numberOfResults) {
+    private Build createBuildWithResults(final int id, final int buildNumber, final String jobName, final int numberOfResults) {
         Build build = new Build(id, buildNumber, "http://localhost:8080/jenkins/job/" + jobName + "/" + buildNumber + "/");
         for (int i = 0; i < numberOfResults; i++) {
             Result result = new Result(
@@ -220,11 +220,11 @@ class BuildServiceTest {
         return build;
     }
 
-    private List<String> createErrorMessage(int i) {
+    private List<String> createErrorMessage(final int i) {
         return Arrays.asList("Error", "Message", ": " + i);
     }
 
-    private List<String> createInfoMessage(int i) {
+    private List<String> createInfoMessage(final int i) {
         return Arrays.asList("Info", "Message", ": " + i);
     }
 }

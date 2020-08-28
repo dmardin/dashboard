@@ -54,7 +54,7 @@ public class ResultEntity {
      * @param qualityGateStatus the quality gate status of the {@link ResultEntity}
      */
     @SuppressWarnings("checkstyle:ParameterNumber")
-    public ResultEntity(int id, String warningId, String latestUrl, String name, int fixedSize, int newSize, int totalSize, String qualityGateStatus) {
+    public ResultEntity(final int id, final String warningId, final String latestUrl, final String name, final int fixedSize, final int newSize, final int totalSize, final String qualityGateStatus) {
         this.id = id;
         this.warningId = warningId;
         this.latestUrl = latestUrl;
@@ -83,7 +83,7 @@ public class ResultEntity {
      *
      * @param reports the list of {@link ReportEntity}
      */
-    public void setReports(List<ReportEntity> reports) {
+    public void setReports(final List<ReportEntity> reports) {
         this.reports = reports;
     }
 
@@ -101,7 +101,7 @@ public class ResultEntity {
      *
      * @param fixedSize the fixed size
      */
-    public void setFixedSize(int fixedSize) {
+    public void setFixedSize(final int fixedSize) {
         this.fixedSize = fixedSize;
     }
 
@@ -119,7 +119,7 @@ public class ResultEntity {
      *
      * @param newSize the new size
      */
-    public void setNewSize(int newSize) {
+    public void setNewSize(final int newSize) {
         this.newSize = newSize;
     }
 
@@ -137,7 +137,7 @@ public class ResultEntity {
      *
      * @param qualityGateStatus the quality gate status
      */
-    public void setQualityGateStatus(String qualityGateStatus) {
+    public void setQualityGateStatus(final String qualityGateStatus) {
         this.qualityGateStatus = qualityGateStatus;
     }
 
@@ -155,7 +155,7 @@ public class ResultEntity {
      *
      * @param totalSize the total size
      */
-    public void setTotalSize(int totalSize) {
+    public void setTotalSize(final int totalSize) {
         this.totalSize = totalSize;
     }
 
@@ -173,7 +173,7 @@ public class ResultEntity {
      *
      * @param errorMessages the error messages
      */
-    public void setErrorMessages(List<String> errorMessages) {
+    public void setErrorMessages(final List<String> errorMessages) {
         this.errorMessages = errorMessages;
     }
 
@@ -191,7 +191,7 @@ public class ResultEntity {
      *
      * @param infoMessages the info messages
      */
-    public void setInfoMessages(List<String> infoMessages) {
+    public void setInfoMessages(final List<String> infoMessages) {
         this.infoMessages = infoMessages;
     }
 
@@ -209,7 +209,7 @@ public class ResultEntity {
      *
      * @param name the name
      */
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -227,7 +227,7 @@ public class ResultEntity {
      *
      * @param id the id
      */
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -245,7 +245,7 @@ public class ResultEntity {
      *
      * @param warningId the warning id
      */
-    public void setWarningId(String warningId) {
+    public void setWarningId(final String warningId) {
         this.warningId = warningId;
     }
 
@@ -263,7 +263,7 @@ public class ResultEntity {
      *
      * @param latestUrl the latest url
      */
-    public void setLatestUrl(String latestUrl) {
+    public void setLatestUrl(final String latestUrl) {
         this.latestUrl = latestUrl;
     }
 
@@ -281,7 +281,7 @@ public class ResultEntity {
      *
      * @param buildEntity the {@link BuildEntity}
      */
-    public void setBuildEntity(BuildEntity buildEntity) {
+    public void setBuildEntity(final BuildEntity buildEntity) {
         this.buildEntity = buildEntity;
     }
 
@@ -291,15 +291,15 @@ public class ResultEntity {
      * @param reportEntity the {@link ReportEntity}
      * @return the added {@link ReportEntity}
      */
-    public ReportEntity addReportEntity(ReportEntity reportEntity) {
+    public ReportEntity addReportEntity(final ReportEntity reportEntity) {
         getReports().add(reportEntity);
         reportEntity.setResultEntity(this);
 
-        return  reportEntity;
+        return reportEntity;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }

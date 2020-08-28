@@ -55,7 +55,7 @@ class UiServiceTest {
         AppStartupRunner appStartupRunner = mock(AppStartupRunner.class);
 
         UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             when(jobService.createJobViewTable()).thenReturn(new JobViewTable(new JobRepositoryStatistics()));
             JobViewTable jobViewTable = uiService.createJobViewTable();
 
@@ -92,7 +92,7 @@ class UiServiceTest {
         AppStartupRunner appStartupRunner = mock(AppStartupRunner.class);
 
         UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             when(buildService.createBuildViewTable()).thenReturn(new BuildViewTable(new BuildRepositoryStatistics()));
             BuildViewTable buildViewTable = uiService.createBuildViewTable();
 
@@ -189,7 +189,7 @@ class UiServiceTest {
         AppStartupRunner appStartupRunner = mock(AppStartupRunner.class);
 
         UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             when(jobEntityService.findAll()).thenReturn(new ArrayList<>());
             List<Object> objects = uiService.prepareRowsForJobViewTable();
             softly.assertThat(objects).isEmpty();
@@ -223,7 +223,7 @@ class UiServiceTest {
         }
         String jobName = JOB_NAME + 1;
         when(jobService.findJobByName(jobName)).thenReturn(jobs.get(1));
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             List<String> usedTools = uiService.getUsedToolsFromLastBuild(jobName);
             for (int i = 0; i < usedTools.size(); i++) {
                 String usedTool = usedTools.get(i);
@@ -243,7 +243,7 @@ class UiServiceTest {
 
         UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         when(jobService.findJobByName(job.getName())).thenReturn(job);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
 
             List<Object> objects = uiService.getRowsForBuildViewTable(job.getName());
             for (int i = 0; i < objects.size(); i++) {
@@ -265,7 +265,7 @@ class UiServiceTest {
         UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         Job job = createJobWithBuildsAndResults(1);
         when(jobService.findJobByName(job.getName())).thenReturn(job);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             LinesChartModel linesChartModel = uiService.getAggregatedAnalysisResultsTrendCharts(job.getName());
             softly.assertThat(linesChartModel.getDomainAxisLabels()).isEqualTo(Arrays.asList("#0", "#1", "#2", "#3", "#4"));
             softly.assertThat(linesChartModel.getBuildNumbers()).isEqualTo(Arrays.asList(0, 1, 2, 3, 4));
@@ -286,7 +286,7 @@ class UiServiceTest {
         UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         Job job = createJobWithBuildsAndResults(1);
         when(jobService.findJobByName(job.getName())).thenReturn(job);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             LinesChartModel linesChartModel = uiService.getTrendChartForTool(job.getName(), "toolName" + 1 + " Warnings");
             softly.assertThat(linesChartModel.getDomainAxisLabels()).isEqualTo(Arrays.asList("#0", "#1", "#2", "#3", "#4"));
             softly.assertThat(linesChartModel.getBuildNumbers()).isEqualTo(Arrays.asList(0, 1, 2, 3, 4));
@@ -305,7 +305,7 @@ class UiServiceTest {
         UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         Job job = createJobWithBuildsAndResults(1);
         when(jobService.findJobByName(job.getName())).thenReturn(job);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             LinesChartModel linesChartModel = uiService.getNewVersusFixedAggregatedTrendChart(job.getName());
             softly.assertThat(linesChartModel.getDomainAxisLabels()).isEqualTo(Arrays.asList("#0", "#1", "#2", "#3", "#4"));
             softly.assertThat(linesChartModel.getSeries().get(0).getData()).isEqualTo(Arrays.asList(30, 30, 30, 30, 30));
@@ -324,7 +324,7 @@ class UiServiceTest {
         UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         Job job = createJobWithBuildsAndResults(1);
         when(jobService.findJobByName(job.getName())).thenReturn(job);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             LinesChartModel linesChartModel = uiService.getNewVersusFixedTrendChartForTool(job.getName(), "toolName" + 1 + " Warnings");
             softly.assertThat(linesChartModel.getDomainAxisLabels()).isEqualTo(Arrays.asList("#0", "#1", "#2", "#3", "#4"));
             softly.assertThat(linesChartModel.getSeries().get(0).getData()).isEqualTo(Arrays.asList(10, 10, 10, 10, 10));
@@ -340,7 +340,7 @@ class UiServiceTest {
         AppStartupRunner appStartupRunner = mock(AppStartupRunner.class);
 
         UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             Job jobWithoutBuilds = createJob(3);
             when(jobService.findJobByName(jobWithoutBuilds.getName())).thenThrow(new NoSuchElementException("Build number " + 3 + " for the Job " + getJobNameForNumber(3) + " not found"));
             softly.assertThatThrownBy(() -> uiService.getBuildWithBuildNumberFromJob(jobWithoutBuilds.getName(), 3))
@@ -370,7 +370,7 @@ class UiServiceTest {
         UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         Job job = createJobWithBuildsAndResults(1);
         when(jobService.findJobByName(job.getName())).thenReturn(job);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             BarChartModel barChartModel = uiService.getResultSummarize(job.getName(), 1, "toolId" + 1);
             softly.assertThat(barChartModel.getSeries().get(0).getData()).isEqualTo(Collections.singletonList(13));
             softly.assertThat(barChartModel.getSeries().get(0).getName()).isEqualTo("Old Total Size");
@@ -399,7 +399,7 @@ class UiServiceTest {
         UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         int buildNumber = 0;
         when(jobService.findJobByName(job.getName())).thenReturn(job);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             List<Object> report = uiService.getIssuesDataForToolWithTotalSize(job.getName(), buildNumber, "toolId" + buildNumber);
             softly.assertThat(report.size()).isEqualTo(6);
             int issueRowIndex = 0;
@@ -422,7 +422,7 @@ class UiServiceTest {
 
         int buildNumber = 0;
         when(jobService.findJobByName(job.getName())).thenReturn(job);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             for (WarningTypeEntity warningTypeEntity : WarningTypeEntity.values()) {
                 List<Object> report = uiService.getIssuesDataForToolWithIssueType(job.getName(), buildNumber, "toolId" + buildNumber, warningTypeEntity.toString().toLowerCase());
                 int issueRowIndex = 0;
@@ -454,7 +454,7 @@ class UiServiceTest {
         UiService uiService = new UiService(jobService, buildService, resultService, appStartupRunner);
         Build build = createBuildWithResults(BUILD_NUMBER, BUILD_NUMBER, JOB_NAME, NUMBER_OF_RESULTS);
 
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             for (int i = 0; i < NUMBER_OF_RESULTS; i++) {
                 when(resultService.getInfoMessagesFromResultWithToolId(build, "toolId" + i)).thenReturn(createInfoMessage(i));
                 List<String> infoMessages = uiService.getInfoMessagesFromResultWithToolId(build, "toolId" + i);
@@ -479,7 +479,7 @@ class UiServiceTest {
         Build build = createBuildWithResults(BUILD_NUMBER, BUILD_NUMBER, JOB_NAME, NUMBER_OF_RESULTS);
         job.addBuild(build);
 
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             for (int i = 0; i < NUMBER_OF_RESULTS; i++) {
                 String notExistingToolId = "notExistingToolId" + i;
                 when(resultService.getInfoMessagesFromResultWithToolId(build, notExistingToolId)).thenThrow(new NoSuchElementException(
@@ -501,7 +501,7 @@ class UiServiceTest {
         });
     }
 
-    private int assertIssueRowAndReturnNextIndex(SoftAssertions softly, List<Object> report, int issueRowIndex, int i) {
+    private int assertIssueRowAndReturnNextIndex(final SoftAssertions softly, final List<Object> report, final int issueRowIndex, final int i) {
         IssueTableModel.IssuesRow issuesRow = (IssueTableModel.IssuesRow) report.get(issueRowIndex);
         softly.assertThat(issuesRow.getCategory()).isEqualTo("category" + i);
         softly.assertThat(issuesRow.getColumn()).isEqualTo(i + ":" + i);
@@ -532,7 +532,7 @@ class UiServiceTest {
         return builds;
     }
 
-    private Build createBuild(int numberOfBuild) {
+    private Build createBuild(final int numberOfBuild) {
         return new Build(
                 numberOfBuild,
                 numberOfBuild,
@@ -540,11 +540,11 @@ class UiServiceTest {
         );
     }
 
-    private String getUrlForBuildWithBuildNumber(int number) {
+    private String getUrlForBuildWithBuildNumber(final int number) {
         return "http://localhost:8080/jenkins/job/" + JOB_NAME + "/" + number + "/";
     }
 
-    private Job createJobWithBuildsAndResults(int numberOfJob) {
+    private Job createJobWithBuildsAndResults(final int numberOfJob) {
         Job job = createJob(numberOfJob);
         List<Build> builds = new ArrayList<>();
         for (int i = 0; i < NUMBER_OF_BUILDS; i++) {
@@ -555,7 +555,7 @@ class UiServiceTest {
         return job;
     }
 
-    private Job createJob(int numberOfJob) {
+    private Job createJob(final int numberOfJob) {
         return new Job(
                 numberOfJob,
                 getJobNameForNumber(numberOfJob),
@@ -567,7 +567,7 @@ class UiServiceTest {
         return IntStream.range(0, NUMBER_OF_JOBS).mapToObj(this::createJobEntity).collect(Collectors.toList());
     }
 
-    private JobEntity createJobEntity(int numberOfJob) {
+    private JobEntity createJobEntity(final int numberOfJob) {
         return new JobEntity(
                 numberOfJob,
                 getJobNameForNumber(numberOfJob),
@@ -575,15 +575,15 @@ class UiServiceTest {
                 SUCCESS);
     }
 
-    private String getUrlForNumber(int number) {
+    private String getUrlForNumber(final int number) {
         return "http://localhost:8080/jenkins/job/" + JOB_NAME + number + "/";
     }
 
-    private String getJobNameForNumber(int numberOfJob) {
+    private String getJobNameForNumber(final int numberOfJob) {
         return JOB_NAME + numberOfJob;
     }
 
-    private Build createBuildWithResults(int id, int buildNumber, String jobName, int numberOfResults) {
+    private Build createBuildWithResults(int id, final int buildNumber, final String jobName, final int numberOfResults) {
         Build build = new Build(id, buildNumber, "http://localhost:8080/jenkins/job/" + jobName + "/" + buildNumber + "/");
         for (int i = 0; i < numberOfResults; i++) {
             Result result = new Result(
@@ -627,15 +627,15 @@ class UiServiceTest {
         return build;
     }
 
-    private List<String> createErrorMessage(int i) {
+    private List<String> createErrorMessage(final int i) {
         return Arrays.asList("Error", "Message", ": " + i);
     }
 
-    private List<String> createInfoMessage(int i) {
+    private List<String> createInfoMessage(final int i) {
         return Arrays.asList("Info", "Message", ": " + i);
     }
 
-    private Issue createIssue(int issueCounter) {
+    private Issue createIssue(final int issueCounter) {
         return new IssueBuilder()
                 .setId(UUID.fromString(issueCounter + "39c88cb-abb2-43c4-8374-735840acbee9"))
                 .setCategory("category" + issueCounter)

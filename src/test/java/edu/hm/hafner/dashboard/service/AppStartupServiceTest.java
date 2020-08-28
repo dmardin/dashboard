@@ -29,7 +29,7 @@ class AppStartupServiceTest {
         BuildService buildService = mock(BuildService.class);
 
         AppStartupService appStartupService = new AppStartupService(jobService, buildService);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             when(jobService.findJobByName("notExist")).thenReturn(null);
             softly.assertThat(appStartupService.findJobByName("notExist")).isNull();
 
@@ -44,7 +44,7 @@ class AppStartupServiceTest {
         BuildService buildService = mock(BuildService.class);
 
         AppStartupService appStartupService = new AppStartupService(jobService, buildService);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             List<Job> jobs = new ArrayList<>();
 
             when(jobService.saveAll(jobs)).thenReturn(jobs);
@@ -62,7 +62,7 @@ class AppStartupServiceTest {
         BuildService buildService = mock(BuildService.class);
 
         AppStartupService appStartupService = new AppStartupService(jobService, buildService);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
 
             Job jobWithoutBuilds = createJob(1);
             when(buildService.getLatestBuild(jobWithoutBuilds)).thenThrow(new NoSuchElementException("No Build not found"));
@@ -83,7 +83,7 @@ class AppStartupServiceTest {
         Job job = createJob(1);
 
         AppStartupService appStartupService = new AppStartupService(jobService, buildService);
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             List<Build> emptyBuilds = new ArrayList<>();
 
             when(buildService.saveAll(job, emptyBuilds)).thenReturn(emptyBuilds);
@@ -104,7 +104,7 @@ class AppStartupServiceTest {
         return jobs;
     }
 
-    private Job createJob(int Id) {
+    private Job createJob(final int Id) {
         return new Job(Id, JOB_NAME + Id, "http://localhost:8080/jenkins/job/" + JOB_NAME + Id + "/", SUCCESS);
     }
 
@@ -116,7 +116,7 @@ class AppStartupServiceTest {
         return builds;
     }
 
-    private Build createBuild(int numberOfBuild) {
+    private Build createBuild(final int numberOfBuild) {
         return new Build(
                 numberOfBuild,
                 numberOfBuild,
@@ -132,7 +132,7 @@ class AppStartupServiceTest {
         return job;
     }
 
-    private String getUrlForBuildWithBuildNumber(int number) {
+    private String getUrlForBuildWithBuildNumber(final int number) {
         return "http://localhost:8080/jenkins/job/" + JOB_NAME + "/" + number + "/";
     }
 }

@@ -27,11 +27,11 @@ public class Build {
     /**
      * Creates a new instance of a {@link Build}.
      *
-     * @param id the id of the {@link Build}
+     * @param id     the id of the {@link Build}
      * @param number the build number of the {@link Build}
-     * @param url the url of the {@link Build}
+     * @param url    the url of the {@link Build}
      */
-    public Build(int id, int number, String url) {
+    public Build(final int id, final int number, final String url) {
         this.id = id;
         this.number = number;
         this.url = url;
@@ -53,7 +53,7 @@ public class Build {
      *
      * @param results the {@link Result}s
      */
-    public void setResults(List<Result> results) {
+    public void setResults(final List<Result> results) {
         this.results = results;
     }
 
@@ -71,7 +71,7 @@ public class Build {
      *
      * @param number the build number
      */
-    public void setNumber(int number) {
+    public void setNumber(final int number) {
         this.number = number;
     }
 
@@ -89,7 +89,7 @@ public class Build {
      *
      * @param url the url
      */
-    public void setUrl(String url) {
+    public void setUrl(final String url) {
         this.url = url;
     }
 
@@ -107,7 +107,7 @@ public class Build {
      *
      * @param job the {@link Job}
      */
-    public void setJob(Job job) {
+    public void setJob(final Job job) {
         this.job = job;
     }
 
@@ -125,7 +125,7 @@ public class Build {
      *
      * @param id the id
      */
-    public void setId(int id) {
+    public void setId(final int id) {
         this.id = id;
     }
 
@@ -135,7 +135,7 @@ public class Build {
      * @param result the {@link Result}
      * @return the added {@link Result}
      */
-    public Result addResult(Result result) {
+    public Result addResult(final Result result) {
         getResults().add(result);
         result.setBuild(this);
 
@@ -143,7 +143,7 @@ public class Build {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }

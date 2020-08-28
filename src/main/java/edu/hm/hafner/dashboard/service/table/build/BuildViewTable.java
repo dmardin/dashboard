@@ -17,7 +17,7 @@ public class BuildViewTable {
      *
      * @param buildRepositoryStatistics the repository with the build statistics for the table
      */
-    public BuildViewTable(BuildRepositoryStatistics buildRepositoryStatistics) {
+    public BuildViewTable(final BuildRepositoryStatistics buildRepositoryStatistics) {
         this.buildRepositoryStatistics = buildRepositoryStatistics;
     }
 
@@ -27,7 +27,7 @@ public class BuildViewTable {
      * @param id the id of the table
      * @return the {@link BuildTableModel}
      */
-    public TableModel getTableModel(String id) {
+    public TableModel getTableModel(final String id) {
         BuildTableModel buildTableModel = new BuildTableModel(buildRepositoryStatistics);
         if (buildTableModel.getId().equals(id)) {
             return buildTableModel;

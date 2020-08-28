@@ -24,7 +24,7 @@ public class AppStartupService {
      * @param buildService the needed buildService
      */
     @Autowired
-    public AppStartupService(JobService jobService, BuildService buildService) {
+    public AppStartupService(final JobService jobService, final BuildService buildService) {
         this.jobService = jobService;
         this.buildService = buildService;
     }
@@ -35,7 +35,7 @@ public class AppStartupService {
      * @param jobName the job name
      * @return the {@link Job}
      */
-    public Job findJobByName(String jobName) {
+    public Job findJobByName(final String jobName) {
         return jobService.findJobByName(jobName);
     }
 
@@ -45,7 +45,7 @@ public class AppStartupService {
      * @param jobs the {@link Job}s to save
      * @return the saves jobs
      */
-    public List<Job> saveNewJobs(List<Job> jobs) {
+    public List<Job> saveNewJobs(final List<Job> jobs) {
         return jobService.saveAll(jobs);
     }
 
@@ -55,7 +55,7 @@ public class AppStartupService {
      * @param job the given Job
      * @return the latest build number
      */
-    public int getLatestBuildNumberFromJob(Job job) {
+    public int getLatestBuildNumberFromJob(final Job job) {
         return buildService.getLatestBuild(job).getNumber();
     }
 
@@ -66,7 +66,7 @@ public class AppStartupService {
      * @param builds     the builds to add
      * @return the saved builds
      */
-    public List<Build> saveNewBuildsFromJob(Job fetchedJob, List<Build> builds) {
+    public List<Build> saveNewBuildsFromJob(final Job fetchedJob, final List<Build> builds) {
         return buildService.saveAll(fetchedJob, builds);
     }
 }

@@ -53,7 +53,7 @@ class MapperTest {
 
     @Test
     void shouldMapJobEntityToJobWithoutBuildEntities() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             JobEntity jobEntity = createJobEntityWithBuildEntities(1, JOB_NAME, SUCCESS, NO_BUILDS);
             Job job = Mapper.map(jobEntity);
             Job expectedJob = createJobWithBuilds(1, JOB_NAME, SUCCESS, NO_BUILDS);
@@ -70,7 +70,7 @@ class MapperTest {
 
     @Test
     void shouldMapJobEntityToJobWithBuildEntities() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             JobEntity jobEntity = createJobEntityWithBuildEntities(1, JOB_NAME, SUCCESS, FIVE_BUILDS);
             Job job = Mapper.map(jobEntity);
             Job expectedJob = createJobWithBuilds(1, JOB_NAME, SUCCESS, FIVE_BUILDS);
@@ -87,7 +87,7 @@ class MapperTest {
 
     @Test
     void shouldNotMapJobEntityToJobWithoutBuildEntities() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             JobEntity jobEntity = createJobEntityWithBuildEntities(1, JOB_NAME, SUCCESS, NO_BUILDS);
             Job job = Mapper.map(jobEntity);
             Job expectedJob = this.createJobWithBuilds(1, OTHER_JOB_NAME, SUCCESS, NO_BUILDS);
@@ -110,7 +110,7 @@ class MapperTest {
 
     @Test
     void shouldNotMapJobEntityToJobWithBuildEntities() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             JobEntity jobEntity = createJobEntityWithBuildEntities(1, JOB_NAME, SUCCESS, FIVE_BUILDS);
             Job job = Mapper.map(jobEntity);
             Job expectedJob = createJobWithBuilds(1, OTHER_JOB_NAME, SUCCESS, FIVE_BUILDS);
@@ -134,7 +134,7 @@ class MapperTest {
 
     @Test
     void shouldMapJobEntitiesToJobsWithoutBuildEntities() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             List<JobEntity> jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, SUCCESS, NO_BUILDS)).collect(Collectors.toList());
             List<Job> jobs = Mapper.map(jobEntities);
             List<Job> expectedJobs = IntStream.range(0, 5).mapToObj(i -> this.createJobWithBuilds(i, JOB_NAME + i, SUCCESS, NO_BUILDS)).collect(Collectors.toList());
@@ -151,7 +151,7 @@ class MapperTest {
 
     @Test
     void shouldMapJobEntitiesToJobsWithBuildEntities() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             List<JobEntity> jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, SUCCESS, FIVE_BUILDS)).collect(Collectors.toList());
             List<Job> jobs = Mapper.map(jobEntities);
             List<Job> expectedJobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, SUCCESS, FIVE_BUILDS)).collect(Collectors.toList());
@@ -168,7 +168,7 @@ class MapperTest {
 
     @Test
     void shouldNotMapJobEntitiesToJobsWithoutBuildEntities() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             List<JobEntity> jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, SUCCESS, NO_BUILDS)).collect(Collectors.toList());
             List<Job> jobs = Mapper.map(jobEntities);
             List<Job> expectedJobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, OTHER_JOB_NAME + i, SUCCESS, NO_BUILDS)).collect(Collectors.toList());
@@ -191,7 +191,7 @@ class MapperTest {
 
     @Test
     void shouldNotMapJobEntitiesToJobsWithBuildEntities() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             List<JobEntity> jobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, SUCCESS, FIVE_BUILDS)).collect(Collectors.toList());
             List<Job> jobs = Mapper.map(jobEntities);
             List<Job> expectedJobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, OTHER_JOB_NAME + i, SUCCESS, FIVE_BUILDS)).collect(Collectors.toList());
@@ -214,7 +214,7 @@ class MapperTest {
 
     @Test
     void shouldMapJobJobToEntityWithoutBuilds() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             Job job = createJobWithBuilds(1, JOB_NAME, SUCCESS, NO_BUILDS);
             JobEntity jobEntity = Mapper.mapToEntity(job);
             JobEntity expectedJobEntity = createJobEntityWithBuildEntities(1, JOB_NAME, SUCCESS, NO_BUILDS);
@@ -231,7 +231,7 @@ class MapperTest {
 
     @Test
     void shouldMapJobJobToEntityWithBuilds() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             Job job = createJobWithBuilds(1, JOB_NAME, SUCCESS, FIVE_BUILDS);
             JobEntity jobEntity = Mapper.mapToEntity(job);
             JobEntity expectedJobEntity = createJobEntityWithBuildEntities(1, JOB_NAME, SUCCESS, FIVE_BUILDS);
@@ -248,7 +248,7 @@ class MapperTest {
 
     @Test
     void shouldNotMapJobToJobEntityWithoutBuilds() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             Job job = createJobWithBuilds(1, JOB_NAME, SUCCESS, NO_BUILDS);
             JobEntity jobEntity = Mapper.mapToEntity(job);
             JobEntity expectedJobEntity = createJobEntityWithBuildEntities(1, OTHER_JOB_NAME, SUCCESS, NO_BUILDS);
@@ -271,7 +271,7 @@ class MapperTest {
 
     @Test
     void shouldNotMapJobToJobEntityWithBuilds() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             Job job = createJobWithBuilds(1, JOB_NAME, SUCCESS, FIVE_BUILDS);
             JobEntity jobEntity = Mapper.mapToEntity(job);
             JobEntity expectedJobEntity = createJobEntityWithBuildEntities(1, OTHER_JOB_NAME, SUCCESS, FIVE_BUILDS);
@@ -294,7 +294,7 @@ class MapperTest {
 
     @Test
     void shouldMapJobsToJobEntitiesWithoutBuilds() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             List<Job> jobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, SUCCESS, NO_BUILDS)).collect(Collectors.toList());
             List<JobEntity> jobEntities = Mapper.mapToEntities(jobs);
             List<JobEntity> expectedJobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, SUCCESS, NO_BUILDS)).collect(Collectors.toList());
@@ -311,7 +311,7 @@ class MapperTest {
 
     @Test
     void shouldMapJobsToJobEntitiesWithBuilds() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             List<Job> jobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, SUCCESS, FIVE_BUILDS)).collect(Collectors.toList());
             List<JobEntity> jobEntities = Mapper.mapToEntities(jobs);
             List<JobEntity> expectedJobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, JOB_NAME + i, SUCCESS, FIVE_BUILDS)).collect(Collectors.toList());
@@ -328,7 +328,7 @@ class MapperTest {
 
     @Test
     void shouldNotMapJobsToJobEntitiesWithoutBuilds() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             List<Job> jobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, SUCCESS, NO_BUILDS)).collect(Collectors.toList());
             List<JobEntity> jobEntities = Mapper.mapToEntities(jobs);
             List<JobEntity> expectedJobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, OTHER_JOB_NAME + i, SUCCESS, NO_BUILDS)).collect(Collectors.toList());
@@ -351,7 +351,7 @@ class MapperTest {
 
     @Test
     void shouldNotMapJobsToJobEntitiesWithBuilds() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             List<Job> jobs = IntStream.range(0, 5).mapToObj(i -> createJobWithBuilds(i, JOB_NAME + i, SUCCESS, FIVE_BUILDS)).collect(Collectors.toList());
             List<JobEntity> jobEntities = Mapper.mapToEntities(jobs);
             List<JobEntity> expectedJobEntities = IntStream.range(0, 5).mapToObj(i -> createJobEntityWithBuildEntities(i, OTHER_JOB_NAME + i, SUCCESS, FIVE_BUILDS)).collect(Collectors.toList());
@@ -374,7 +374,7 @@ class MapperTest {
 
     @Test
     void shouldMapBuildEntityToBuildWithoutResultEntities() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             BuildEntity buildEntity = createBuildEntityWithResultEntities(1, 1, JOB_NAME, NO_RESULTS);
             Build build = Mapper.map(buildEntity);
             Build expectedBuild = createBuildWithResults(1, 1, JOB_NAME, NO_RESULTS);
@@ -385,7 +385,7 @@ class MapperTest {
 
     @Test
     void shouldNotMapBuildEntityToBuildWithoutResultEntities() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             BuildEntity buildEntity = createBuildEntityWithResultEntities(1, 1, JOB_NAME, NO_RESULTS);
             Build build = Mapper.map(buildEntity);
             Build expectedBuild = createBuildWithResults(2, 1, JOB_NAME, NO_RESULTS);
@@ -408,7 +408,7 @@ class MapperTest {
 
     @Test
     void shouldMapBuildEntityToBuildWithResultEntities() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             BuildEntity buildEntity = createBuildEntityWithResultEntities(1, 1, JOB_NAME, FIVE_RESULTS);
             Build build = Mapper.map(buildEntity);
             Build expectedBuild = createBuildWithResults(1, 1, JOB_NAME, FIVE_RESULTS);
@@ -419,7 +419,7 @@ class MapperTest {
 
     @Test
     void shouldMapNotBuildEntityToBuildWithResultEntities() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             BuildEntity buildEntity = createBuildEntityWithResultEntities(1, 1, JOB_NAME, FIVE_RESULTS);
             Build build = Mapper.map(buildEntity);
             Build expectedBuild = createBuildWithResults(2, 1, JOB_NAME, FIVE_RESULTS);
@@ -442,7 +442,7 @@ class MapperTest {
 
     @Test
     void shouldMapBuildToBuildEntityWithoutResults() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             Build build = createBuildWithResults(1, 1, JOB_NAME, NO_RESULTS);
             BuildEntity buildEntity = Mapper.mapToEntity(build);
             BuildEntity expectedBuildEntity = createBuildEntityWithResultEntities(1, 1, JOB_NAME, NO_RESULTS);
@@ -453,7 +453,7 @@ class MapperTest {
 
     @Test
     void shouldNotMapBuildToBuildEntityWithoutResults() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             Build build = createBuildWithResults(1, 1, JOB_NAME, NO_RESULTS);
             BuildEntity buildEntity = Mapper.mapToEntity(build);
             BuildEntity expectedBuildEntity = createBuildEntityWithResultEntities(2, 1, JOB_NAME, NO_RESULTS);
@@ -476,7 +476,7 @@ class MapperTest {
 
     @Test
     void shouldMapBuildToBuildEntityWithResults() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             Build build = createBuildWithResults(1, 1, JOB_NAME, FIVE_RESULTS);
             BuildEntity buildEntity = Mapper.mapToEntity(build);
             BuildEntity expectedBuildEntity = createBuildEntityWithResultEntities(1, 1, JOB_NAME, FIVE_RESULTS);
@@ -487,7 +487,7 @@ class MapperTest {
 
     @Test
     void shouldNotMapBuildToBuildEntityWithResults() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             Build build = createBuildWithResults(1, 1, JOB_NAME, FIVE_RESULTS);
             BuildEntity buildEntity = Mapper.mapToEntity(build);
             BuildEntity expectedBuildEntity = createBuildEntityWithResultEntities(2, 1, JOB_NAME, FIVE_RESULTS);
@@ -510,83 +510,83 @@ class MapperTest {
 
     @Test
     void shouldMapResultEntityToResult() {
-        SoftAssertions.assertSoftly((softly) -> {
-            ResultEntity resultEntity = createResultEntity(1, 1, JOB_NAME, 0,0,0,0,0,0);
+        SoftAssertions.assertSoftly(softly -> {
+            ResultEntity resultEntity = createResultEntity(1, 1, JOB_NAME, 0, 0, 0, 0, 0, 0);
             Result result = Mapper.map(resultEntity);
-            Result expectedResult = createResult(1, 1,  JOB_NAME,0,0,0,0,0,0);
+            Result expectedResult = createResult(1, 1, JOB_NAME, 0, 0, 0, 0, 0, 0);
             softly.assertThat(result).isEqualTo(expectedResult);
 
-            resultEntity = createResultEntity(1, 1, JOB_NAME, 0,5,5,10,10,15);
+            resultEntity = createResultEntity(1, 1, JOB_NAME, 0, 5, 5, 10, 10, 15);
             result = Mapper.map(resultEntity);
-            expectedResult = createResult(1, 1,  JOB_NAME,0,5,5,10,10,15);
+            expectedResult = createResult(1, 1, JOB_NAME, 0, 5, 5, 10, 10, 15);
             softly.assertThat(result).isEqualTo(expectedResult);
         });
     }
 
     @Test
     void shouldNotMapResultEntityToResult() {
-        SoftAssertions.assertSoftly((softly) -> {
-            ResultEntity resultEntity = createResultEntity(1, 1, JOB_NAME,0,5,5,10,10,15);
+        SoftAssertions.assertSoftly(softly -> {
+            ResultEntity resultEntity = createResultEntity(1, 1, JOB_NAME, 0, 5, 5, 10, 10, 15);
             Result result = Mapper.map(resultEntity);
-            Result expectedResult = createResult(2, 1,  JOB_NAME,0,5,5,10,10,15);
+            Result expectedResult = createResult(2, 1, JOB_NAME, 0, 5, 5, 10, 10, 15);
             softly.assertThat(result).isNotEqualTo(expectedResult);
 
-            resultEntity = createResultEntity(1, 1, JOB_NAME,0,5,5,10,10,15);
+            resultEntity = createResultEntity(1, 1, JOB_NAME, 0, 5, 5, 10, 10, 15);
             result = Mapper.map(resultEntity);
-            expectedResult = createResult(1, 2,  JOB_NAME,0,5,5,10,10,15);
+            expectedResult = createResult(1, 2, JOB_NAME, 0, 5, 5, 10, 10, 15);
             softly.assertThat(result).isNotEqualTo(expectedResult);
 
-            resultEntity = createResultEntity(1, 1, JOB_NAME,0,5,5,10,10,15);
+            resultEntity = createResultEntity(1, 1, JOB_NAME, 0, 5, 5, 10, 10, 15);
             result = Mapper.map(resultEntity);
-            expectedResult = createResult(1, 1,  OTHER_JOB_NAME,0,5,5,10,10,15);
+            expectedResult = createResult(1, 1, OTHER_JOB_NAME, 0, 5, 5, 10, 10, 15);
             softly.assertThat(result).isNotEqualTo(expectedResult);
 
-            resultEntity = createResultEntity(1, 1, JOB_NAME,0,5,5,10,10,15);
+            resultEntity = createResultEntity(1, 1, JOB_NAME, 0, 5, 5, 10, 10, 15);
             result = Mapper.map(resultEntity);
-            expectedResult = createResult(1, 1,  JOB_NAME, 1,6,6,11,11,16);
+            expectedResult = createResult(1, 1, JOB_NAME, 1, 6, 6, 11, 11, 16);
             softly.assertThat(result).isNotEqualTo(expectedResult);
 
-            resultEntity = createResultEntity(1, 1, JOB_NAME,0,5,5,10,10,15);
+            resultEntity = createResultEntity(1, 1, JOB_NAME, 0, 5, 5, 10, 10, 15);
             result = Mapper.map(resultEntity);
-            expectedResult = createResult(1, 1,  JOB_NAME, 1,2,2,3,3,4);
+            expectedResult = createResult(1, 1, JOB_NAME, 1, 2, 2, 3, 3, 4);
             softly.assertThat(result).isNotEqualTo(expectedResult);
         });
     }
 
     @Test
     void shouldMapResultToResultEntity() {
-        SoftAssertions.assertSoftly((softly) -> {
-            Result result = createResult(1, 1, JOB_NAME,0,0,0,0,0,0);
+        SoftAssertions.assertSoftly(softly -> {
+            Result result = createResult(1, 1, JOB_NAME, 0, 0, 0, 0, 0, 0);
             ResultEntity resultEntity = Mapper.mapToEntity(result);
-            ResultEntity expectedResultEntity = createResultEntity(1, 1, JOB_NAME,0,0,0,0,0,0);
+            ResultEntity expectedResultEntity = createResultEntity(1, 1, JOB_NAME, 0, 0, 0, 0, 0, 0);
             softly.assertThat(resultEntity).isEqualTo(expectedResultEntity);
 
-            result = createResult(1, 1, JOB_NAME,0,5,5,10,10,15);
+            result = createResult(1, 1, JOB_NAME, 0, 5, 5, 10, 10, 15);
             resultEntity = Mapper.mapToEntity(result);
-            expectedResultEntity = createResultEntity(1, 1, JOB_NAME,0,5,5,10,10,15);
+            expectedResultEntity = createResultEntity(1, 1, JOB_NAME, 0, 5, 5, 10, 10, 15);
             softly.assertThat(resultEntity).isEqualTo(expectedResultEntity);
         });
     }
 
     @Test
     void shouldNotMapResultToResultEntity() {
-        SoftAssertions.assertSoftly((softly) -> {
-            Result result = createResult(1, 1, JOB_NAME,0,5,5,10,10,15);
+        SoftAssertions.assertSoftly(softly -> {
+            Result result = createResult(1, 1, JOB_NAME, 0, 5, 5, 10, 10, 15);
             ResultEntity resultEntity = Mapper.mapToEntity(result);
-            ResultEntity expectedResultEntity = createResultEntity(2, 1, JOB_NAME,0,5,5,10,10,15);
+            ResultEntity expectedResultEntity = createResultEntity(2, 1, JOB_NAME, 0, 5, 5, 10, 10, 15);
             softly.assertThat(resultEntity).isNotEqualTo(expectedResultEntity);
 
-            result = createResult(1, 1, JOB_NAME,0,5,5,10,10,15);
+            result = createResult(1, 1, JOB_NAME, 0, 5, 5, 10, 10, 15);
             resultEntity = Mapper.mapToEntity(result);
-            expectedResultEntity = createResultEntity(1, 2, JOB_NAME,0,5,5,10,10,15);
+            expectedResultEntity = createResultEntity(1, 2, JOB_NAME, 0, 5, 5, 10, 10, 15);
             softly.assertThat(resultEntity).isNotEqualTo(expectedResultEntity);
 
-            result = createResult(1, 1, JOB_NAME,0,5,5,10,10,15);
+            result = createResult(1, 1, JOB_NAME, 0, 5, 5, 10, 10, 15);
             resultEntity = Mapper.mapToEntity(result);
-            expectedResultEntity = createResultEntity(1, 1, OTHER_JOB_NAME,0,5,5,10,10,15);
+            expectedResultEntity = createResultEntity(1, 1, OTHER_JOB_NAME, 0, 5, 5, 10, 10, 15);
             softly.assertThat(resultEntity).isNotEqualTo(expectedResultEntity);
 
-            result = createResult(1, 1, JOB_NAME,0,5,5,10,10,15);
+            result = createResult(1, 1, JOB_NAME, 0, 5, 5, 10, 10, 15);
             resultEntity = Mapper.mapToEntity(result);
             expectedResultEntity = createResultEntity(1, 1, JOB_NAME, 1, 6, 6, 11, 11, 16);
             softly.assertThat(resultEntity).isNotEqualTo(expectedResultEntity);
@@ -600,14 +600,14 @@ class MapperTest {
 
     @Test
     void shouldMapIssueResponseFromJenkinsApiToIssue() {
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             IssuesResponse.Issue issueFromIssuesResponse = createIssueFromIssuesResponse(1);
             Issue issue = Mapper.map(issueFromIssuesResponse);
             softly.assertThat(issue).isEqualTo(createIssue(1));
         });
     }
 
-    private JobEntity createJobEntityWithBuildEntities(int idNumber, String jobName, String lastBuildStatus, int numberOfBuilds) {
+    private JobEntity createJobEntityWithBuildEntities(final int idNumber, final String jobName, final String lastBuildStatus, final int numberOfBuilds) {
         JobEntity jobEntity = new JobEntity(idNumber, jobName, "http://localhost:8080/jenkins/job/" + jobName + "/", lastBuildStatus);
         for (int i = 0; i < numberOfBuilds; i++) {
             jobEntity.addBuildEntity(new BuildEntity(i, i, "http://localhost:8080/jenkins/job/" + jobName + "/" + i + "/"));
@@ -754,7 +754,7 @@ class MapperTest {
 
     private Report createReport(int issueNumberStart, int issueNumberEnd) {
         Report report = new Report();
-        for(int i = issueNumberStart; i < issueNumberEnd; i++) {
+        for (int i = issueNumberStart; i < issueNumberEnd; i++) {
             report.add(createIssue(i));
         }
         return report;
@@ -813,24 +813,24 @@ class MapperTest {
         return reportEntity;
     }
 
-    private IssueEntity createIssueEntity(int i){
+    private IssueEntity createIssueEntity(int i) {
         return new IssueEntity(
                 getUUID(i),
-                i+1,
-                i+2,
-                i+3,
-                i+4,
-                "category"+i,
-                "description"+i,
-                "filename"+i,
-                "fingerprint"+i,
-                "message"+i,
-                "moduleName"+i,
-                "origin"+i,
-                "packageName"+i,
-                "reference"+i,
-                "ERROR"+i,
-                "type"+i
+                i + 1,
+                i + 2,
+                i + 3,
+                i + 4,
+                "category" + i,
+                "description" + i,
+                "filename" + i,
+                "fingerprint" + i,
+                "message" + i,
+                "moduleName" + i,
+                "origin" + i,
+                "packageName" + i,
+                "reference" + i,
+                "ERROR" + i,
+                "type" + i
         );
     }
 

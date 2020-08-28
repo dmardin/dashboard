@@ -42,11 +42,11 @@ public class IssueController {
      */
     @RequestMapping(path = {"/job/{jobName}/build/{buildNumber}/{toolId}"}, method = RequestMethod.GET)
     public String getIssueHeadersForTool(
-            @PathVariable("jobName") String jobName,
-            @PathVariable("buildNumber") Integer buildNumber,
-            @PathVariable("toolId") String toolId,
+            final @PathVariable("jobName") String jobName,
+            final @PathVariable("buildNumber") Integer buildNumber,
+            final @PathVariable("toolId") String toolId,
             final Model model,
-            @RequestParam(required = false) boolean fetchData) {
+            final @RequestParam(required = false) boolean fetchData) {
         if (fetchData) {
             logger.info("fetching new data..");
             uiService.fetchData();
@@ -70,10 +70,10 @@ public class IssueController {
      */
     @RequestMapping(path = {"/job/{jobName}/build/{buildNumber}/{toolId}/{issueType}"}, method = RequestMethod.GET)
     public String getIssueHeaders(
-            @PathVariable("jobName") String jobName,
-            @PathVariable("buildNumber") Integer buildNumber,
-            @PathVariable("toolId") String toolId,
-            @PathVariable("issueType") String issueType,
+            final @PathVariable("jobName") String jobName,
+            final @PathVariable("buildNumber") Integer buildNumber,
+            final @PathVariable("toolId") String toolId,
+            final @PathVariable("issueType") String issueType,
             final Model model) {
         model.addAttribute("issueViewTable", uiService.createIssueViewTable());
         model.addAttribute("toolId", toolId);
@@ -94,9 +94,9 @@ public class IssueController {
     @RequestMapping(path = {"/ajax/job/{jobName}/build/{buildNumber}/{toolId}"}, method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public List<Object> getIssuesDataForToolWithTotalSize(
-            @PathVariable("jobName") String jobName,
-            @PathVariable("buildNumber") Integer buildNumber,
-            @PathVariable("toolId") String toolId) {
+            final @PathVariable("jobName") String jobName,
+            final @PathVariable("buildNumber") Integer buildNumber,
+            final @PathVariable("toolId") String toolId) {
         logger.info("getIssuesDataForToolWithTotalSize is called");
 
         return uiService.getIssuesDataForToolWithTotalSize(jobName, buildNumber, toolId);
@@ -114,10 +114,10 @@ public class IssueController {
     @RequestMapping(path = {"/ajax/job/{jobName}/build/{buildNumber}/{toolId}/{issueType}"}, method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public List<Object> getIssuesDataForToolWithIssueType(
-            @PathVariable("jobName") String jobName,
-            @PathVariable("buildNumber") Integer buildNumber,
-            @PathVariable("toolId") String toolId,
-            @PathVariable("issueType") String issueType) {
+            final @PathVariable("jobName") String jobName,
+            final @PathVariable("buildNumber") Integer buildNumber,
+            final @PathVariable("toolId") String toolId,
+            final @PathVariable("issueType") String issueType) {
         logger.info("getIssuesDataForToolWithIssueType is called");
 
         return uiService.getIssuesDataForToolWithIssueType(jobName, buildNumber, toolId, issueType);

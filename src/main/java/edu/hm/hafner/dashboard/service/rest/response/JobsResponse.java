@@ -22,7 +22,7 @@ public class JobsResponse {
      *
      * @param jobs the {@link Job}s
      */
-    public void setJobs(Job[] jobs) {
+    public void setJobs(final Job[] jobs) {
         this.jobs = jobs;
     }
 }

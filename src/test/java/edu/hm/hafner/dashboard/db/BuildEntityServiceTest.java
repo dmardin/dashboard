@@ -27,7 +27,7 @@ class BuildEntityServiceTest {
         BuildRepository buildRepository = mock(BuildRepository.class);
         BuildEntityService buildEntityService = new BuildEntityService(buildRepository);
 
-        SoftAssertions.assertSoftly((softly) -> {
+        SoftAssertions.assertSoftly(softly -> {
             List<BuildEntity> buildEntitiesToSave = new ArrayList<>();
             when(buildRepository.saveAll(buildEntitiesToSave)).thenReturn(buildEntitiesToSave);
             List<BuildEntity> savedBuildEntities = buildEntityService.saveAll(buildEntitiesToSave);

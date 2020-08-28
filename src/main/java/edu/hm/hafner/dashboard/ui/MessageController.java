@@ -28,7 +28,7 @@ public class MessageController {
      * @param uiService the service for interactions with the ui
      */
     @Autowired
-    public MessageController(UiService uiService) {
+    public MessageController(final UiService uiService) {
         this.uiService = uiService;
     }
 
@@ -44,11 +44,11 @@ public class MessageController {
      */
     @RequestMapping(path = {"/job/{jobName}/build/{buildNumber}/{toolId}/messages"}, method = RequestMethod.GET)
     public String getInfoAndErrorMessages(
-            @PathVariable("jobName") String jobName,
-            @PathVariable("buildNumber") Integer buildNumber,
-            @PathVariable("toolId") String toolId,
+            final @PathVariable("jobName") String jobName,
+            final @PathVariable("buildNumber") Integer buildNumber,
+            final @PathVariable("toolId") String toolId,
             final Model model,
-            @RequestParam(required = false) boolean fetchData) {
+            final @RequestParam(required = false) boolean fetchData) {
         logger.info("getInfoAndErrorMessages is called");
         if (fetchData) {
             logger.info("fetching new data..");

@@ -22,7 +22,7 @@ public class IssuesResponse {
      *
      * @param issues the {@link Issue}s
      */
-    public void setIssues(Issue[] issues) {
+    public void setIssues(final Issue[] issues) {
         this.issues = issues;
     }
 
@@ -51,7 +51,7 @@ public class IssuesResponse {
             return id;
         }
 
-        public void setId(UUID id) {
+        public void setId(final UUID id) {
             this.id = id;
         }
 
@@ -59,7 +59,7 @@ public class IssuesResponse {
             return category;
         }
 
-        public void setCategory(String category) {
+        public void setCategory(final String category) {
             this.category = category;
         }
 
@@ -67,7 +67,7 @@ public class IssuesResponse {
             return columnStart;
         }
 
-        public void setColumnStart(int columnStart) {
+        public void setColumnStart(final int columnStart) {
             this.columnStart = columnStart;
         }
 
@@ -75,7 +75,7 @@ public class IssuesResponse {
             return columnEnd;
         }
 
-        public void setColumnEnd(int columnEnd) {
+        public void setColumnEnd(final int columnEnd) {
             this.columnEnd = columnEnd;
         }
 
@@ -83,7 +83,7 @@ public class IssuesResponse {
             return description;
         }
 
-        public void setDescription(String description) {
+        public void setDescription(final String description) {
             this.description = description;
         }
 
@@ -91,7 +91,7 @@ public class IssuesResponse {
             return fileName;
         }
 
-        public void setFileName(String fileName) {
+        public void setFileName(final String fileName) {
             this.fileName = fileName;
         }
 
@@ -99,7 +99,7 @@ public class IssuesResponse {
             return fingerprint;
         }
 
-        public void setFingerprint(String fingerprint) {
+        public void setFingerprint(final String fingerprint) {
             this.fingerprint = fingerprint;
         }
 
@@ -107,7 +107,7 @@ public class IssuesResponse {
             return lineStart;
         }
 
-        public void setLineStart(int lineStart) {
+        public void setLineStart(final int lineStart) {
             this.lineStart = lineStart;
         }
 
@@ -115,7 +115,7 @@ public class IssuesResponse {
             return lineEnd;
         }
 
-        public void setLineEnd(int lineEnd) {
+        public void setLineEnd(final int lineEnd) {
             this.lineEnd = lineEnd;
         }
 
@@ -123,7 +123,7 @@ public class IssuesResponse {
             return message;
         }
 
-        public void setMessage(String message) {
+        public void setMessage(final String message) {
             this.message = message;
         }
 
@@ -131,7 +131,7 @@ public class IssuesResponse {
             return moduleName;
         }
 
-        public void setModuleName(String moduleName) {
+        public void setModuleName(final String moduleName) {
             this.moduleName = moduleName;
         }
 
@@ -139,7 +139,7 @@ public class IssuesResponse {
             return origin;
         }
 
-        public void setOrigin(String origin) {
+        public void setOrigin(final String origin) {
             this.origin = origin;
         }
 
@@ -147,7 +147,7 @@ public class IssuesResponse {
             return packageName;
         }
 
-        public void setPackageName(String packageName) {
+        public void setPackageName(final String packageName) {
             this.packageName = packageName;
         }
 
@@ -155,7 +155,7 @@ public class IssuesResponse {
             return reference;
         }
 
-        public void setReference(String reference) {
+        public void setReference(final String reference) {
             this.reference = reference;
         }
 
@@ -163,7 +163,7 @@ public class IssuesResponse {
             return severity;
         }
 
-        public void setSeverity(String severity) {
+        public void setSeverity(final String severity) {
             this.severity = severity;
         }
 
@@ -171,7 +171,7 @@ public class IssuesResponse {
             return type;
         }
 
-        public void setType(String type) {
+        public void setType(final String type) {
             this.type = type;
         }
     }

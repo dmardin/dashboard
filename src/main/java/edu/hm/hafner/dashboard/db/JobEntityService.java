@@ -22,7 +22,7 @@ public class JobEntityService {
      * @param jobRepository the repository for jobs
      */
     @Autowired
-    JobEntityService(JobRepository jobRepository) {
+    JobEntityService(final JobRepository jobRepository) {
         this.jobRepository = jobRepository;
     }
 
@@ -41,7 +41,7 @@ public class JobEntityService {
      * @param name the name of the job
      * @return the job
      */
-    public JobEntity findJobByName(String name) {
+    public JobEntity findJobByName(final String name) {
         return jobRepository.findByName(name);
     }
 
@@ -51,7 +51,7 @@ public class JobEntityService {
      * @param jobEntities the {@link JobEntity}s to save
      * @return the saved {@link JobEntity}s
      */
-    public List<JobEntity> saveAll(List<JobEntity> jobEntities) {
+    public List<JobEntity> saveAll(final List<JobEntity> jobEntities) {
         return jobRepository.saveAll(jobEntities);
     }
 }

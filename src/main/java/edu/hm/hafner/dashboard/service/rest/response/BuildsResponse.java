@@ -22,7 +22,7 @@ public class BuildsResponse {
      *
      * @param builds the {@link Build}s
      */
-    public void setBuilds(Build[] builds) {
+    public void setBuilds(final Build[] builds) {
         this.builds = builds;
     }
 }

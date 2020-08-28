@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public class AggregatedAnalysisResultsSeriesBuilder extends SeriesBuilder<Build> {
     @Override
-    protected Map<String, Integer> computeSeries(Build current) {
+    protected Map<String, Integer> computeSeries(final Build current) {
         Map<String, Integer> series = new HashMap<>();
         current.getResults().forEach(r -> {
             series.put(r.getName(), r.getTotalSize());
