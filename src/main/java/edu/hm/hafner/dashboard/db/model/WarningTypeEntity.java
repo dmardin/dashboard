@@ -30,7 +30,7 @@ public enum WarningTypeEntity {
      *
      * @param issues the list of{@link ReportEntity}s
      */
-    public void setIssues(final List<ReportEntity> issues) {
-        this.issues = issues;
-    }
+//    public void setIssues(final List<ReportEntity> issues) {
+//        this.issues = issues;
+//    }
 }

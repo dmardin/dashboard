@@ -134,7 +134,7 @@ public class AppStartupRunner implements ApplicationRunner {
                         }
 
                         logger.info("Start requesting " + warningTypeEntity.toString() + " Issues for tool with name " + tool.getName());
-                        String url = tool.getLatestUrl() + SLASH + warningTypeEntity.toString().toLowerCase() + SLASH + API_JSON;
+                        String url = tool.getLatestUrl() + SLASH + warningTypeEntity.name().toLowerCase() + SLASH + API_JSON;
                         IssuesResponse issuesResponse = restService.getIssues(url);
                         if (issuesResponse != null) {
                             IssuesResponse.Issue[] issues = issuesResponse.getIssues();

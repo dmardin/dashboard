@@ -107,6 +107,8 @@ class ResultService {
             case "new":
                 report = result.getNewIssues();
                 break;
+            default:
+                throw new IllegalArgumentException("Parameter issueType must be outstanding, fixed or new but was: " + issueType);
         }
 
         return convertRowsForTheIssueViewTable(report);
