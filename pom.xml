@@ -38,7 +38,7 @@
 		<webjars.font-awesome.version>4.7.0</webjars.font-awesome.version>
 
 		<!-- Database -->
-		<mysql.conector.version>8.0.18</mysql.conector.version>
+		<mysql.conector.version>8.0.28</mysql.conector.version>
 
 		<!-- Test -->
 		<assertj-core.version>3.15.0</assertj-core.version>
