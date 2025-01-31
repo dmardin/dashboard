@@ -46,7 +46,7 @@
 		<!-- Maven Plug-ins Configuration -->
 		<maven-resources-plugin.version>3.2.0</maven-resources-plugin.version>
 		<maven-pmd-plugin.version>3.13.0</maven-pmd-plugin.version>
-		<pmd.version>6.26.0</pmd.version>
+		<pmd.version>7.10.0</pmd.version>
 		<maven-checkstyle-plugin.version>3.1.1</maven-checkstyle-plugin.version>
 		<checkstyle.version>8.35</checkstyle.version>
 		<spotbugs-maven-plugin.version>4.0.4</spotbugs-maven-plugin.version>
